@@ -18,10 +18,9 @@ input[type=checkbox].nd-switch {
 	--nd-current-background: var(--nd-_switch-color);
 	background: var(--nd-current-background);
 	cursor: pointer;
-	transition: .3s background;
+	transition: .3s background
 }
-
-	input[type=checkbox].nd-switch::before {
+input[type=checkbox].nd-switch::before {
 		content: "";
 		display: block;
 		aspect-ratio: 1 / 1;
@@ -33,25 +32,20 @@ input[type=checkbox].nd-switch {
 		transition-duration: inherit;
 		box-shadow: 0 0 0 1px var(--nd-current-background), 0 0 var(--nd-focus-ring, );
 	}
-
-	input[type=checkbox].nd-switch:checked {
-		--nd-current-background: var(--nd-_switch-color-checked);
+input[type=checkbox].nd-switch:checked {
+		--nd-current-background: var(--nd-_switch-color-checked)
 	}
-
-	input[type=checkbox].nd-switch:checked::before {
+input[type=checkbox].nd-switch:checked::before {
 			margin-inline-start: calc(var(--nd-_switch-width) - var(--nd-_switch-height) + var(--nd-_thumb-margin));
 		}
-
-	input[type=checkbox].nd-switch:disabled {
+input[type=checkbox].nd-switch:disabled {
 		filter: grayscale();
 		opacity: .6;
 		cursor: not-allowed;
 	}
-
-	input[type=checkbox].nd-switch:focus {
-		outline: none;
+input[type=checkbox].nd-switch:focus {
+		outline: none
 	}
-
-	input[type=checkbox].nd-switch:focus::before {
+input[type=checkbox].nd-switch:focus::before {
 			--nd-focus-ring: .05em .2em hsl(205 80% 50% / .5);
 		}

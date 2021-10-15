@@ -1,0 +1,30 @@
+{
+  "name": "nudeforms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx postcss **/*.postcss --base . --dir . --ext .css",
+    "watch": "npx postcss **/*.postcss --base . --dir . --ext .css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leaverou/nudeforms.git"
+  },
+  "keywords": [
+    "CSS",
+    "forms"
+  ],
+  "author": "Lea Verou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leaverou/nudeforms/issues"
+  },
+  "homepage": "https://github.com/leaverou/nudeforms#readme",
+  "devDependencies": {
+    "postcss": "^8.3.9",
+    "postcss-cli": "^9.0.1",
+    "postcss-nesting": "^8.0.1"
+  }
+}

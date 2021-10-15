@@ -5,30 +5,48 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Nude switch</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="component.css">
 </head>
 <body>
-	<h1>Switch</h1>
+	<header>
+		<h1>Nude Switch</h1>
+		<p class="tags">
+			<span>CSS only</span>
+		</p>
+	</header>
 
-	<p>Regular size:
-		<input type="checkbox" class="nd-switch">
+	<main>
+		<section>
+			<h2>Usage</h2>
 
-	<p>Bigger:
-		<input type="checkbox" class="nd-switch" style="font-size: 200%">
+			<p>This is a CSS-only component. You can just import it straight into your CSS file:</p>
 
-	<p>With larger and smaller thumb:
-		<input type="checkbox" class="nd-switch" style="--nd-thumb-margin: -.2em">
-		<input type="checkbox" class="nd-switch" style="--nd-thumb-margin: .2em">
+			<pre><code>@import url('https://projects.verou.me/nudeforms/switch/component.css')</code></pre>
+		</section>
+		<section>
+			<h2>Examples</h2>
 
-	<p>Different colors:
-		<input type="checkbox" class="nd-switch" style="--nd-thumb-color: black; --nd-switch-color: white; border: 1px solid black; --nd-switch-color-checked: red">
+			<p>Basic:
+				<input type="checkbox" class="nd-switch">
 
-	<p>Right to left:
-		<input type="checkbox" class="nd-switch" dir="rtl">
+			<p>Bigger:
+				<input type="checkbox" class="nd-switch" style="font-size: 200%">
 
-	<p>
-		Disabled:
-		<input type="checkbox" class="nd-switch" disabled>
-	</p>
+			<p>With larger and smaller thumb:
+				<input type="checkbox" class="nd-switch" style="--nd-thumb-margin: -.2em">
+				<input type="checkbox" class="nd-switch" style="--nd-thumb-margin: .2em">
+
+			<p>Different colors:
+				<input type="checkbox" class="nd-switch" style="--nd-thumb-color: black; --nd-switch-color: white; border: 1px solid black; --nd-switch-color-checked: red">
+
+			<p>Right to left:
+				<input type="checkbox" class="nd-switch" dir="rtl">
+
+			<p>
+				Disabled:
+				<input type="checkbox" class="nd-switch" disabled>
+			</p>
+		</section>
+	</main>
 </body>
 </html>
