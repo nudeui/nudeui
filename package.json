@@ -5,8 +5,10 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx postcss **/*.postcss --base . --dir . --ext .css",
-    "watch": "npx postcss **/*.postcss --base . --dir . --ext .css --watch"
+    "build:css": "npx postcss \"**/*.postcss\" --base . --dir . --ext .css",
+    "build": "npm run build:css",
+    "watch:css": "npx postcss \"**/*.postcss\" --base . --dir . --ext .css --watch",
+    "watch": "npm run watch:css"
   },
   "repository": {
     "type": "git",

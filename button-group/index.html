@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>&lt;button-group></title>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css@0.9.8" />
+	<script src="https://md-block.verou.me/md-block.js" type="module"></script>
+	<script src="button-group.js" type="module"></script>
+</head>
+<body>
+
+<md-block src="README.md" id="readme"></md-block>
+
+<script>
+new MutationObserver(records => {
+	// Render examples
+
+	for (code of readme.querySelectorAll("pre.language-html > code")) {
+		code.parentNode.insertAdjacentHTML("beforebegin", code.textContent);
+	}
+}).observe(readme, {attributeFilter: ["rendered"]});
+</script>
+
+</body>
+</html>
