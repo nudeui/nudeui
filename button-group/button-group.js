@@ -35,7 +35,6 @@ export default class ButtonGroup extends HTMLElement {
 			});
 
 			if (mutations.length > 0) {
-				console.log("aria-pressed", getValue(this.pressedButton));
 				this.value = getValue(this.pressedButton);
 			}
 		});

@@ -83,4 +83,15 @@ Dynamically adding `aria-pressed` attribute
 <button onclick="group2.children[2].ariaPressed = true">Select C</button>
 ```
 
+Dynamically adding options
+
+```html
+<button-group id="group3">
+	<button>1</button>
+	<button>2</button>
+	<button aria-pressed="true">3</button>
+</button-group>
+<button onclick="window.counter ||= 3; group3.insertAdjacentHTML('beforeend', `<button aria-pressed=true>${++counter}</button>`)">Add option</button>
+```
+
 </main>
