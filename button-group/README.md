@@ -94,6 +94,15 @@ Dynamically adding options:
 <button onclick="window.counter ||= 3; group3.insertAdjacentHTML('beforeend', `<button aria-pressed=true>${++counter}</button>`)">Add option</button>
 ```
 
+`<button-group>` has an implicit ARIA Role of `region`, so adding an `aria-label` will make it work as a landmark out of the box:
+
+```html
+<button-group aria-label="View switcher">
+	<button>Design</button>
+	<button aria-pressed="true">Preview</button>
+</button-group>
+```
+
 Using a [button custom element](https://shoelace.style/components/button?id=css-parts)
 (presentation needs work, but functionality is there):
 
