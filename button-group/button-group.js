@@ -16,6 +16,8 @@ export default class ButtonGroup extends HTMLElement {
 		}
 
 		this.addEventListener("click", evt => {
+			let previousValue = this.value;
+
 			let button = evt.target;
 
 			while (evt.target.parentNode !== this) {
@@ -24,6 +26,10 @@ export default class ButtonGroup extends HTMLElement {
 
 			if (button) {
 				this.value = getValue(button);
+
+				if (previousValue !== this.value) {
+					this.dispatchEvent(new InputEvent("input"))
+				}
 			}
 		});
 

@@ -6,9 +6,10 @@
 		margin: 0;
 	}
 
+	/* 0 specificity default pressed styles */
 	& ::slotted(:where([aria-pressed="true"])) {
-		background: hsl(0 0% 95% / .8);
-		box-shadow: 0 .1em .2em hsl(0 0% 0% / .2) inset, 0 0 0 2em hsl(220 10% 50% / .12) inset;
+		background: hsl(220 10% 90% / .9);
+		box-shadow: 0 .1em .2em hsl(0 0% 0% / .2) inset, 0 0 0 2em hsl(220 10% 50% / .15) inset;
 	}
 }
 
