@@ -10,6 +10,11 @@ export default class ButtonGroup extends HTMLElement {
 
 		this.#internals = this.attachInternals?.();
 
+		if (this.#internals) {
+			// https://twitter.com/LeonieWatson/status/1545788775644667904
+			this.#internals.role = "region";
+		}
+
 		this.addEventListener("click", evt => {
 			let button = evt.target;
 
@@ -31,7 +36,7 @@ export default class ButtonGroup extends HTMLElement {
 					if (m.type === "childList") {
 						return true;
 					}
-					else if (m.oldValue !== m.target.ariaPressed) {
+					else if (m.oldValue !== m.target.getAttribute("aria-pressed")) {
 						return true;
 					}
 				}
@@ -71,8 +76,8 @@ export default class ButtonGroup extends HTMLElement {
 
 			let pressed = getValue(button) === value;
 
-			if (pressed !== button.ariaPressed) {
-				button.ariaPressed = pressed;
+			if (pressed !== button.getAttribute("aria-pressed")) {
+				button.setAttribute("aria-pressed", pressed);
 			}
 		}
 	}

@@ -34,7 +34,7 @@ Pre-selected state via `aria-pressed`:
 </button-group>
 ```
 
-Participates in form submission (requires `ElementInternals` support):
+Participates in form submission (requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
 
 ```html
 <form action="about:blank" target="_blank">
@@ -80,7 +80,7 @@ Dynamically adding `aria-pressed` attribute:
 	<button aria-pressed="true">B</button>
 	<button>C</button>
 </button-group>
-<button onclick="group2.children[2].ariaPressed = true">Select C</button>
+<button onclick="group2.children[2].setAttribute('aria-pressed', 'true')">Select C</button>
 ```
 
 Dynamically adding options:
