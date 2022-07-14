@@ -18,6 +18,8 @@
 }
 
 body {
+	display: flex;
+	flex-direction: column;
 	margin: 0;
 	min-height: 100vh;
 	font: 100%/1.5 var(--font-body);
@@ -25,10 +27,12 @@ body {
 
 body > *,
 body > md-block > * {
+	order: 10;
 	padding: 1em clamp(1em, 50vw - var(--page-width) / 2, 50vw)
 }
 
 body > *:is(header), body > md-block > *:is(header) {
+		order: 0;
 		background: var(--accent-color);
 		color: white
 	}
@@ -46,6 +50,35 @@ body > *:is(header) h1 + p, body > md-block > *:is(header) h1 + p {
 body > *:is(header) a, body > md-block > *:is(header) a {
 			color: inherit;
 		}
+
+nav {
+	order: 1;
+	display: flex;
+	padding-top: 0;
+	padding-bottom: 0;
+	background: hsl(var(--accent-color-hs) 65%)
+}
+
+nav > a {
+		flex: 1;
+		padding: .4em .5em;
+		color: white;
+		font-weight: bold;
+		background: linear-gradient(to right, hsl(var(--accent-color-hs) 50%), hsl(var(--accent-color-hs) 75%)) no-repeat left / 0 100%;
+		transition: .3s
+	}
+
+nav > a:hover {
+			background-size: 100% 100%;
+		}
+
+nav > a:where(:not(:hover)) {
+			text-decoration: none;
+		}
+
+md-block {
+	display: contents;
+}
 
 code, pre {
 	font-family: var(--font-mono);

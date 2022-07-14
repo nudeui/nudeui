@@ -11,7 +11,9 @@ Group of exclusive push buttons
 ## Features
 
 - Uses existing button styling present in the page
-- Uses `ElementInternals` to work like a built-in form element
+- Uses [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) to work like a built-in form element
+- Accessible
+- Ultra light (3KB **unminified** and **uncompressed**!)
 
 
 ## Examples
@@ -94,7 +96,8 @@ Dynamically adding options:
 <button onclick="window.counter ||= 3; group3.insertAdjacentHTML('beforeend', `<button aria-pressed=true>${++counter}</button>`)">Add option</button>
 ```
 
-`<button-group>` has an implicit ARIA Role of `region`, so adding an `aria-label` will make it work as a landmark out of the box
+[WIP](https://twitter.com/LeonieWatson/status/1547544701036888065):
+`<button-group>` has an implicit ARIA Role of `region`, so adding an `aria-label` should make it work as a landmark out of the box
 (requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
 
 ```html
@@ -114,7 +117,8 @@ Regular labels should work too (requires [`ElementInternals`](https://developer.
 </button-group>
 ```
 
-Using a [button custom element](https://shoelace.style/components/button?id=css-parts)
+You don't even need to use an actual `<button>`, [custom elements](https://shoelace.style/components/button?id=css-parts)
+should work too
 (presentation needs work, but functionality is there):
 
 ```html
@@ -130,5 +134,15 @@ sl-button[aria-pressed="true"]::part(base) {
 	<sl-button>3</sl-button>
 </button-group>
 ```
+
+## Installation
+
+Just include the component's JS file and you're good:
+
+```html
+<script src="https://projects.verou.me/nudeforms/button-group/button-group.js" type="module"></script>
+```
+
+In case you want to link to local files: CSS is fetched automatically, and assumed to be in the same directory as the JS file.
 
 </main>

@@ -18,6 +18,8 @@
 }
 
 body {
+	display: flex;
+	flex-direction: column;
 	margin: 0;
 	min-height: 100vh;
 	font: 100%/1.5 var(--font-body);
@@ -25,9 +27,11 @@ body {
 
 body > *,
 body > md-block > * {
+	order: 10;
 	padding: 1em clamp(1em, 50vw - var(--page-width) / 2, 50vw);
 
 	&:is(header) {
+		order: 0;
 		background: var(--accent-color);
 		color: white;
 
@@ -45,6 +49,35 @@ body > md-block > * {
 			color: inherit;
 		}
 	}
+}
+
+nav {
+	order: 1;
+	display: flex;
+	padding-top: 0;
+	padding-bottom: 0;
+	background: hsl(var(--accent-color-hs) 65%);
+
+	& > a {
+		flex: 1;
+		padding: .4em .5em;
+		color: white;
+		font-weight: bold;
+		background: linear-gradient(to right, hsl(var(--accent-color-hs) 50%), hsl(var(--accent-color-hs) 75%)) no-repeat left / 0 100%;
+		transition: .3s;
+
+		&:hover {
+			background-size: 100% 100%;
+		}
+
+		&:where(:not(:hover)) {
+			text-decoration: none;
+		}
+	}
+}
+
+md-block {
+	display: contents;
 }
 
 code, pre {
