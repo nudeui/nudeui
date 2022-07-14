@@ -90,6 +90,10 @@ export default class ButtonGroup extends HTMLElement {
 		return this.pressedButtons.at(-1);
 	}
 
+	get labels() {
+		return this.#internals?.labels;
+	}
+
 	connectedCallback () {
 		this.value = getValue(this.pressedButton);
 
