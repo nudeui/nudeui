@@ -1,21 +1,44 @@
-document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="${new URL("style.css", import.meta.url)}" />`);
-
 export default class ButtonGroup extends HTMLElement {
 	#internals
+	#observer
 
 	constructor () {
 		super();
+
+		this.attachShadow({ mode: "open" });
+		this.shadowRoot.innerHTML = `<style>@import "${new URL("style.css", import.meta.url)}";</style><slot></slot>`;
 
 		this.#internals = this.attachInternals?.();
 
 		this.addEventListener("click", evt => {
 			let button = evt.target.closest("button");
 			if (button) {
-				this.value = button.value;
+				this.value = getValue(button);
 			}
 		});
 
-		// TODO mutation observer for aria-pressed on children and new children
+		this.#observer = new MutationObserver(mutations => {
+			mutations = mutations.filter(m => {
+				if (m.target === this) {
+					return true;
+				}
+				else if (m.target.parentNode === this) {
+					if (m.type === "childList") {
+						return true;
+					}
+					else if (m.oldValue !== m.target.ariaPressed) {
+						return true;
+					}
+				}
+
+				return false;
+			});
+
+			if (mutations.length > 0) {
+				console.log("aria-pressed", getValue(this.pressedButton));
+				this.value = getValue(this.pressedButton);
+			}
+		});
 	}
 
 	get name () {
@@ -23,7 +46,6 @@ export default class ButtonGroup extends HTMLElement {
 	}
 
 	set name (value) {
-		// TODO set names of radios
 		this.setAttribute("name", value);
 	}
 
@@ -36,56 +58,42 @@ export default class ButtonGroup extends HTMLElement {
 	set value (value) {
 		this.#value = value;
 
-		if (this.getAttribute("value") != value) {
-			this.setAttribute("value", value);
-		}
-
 		this.#internals?.setFormValue(value);
-
-		if (this.pressedButton?.value != value) {
-			for (let button of this.children) {
-				button.ariaPressed = button.value === value;
-			}
-		}
-	}
-
-	get pressedButton () {
-		return this.querySelector(`button[aria-pressed="true"]`);
-	}
-
-	connectedCallback () {
-		let value = this.#value;
 
 		for (let button of this.children) {
 			if (!button.hasAttribute("type")) {
 				button.type = "button";
 			}
 
-			if (!button.value) {
-				button.value = idify(button.textContent.trim());
-			}
+			let pressed = getValue(button) === value;
 
-			if (value !== undefined) {
-				button.ariaPressed = button.value === value;
+			if (pressed !== button.ariaPressed) {
+				button.ariaPressed = pressed;
 			}
-			else if (button.ariaPressed === "true") {
-				value = button.value;
-			}
-		}
-
-		if (value !== undefined) {
-			this.value = value;
 		}
 	}
 
-	static get observedAttributes () {
-		return ["name", "value"];
+	get pressedButtons () {
+		return [...this.querySelectorAll(`:scope > [aria-pressed="true"]`)];
 	}
 
-	attributeChangedCallback (name, oldValue, newValue) {
-		if (name === "value") {
-			this.value = newValue;
-		}
+	get pressedButton () {
+		return this.pressedButtons.at(-1);
+	}
+
+	connectedCallback () {
+		this.value = getValue(this.pressedButton);
+
+		this.#observer.observe(this, {
+			attributeFilter: ["aria-pressed"],
+			attributeOldValue: true,
+			childList: true,
+			subtree: true,
+		});
+	}
+
+	disconnectedCallback () {
+		this.#observer.disconnect();
 	}
 
 	static get formAssociated() {
@@ -93,9 +101,17 @@ export default class ButtonGroup extends HTMLElement {
 	}
 }
 
-function idify (str) {
-	return str.trim().replace(/\s+/g, "-") // Convert whitespace to hyphens
-			.toLowerCase();
+function getValue(button) {
+	if (!button) {
+		return null;
+	}
+
+	if (button.hasAttribute("value")) {
+		return button.value;
+	}
+	else {
+		return button.textContent.trim();
+	}
 }
 
 customElements.define("button-group", ButtonGroup);

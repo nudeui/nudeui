@@ -1,41 +1,49 @@
-button-group {
-	display: flex;
+:host {
+	display: inline-flex;
 	margin: .5em
 }
-button-group[vertical] {
-		flex-direction: column;
-		align-items: stretch
-	}
-button-group[vertical] > * {
-			text-align: left
-		}
-button-group[vertical] > *:not(:last-of-type) {
-				border-bottom-left-radius: 0;
-				border-bottom-right-radius: 0;
-				border-bottom: none;
-			}
-button-group[vertical] > *:not(:first-of-type) {
-				border-top-left-radius: 0;
-				border-top-right-radius: 0;
-			}
-button-group:not([vertical]) {
-		justify-content: center;
-		align-items: center
-	}
-button-group:not([vertical]) > * {
-			flex: 1
-		}
-button-group:not([vertical]) > *:not(:last-of-type) {
-				border-top-right-radius: 0;
-				border-bottom-right-radius: 0;
-				border-right: none;
-			}
-button-group:not([vertical]) > *:not(:first-of-type) {
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
-			}
-button-group > :where([aria-pressed="true"]) {
+
+:host ::slotted(button:where([aria-pressed="true"])) {
 		background: hsl(0 0% 95% / .8);
-		box-shadow: 0 .1em .2em hsl(0 0% 0% / .2) inset, 0 0 0 2em hsl(var(--gray) 50% / .12) inset;
-		outline: 2px solid red;
+		box-shadow: 0 .1em .2em hsl(0 0% 0% / .2) inset, 0 0 0 2em hsl(220 10% 50% / .12) inset;
+	}
+
+:host(:not([vertical])) {
+	justify-content: center;
+	align-items: center
+}
+
+:host(:not([vertical])) slot::slotted(*) {
+		flex: 1;
+	}
+
+:host(:not([vertical])) ::slotted(:not(:last-of-type)) {
+		border-top-right-radius: 0 !important;
+		border-bottom-right-radius: 0 !important;
+		border-inline-end: none !important;
+	}
+
+:host(:not([vertical])) ::slotted(:not(:first-of-type)) {
+		border-top-left-radius: 0 !important;
+		border-bottom-left-radius: 0 !important;
+	}
+
+:host([vertical]) {
+	flex-direction: column;
+	align-items: stretch
+}
+
+:host([vertical]) ::slotted(*) {
+		text-align: inline-start;
+	}
+
+:host([vertical]) ::slotted(:not(:last-of-type)) {
+		border-bottom-left-radius: 0 !important;
+		border-bottom-right-radius: 0 !important;
+		border-block-end: none !important;
+	}
+
+:host([vertical]) ::slotted(:not(:first-of-type)) {
+		border-top-left-radius: 0 !important;
+		border-top-right-radius: 0 !important;
 	}
