@@ -94,10 +94,21 @@ Dynamically adding options:
 <button onclick="window.counter ||= 3; group3.insertAdjacentHTML('beforeend', `<button aria-pressed=true>${++counter}</button>`)">Add option</button>
 ```
 
-`<button-group>` has an implicit ARIA Role of `region`, so adding an `aria-label` will make it work as a landmark out of the box:
+`<button-group>` has an implicit ARIA Role of `region`, so adding an `aria-label` will make it work as a landmark out of the box
+(requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
 
 ```html
 <button-group aria-label="View switcher">
+	<button>Design</button>
+	<button aria-pressed="true">Preview</button>
+</button-group>
+```
+
+Regular labels should work too (requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
+
+```html
+<label for="view-switcher">View:</label>
+<button-group id="view-switcher">
 	<button>Design</button>
 	<button aria-pressed="true">Preview</button>
 </button-group>
