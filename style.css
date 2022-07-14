@@ -43,6 +43,10 @@ body > *:is(header) h1 + p, body > md-block > *:is(header) h1 + p {
 				font-weight: bold;
 			}
 
+body > *:is(header) a, body > md-block > *:is(header) a {
+			color: inherit;
+		}
+
 code, pre {
 	font-family: var(--font-mono);
 }

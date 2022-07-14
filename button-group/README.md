@@ -16,7 +16,7 @@ Group of exclusive push buttons
 
 ## Examples
 
-Basic
+Basic, no selected option:
 
 ```html
 <button-group>
@@ -25,7 +25,7 @@ Basic
 </button-group>
 ```
 
-Pre-selected state via `aria-pressed`
+Pre-selected state via `aria-pressed`:
 
 ```html
 <button-group>
@@ -61,7 +61,7 @@ Vertical
 </button-group>
 ```
 
-Dynamically setting `element.value`
+Dynamically setting `element.value`:
 
 ```html
 <button-group id="group1">
@@ -72,7 +72,7 @@ Dynamically setting `element.value`
 <button onclick="group1.value = 'C'">Select C</button>
 ```
 
-Dynamically adding `aria-pressed` attribute
+Dynamically adding `aria-pressed` attribute:
 
 ```html
 <button-group id="group2">
@@ -83,7 +83,7 @@ Dynamically adding `aria-pressed` attribute
 <button onclick="group2.children[2].ariaPressed = true">Select C</button>
 ```
 
-Dynamically adding options
+Dynamically adding options:
 
 ```html
 <button-group id="group3">
@@ -92,6 +92,23 @@ Dynamically adding options
 	<button aria-pressed="true">3</button>
 </button-group>
 <button onclick="window.counter ||= 3; group3.insertAdjacentHTML('beforeend', `<button aria-pressed=true>${++counter}</button>`)">Add option</button>
+```
+
+Using a [button custom element](https://shoelace.style/components/button?id=css-parts)
+(presentation needs work, but functionality is there):
+
+```html
+<style>
+sl-button[aria-pressed="true"]::part(base) {
+	background: var(--sl-color-primary-100);
+	border-color: var(--sl-color-primary-300);
+}
+</style>
+<button-group>
+	<sl-button>1</sl-button>
+	<sl-button aria-pressed="true">2</sl-button>
+	<sl-button>3</sl-button>
+</button-group>
 ```
 
 </main>
