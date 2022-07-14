@@ -11,7 +11,12 @@ export default class ButtonGroup extends HTMLElement {
 		this.#internals = this.attachInternals?.();
 
 		this.addEventListener("click", evt => {
-			let button = evt.target.closest("button");
+			let button = evt.target;
+
+			while (evt.target.parentNode !== this) {
+				button = button.parentNode;
+			}
+
 			if (button) {
 				this.value = getValue(button);
 			}
