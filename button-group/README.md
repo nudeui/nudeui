@@ -27,6 +27,18 @@ Basic, no selected option:
 </button-group>
 ```
 
+Providing values:
+
+```html
+<button-group id="temporal" oninput="out.textContent = this.value">
+	<button value="">None</button>
+	<button value="d">Dates</button>
+	<button value="t">Times</button>
+	<button value="dt">Times</button>
+</button-group>
+<output id="out"></output>
+```
+
 Pre-selected state via `aria-pressed`:
 
 ```html
@@ -60,6 +72,21 @@ Vertical
 	<button value="garlic" aria-pressed="true">Garlic</button>
 	<button value="msg">MSG</button>
 	<button value="salt">Salt</button>
+</button-group>
+```
+
+Separate
+
+```html
+<button-group name="type" separate>
+	<button>Salt</button>
+	<button>Pepper</button>
+	<button>Garlic</button>
+	<button>Cumin</button>
+	<button>Coriander</button>
+	<button>Dill</button>
+	<button>Parsley</button>
+	<button>Turmeric</button>
 </button-group>
 ```
 
