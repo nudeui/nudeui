@@ -48,6 +48,21 @@ body > md-block > * {
 		& a {
 			color: inherit;
 		}
+
+		& .home {
+			text-transform: uppercase;
+			font-weight: 900;
+			font-size: 75%;
+
+			&:not(:hover) {
+				text-decoration: none;
+			}
+
+			&::before {
+				content: "🏠";
+				margin-right: .3em;
+			}
+		}
 	}
 }
 

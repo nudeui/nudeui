@@ -51,6 +51,21 @@ body > *:is(header) a, body > md-block > *:is(header) a {
 			color: inherit;
 		}
 
+body > *:is(header) .home, body > md-block > *:is(header) .home {
+			text-transform: uppercase;
+			font-weight: 900;
+			font-size: 75%
+		}
+
+body > *:is(header) .home:not(:hover), body > md-block > *:is(header) .home:not(:hover) {
+				text-decoration: none;
+			}
+
+body > *:is(header) .home::before, body > md-block > *:is(header) .home::before {
+				content: "🏠";
+				margin-right: .3em;
+			}
+
 nav {
 	order: 1;
 	display: flex;

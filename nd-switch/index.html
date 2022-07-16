@@ -8,23 +8,16 @@
 	<link rel="stylesheet" href="../style.css" />
 	<link rel="stylesheet" href="nd-switch.css">
 
-	<script src="https://prismjs.com/prism.js"></script>
-
-	<script src="https://md-block.verou.me/md-block.js" type="module"></script>
+	<script src="../global.js" type="module"></script>
 </head>
 <body>
 
+<nav>
+	<a href="#installation">Installation</a>
+	<a href="https://github.com/LeaVerou/nudeforms/tree/main/nd-switch">GitHub</a>
+</nav>
+
 <md-block src="README.md" id="readme"></md-block>
-
-<script>
-new MutationObserver(records => {
-	// Render examples
-
-	for (code of readme.querySelectorAll("pre.language-html > code")) {
-		code.parentNode.insertAdjacentHTML("beforebegin", code.textContent);
-	}
-}).observe(readme, {attributeFilter: ["rendered"]});
-</script>
 
 </body>
 </html>

@@ -6,9 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>&lt;button-group></title>
 
-	<script src="https://prismjs.com/prism.js"></script>
 	<link rel="stylesheet" href="../style.css" />
-	<script src="https://md-block.verou.me/md-block.js" type="module"></script>
+	<script src="../global.js" type="module"></script>
 	<script src="button-group.js" type="module"></script>
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.77/dist/themes/light.css" />
@@ -21,16 +20,6 @@
 	<a href="https://github.com/LeaVerou/nudeforms/tree/main/button-group">GitHub</a>
 </nav>
 <md-block src="README.md" id="readme"></md-block>
-
-<script>
-new MutationObserver(records => {
-	// Render examples
-
-	for (code of readme.querySelectorAll("pre.language-html > code")) {
-		code.parentNode.insertAdjacentHTML("beforebegin", code.textContent);
-	}
-}).observe(readme, {attributeFilter: ["rendered"]});
-</script>
 
 </body>
 </html>

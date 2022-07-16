@@ -8,16 +8,6 @@ CSS-only toggle switch
 
 <main>
 
-## Usage
-
-This is a CSS-only component. You can just import it straight into your CSS file:
-
-```css
-@import url('https://projects.verou.me/nudeforms/nd-switch/nd-switch.css');
-```
-
-Then use `class="nd-switch"` on checkboxes.
-
 ## Examples
 
 Basic:
@@ -59,5 +49,15 @@ Disabled:
 ```html
 <input type="checkbox" class="nd-switch" disabled>
 ```
+
+## Installation
+
+This is a CSS-only component. You can just import it straight into your CSS file:
+
+```css
+@import url('https://projects.verou.me/nudeforms/nd-switch/nd-switch.css');
+```
+
+Then use `class="nd-switch"` on checkboxes.
 
 </main>
