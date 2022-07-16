@@ -18,6 +18,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 
 - [Switch](nd-switch)
 - [Button Group](button-group)
+- [Cycle Toggle](cycle-toggle)
 
 ## Wanna use them all?
 
