@@ -1,5 +1,9 @@
-import "button-group/button-group.js";
-import "cycle-toggle/cycle-toggle.js";
+import "./button-group/button-group.js";
+import "./cycle-toggle/cycle-toggle.js";
 
 // CSS only modules
-document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="${new URL("style.css", import.meta.url)}" />`);
+let modules = [
+	"nd-switch",
+]
+
+document.head.insertAdjacentHTML("beforeend", modules.map(id => `<link rel="stylesheet" href="${new URL(`./${id}/${id}.css`, import.meta.url)}" />`).join("\n"));
