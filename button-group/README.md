@@ -34,7 +34,7 @@ Providing values:
 	<button value="">None</button>
 	<button value="d">Dates</button>
 	<button value="t">Times</button>
-	<button value="dt">Times</button>
+	<button value="dt">Dates & Times</button>
 </button-group>
 <output id="out"></output>
 ```
