@@ -11,7 +11,7 @@
 ## Features
 
 - Uses [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) to work like a built-in form element
-- Accessible
+- Accessible (?)
 - Tiny (3K **uncompressed** and **unminified**!)
 
 

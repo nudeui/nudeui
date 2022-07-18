@@ -1,3 +1,8 @@
+if (!HTMLSlotElement.prototype.assign) {
+	// Include Imperative Slot Assignment polyfill
+	await import("https://unpkg.com/dom-slot-assign");
+}
+
 export default class CycleToggle extends HTMLElement {
 	#internals
 	#observer
