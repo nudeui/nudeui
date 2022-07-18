@@ -80,10 +80,10 @@ export default class ButtonGroup extends HTMLElement {
 				button.type = "button";
 			}
 
-			let pressed = getValue(button) === value;
+			let ariaPressed = (getValue(button) === value).toString();
 
-			if (pressed !== button.getAttribute("aria-pressed")) {
-				button.setAttribute("aria-pressed", pressed);
+			if (ariaPressed !== button.getAttribute("aria-pressed")) {
+				button.setAttribute("aria-pressed", ariaPressed);
 			}
 		}
 	}
