@@ -20,7 +20,7 @@ export default class ButtonGroup extends HTMLElement {
 
 			let button = evt.target;
 
-			while (button.parentNode !== this) {
+			while (button && button.parentNode !== this) {
 				button = button.parentNode;
 			}
 
