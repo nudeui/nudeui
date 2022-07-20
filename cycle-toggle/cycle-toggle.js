@@ -138,7 +138,6 @@ export default class CycleToggle extends HTMLElement {
 			this.#observer.takeRecords();
 			this.#observer.disconnect();
 		}
-
 	}
 
 	disconnectedCallback () {

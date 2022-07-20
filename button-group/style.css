@@ -46,22 +46,22 @@
 		border-bottom-left-radius: 0 !important;
 	}
 
-:host([vertical]):not([separate]) {
+:host([vertical]:not([separate])) {
 	flex-direction: column;
 	align-items: stretch
 }
 
-:host([vertical]):not([separate]) ::slotted(*) {
+:host([vertical]:not([separate])) ::slotted(*) {
 		text-align: inline-start;
 	}
 
-:host([vertical]):not([separate]) ::slotted(:not(:last-of-type)) {
+:host([vertical]:not([separate])) ::slotted(:not(:last-of-type)) {
 		border-bottom-left-radius: 0 !important;
 		border-bottom-right-radius: 0 !important;
 		border-block-end: none !important;
 	}
 
-:host([vertical]):not([separate]) ::slotted(:not(:first-of-type)) {
+:host([vertical]:not([separate])) ::slotted(:not(:first-of-type)) {
 		border-top-left-radius: 0 !important;
 		border-top-right-radius: 0 !important;
 	}
