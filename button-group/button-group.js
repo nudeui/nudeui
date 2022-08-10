@@ -28,7 +28,8 @@ export default class ButtonGroup extends HTMLElement {
 				this.value = getValue(button);
 
 				if (previousValue !== this.value) {
-					this.dispatchEvent(new InputEvent("input"))
+					let evt = new InputEvent("input", {bubbles: true});
+					this.dispatchEvent(evt);
 				}
 			}
 		});
