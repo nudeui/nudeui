@@ -1,3 +1,8 @@
+---
+id: button-group
+title: <button-group>
+---
+
 <header>
 
 # `<button-group>`

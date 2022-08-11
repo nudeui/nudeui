@@ -6,9 +6,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Nude switch</title>
 	<link rel="stylesheet" href="../style.css" />
-	<link rel="stylesheet" href="nd-switch.css">
 
-	<script src="../global.js" type="module"></script>
+	
+	<link rel="stylesheet" href="nd-switch.css">
+	
+	
+
+
 </head>
 <body>
 
@@ -17,7 +21,43 @@
 	<a href="https://github.com/LeaVerou/nudeui/tree/main/nd-switch">GitHub</a>
 </nav>
 
-<md-block src="README.md" id="readme"></md-block>
+<header>
+<h1>Nude switch</h1>
+<p>CSS-only toggle switch</p>
+</header>
+<main>
+<h2>Examples</h2>
+<p>Basic:</p>
+<pre><code class="language-html">&lt;input type=&quot;checkbox&quot; class=&quot;nd-switch&quot;&gt;
+</code></pre>
+<p>Bigger:</p>
+<pre><code class="language-html">&lt;input type=&quot;checkbox&quot; class=&quot;nd-switch&quot; style=&quot;font-size: 200%&quot;&gt;
+</code></pre>
+<p>With larger and smaller thumb:</p>
+<pre><code class="language-html">&lt;input type=&quot;checkbox&quot; class=&quot;nd-switch&quot; style=&quot;--nd-thumb-margin: -.2em&quot;&gt;
+&lt;input type=&quot;checkbox&quot; class=&quot;nd-switch&quot; style=&quot;--nd-thumb-margin: .2em&quot;&gt;
+</code></pre>
+<p>Different colors:</p>
+<pre><code class="language-html">&lt;input type=&quot;checkbox&quot; class=&quot;nd-switch&quot; style=&quot;
+	--nd-thumb-color: black;
+	--nd-switch-color: white; border: 1px solid black;
+	--nd-switch-color-checked: red
+&quot;&gt;
+</code></pre>
+<p>Right to left:</p>
+<pre><code class="language-html">&lt;input type=&quot;checkbox&quot; class=&quot;nd-switch&quot; dir=&quot;rtl&quot;&gt;
+</code></pre>
+<p>Disabled:</p>
+<pre><code class="language-html">&lt;input type=&quot;checkbox&quot; class=&quot;nd-switch&quot; disabled&gt;
+</code></pre>
+<h2>Installation</h2>
+<p>This is a CSS-only component. You can just import it straight into your CSS file:</p>
+<pre><code class="language-css">@import url('https://projects.verou.me/nudeui/nd-switch/nd-switch.css');
+</code></pre>
+<p>Then use <code>class=&quot;nd-switch&quot;</code> on checkboxes.</p>
+</main>
+
+<script src="../global.js" type="module"></script>
 
 </body>
 </html>

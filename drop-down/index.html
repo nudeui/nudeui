@@ -4,11 +4,15 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>&lt;drop-down></title>
-
+	<title>&lt;drop-down&gt;</title>
 	<link rel="stylesheet" href="../style.css" />
-	<script src="../global.js" type="module"></script>
+
+	
 	<script src="drop-down.js" type="module"></script>
+	
+	
+
+
 </head>
 <body>
 
@@ -17,7 +21,56 @@
 	<a href="https://github.com/LeaVerou/nudeui/tree/main/drop-down">GitHub</a>
 </nav>
 
-<md-block src="README.md" id="readme"></md-block>
+<header>
+<h1><code>&lt;drop-down&gt;</code></h1>
+<p>Drop-down menu that performs actions when items are clicked</p>
+</header>
+<main>
+<section class="failed">
+<h2>Failed experiment</h2>
+<p>This is a failed experiment. Do not use.
+It is only posted here, in the hopes that someone else may be able to fix its issues.</p>
+<h3>Issues</h3>
+<ul>
+<li>It is impossible to reliably detect when the <code>&lt;select&gt;</code> is closed,
+so when the menu is closed with no selection, <code>aria-pressed</code> lingers until the button is unfocused.</li>
+</ul>
+</section>
+<h2>Features</h2>
+<ul>
+<li>Uses a regular <code>&lt;select&gt;</code> menu, ensuring it works well on a variety of devices</li>
+<li>Accessible (?)</li>
+<li>Tiny (3K <strong>uncompressed</strong> and <strong>unminified</strong>!)</li>
+</ul>
+<h2>Examples</h2>
+<p>Basic:</p>
+<pre><code class="language-html">&lt;drop-down&gt;
+	&lt;button&gt;Click me&lt;/button&gt;
+	&lt;select&gt;
+		&lt;option&gt;One&lt;/option&gt;
+		&lt;option&gt;Two&lt;/option&gt;
+		&lt;option onclick=&quot;alert('hi')&quot;&gt;Three&lt;/option&gt;
+	&lt;/select&gt;
+&lt;/drop-down&gt;
+</code></pre>
+<p>With customized menu label:</p>
+<pre><code class="language-html">&lt;drop-down&gt;
+	&lt;button&gt;+&lt;/button&gt;
+	&lt;select aria-label=&quot;Create new…&quot;&gt;
+		&lt;option&gt;Document&lt;/option&gt;
+		&lt;option&gt;Sheet&lt;/option&gt;
+		&lt;option onclick=&quot;alert('hi')&quot;&gt;Picture&lt;/option&gt;
+	&lt;/select&gt;
+&lt;/drop-down&gt;
+</code></pre>
+<h2>Installation</h2>
+<p>Just include the component's JS file and you're good:</p>
+<pre><code class="language-html">&lt;script src=&quot;https://projects.verou.me/nudeui/drop-down/drop-down.js&quot; type=&quot;module&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>In case you want to link to local files: CSS is fetched automatically, and assumed to be in the same directory as the JS file.</p>
+</main>
+
+<script src="../global.js" type="module"></script>
 
 </body>
 </html>

@@ -1,3 +1,7 @@
+---
+title: <drop-down>
+id: drop-down
+---
 <header>
 
 # `<drop-down>`

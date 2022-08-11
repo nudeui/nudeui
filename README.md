@@ -2,7 +2,7 @@
 
 # Nude UI
 
-A collection of accessible, customizable, ultra-light form components
+A collection of accessible, customizable, ultra-light web components
 
 - Using built-in controls whenever possible, web components when JS and/or extra elements are needed
 - Highly customizable

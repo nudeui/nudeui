@@ -1,8 +1,13 @@
+---
+title: <cycle-toggle>
+id: cycle-toggle
+---
+
 <header>
 
 # `<cycle-toggle>`
 
-
+Click to cycle through a variety of options
 
 </header>
 

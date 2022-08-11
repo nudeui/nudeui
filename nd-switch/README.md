@@ -1,3 +1,9 @@
+---
+title: Nude switch
+id: nd-switch
+css_only: true
+---
+
 <header>
 
 # Nude switch
