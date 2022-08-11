@@ -23,7 +23,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 ## Wanna use them all?
 
 ```js
-import "https://projects.verou.me/nudeui/index.js";
+import "https://nudeui.com/index.js";
 ```
 
 ## Failed experiments
