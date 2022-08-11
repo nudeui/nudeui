@@ -187,3 +187,23 @@ button {
 		}
 	}
 }
+
+.failed {
+	--color-hs: 0 50%;
+	border: 1px solid hsl(var(--color-hs) 60%);
+	background: hsl(var(--color-hs) 95%);
+	color: hsl(var(--color-hs) 20%);
+	padding: 1em;
+
+	& :is(h2, h3, h4, h5, h6) {
+		color: hsl(var(--color-hs) 50%);
+	}
+
+	& h2 {
+		margin-top: 0;
+
+		&::before {
+			content: "⚠️";
+		}
+	}
+}

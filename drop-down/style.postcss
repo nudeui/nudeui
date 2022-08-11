@@ -1,0 +1,33 @@
+:host {
+	display: inline-grid;
+	grid-template: auto / auto;
+	overflow: hidden;
+}
+
+slot[name=menu]::slotted(select),
+#trigger-container {
+	grid-column: 1;
+	grid-row: 1;
+}
+
+slot[name=menu]::slotted(select) {
+	opacity: 0 !important;
+	transform: scaleY(2);
+	transform-origin: top;
+	min-width: 0 !important;
+	width: var(--trigger-width, 100%) !important;
+}
+
+
+slot[name=trigger]::slotted(button) {
+	/*padding-right: 1.5rem;
+	-webkit-appearance: none;
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">\
+		<path d="m 20 10 L 50 40 L 80 10" fill="none" stroke="black" stroke-opacity=".4" stroke-width="13" stroke-linejoin="round" stroke-linecap="round" />\
+	</svg>');
+	background-position: calc(100% + 1rem) 55%;
+	background-size: auto .4rem;
+	background-repeat: no-repeat;
+	background-origin: content-box;*/
+	list-style: "N"
+}
