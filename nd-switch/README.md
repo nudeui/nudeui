@@ -55,7 +55,7 @@ Disabled:
 This is a CSS-only component. You can just import it straight into your CSS file:
 
 ```css
-@import url('https://projects.verou.me/nudeforms/nd-switch/nd-switch.css');
+@import url('https://projects.verou.me/nudeui/nd-switch/nd-switch.css');
 ```
 
 Then use `class="nd-switch"` on checkboxes.

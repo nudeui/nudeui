@@ -1,5 +1,5 @@
 {
-  "name": "nudeforms",
+  "name": "nudeui",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leaverou/nudeforms.git"
+    "url": "git+https://github.com/leaverou/nudeui.git"
   },
   "keywords": [
     "CSS",
@@ -21,9 +21,9 @@
   "author": "Lea Verou",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/leaverou/nudeforms/issues"
+    "url": "https://github.com/leaverou/nudeui/issues"
   },
-  "homepage": "https://github.com/leaverou/nudeforms#readme",
+  "homepage": "https://github.com/leaverou/nudeui#readme",
   "devDependencies": {
     "postcss": "^8.3.9",
     "postcss-cli": "^9.0.1",

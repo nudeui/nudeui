@@ -1,6 +1,6 @@
 <header>
 
-# Nude forms
+# Nude UI
 
 A collection of accessible, customizable, ultra-light form components
 
@@ -8,7 +8,7 @@ A collection of accessible, customizable, ultra-light form components
 - Highly customizable
 - Tiny (most are ~1KB minified & compressed)
 
-A work in progress. Try them out and [provide feedback](https://github.com/leaverou/nudeforms) or move along and check back later.
+A work in progress. Try them out and [provide feedback](https://github.com/leaverou/nudeui) or move along and check back later.
 
 </header>
 
@@ -23,7 +23,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 ## Wanna use them all?
 
 ```js
-import "https://projects.verou.me/nudeforms/index.js";
+import "https://projects.verou.me/nudeui/index.js";
 ```
 
 </main>
