@@ -91,4 +91,8 @@ Just include the component's JS file and you're good:
 
 In case you want to link to local files: CSS is fetched automatically, and assumed to be in the same directory as the JS file.
 
+## See also
+
+* [`<nd-rating>`](../nd-rating), an editable version of `<meter-discrete>`
+
 </main>
