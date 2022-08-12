@@ -55,4 +55,14 @@ Actual image instead of emoji:
 <nd-rating value="3.5" icon="../logo.svg"></nd-rating>
 ```
 
+## Installation
+
+Just include the component's JS file and you're good:
+
+```html
+<script src="https://nudeui.com/nd-rating/nd-rating.js" type="module"></script>
+```
+
+In case you want to link to local files: CSS is fetched automatically, and assumed to be in the same directory as the JS file.
+
 </main>
