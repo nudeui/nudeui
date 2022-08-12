@@ -3,6 +3,10 @@ import MeterDiscrete, {internals} from "../meter-discrete/meter-discrete.js";
 class NudeRating extends MeterDiscrete {
 	constructor () {
 		super();
+
+		if (!this.hasAttribute("tabindex")) {
+			this.tabIndex = 0;
+		}
 	}
 
 	get readonly () {
@@ -89,18 +93,20 @@ class NudeRating extends MeterDiscrete {
 				this.dispatchEvent(new InputEvent("input", { bubbles: true }));
 			},
 
-			// keydown: evt => {
-			// 	// Edit with arrow keys
-			// 	if (evt.target == this && (evt.key == "ArrowLeft" || evt.key == "ArrowRight")) {
-			// 		let increment = step * (evt.key == "ArrowRight"? 1 : -1) * (evt.shiftKey? 10 : 1);
-			// 		let newValue = this.value + increment;
-			// 		newValue = Math.max(min, Math.min(newValue, max));
+			keydown: evt => {
+				// Edit with arrow keys
+				if (["ArrowLeft", "ArrowRight"].includes(evt.key)) {
+					let increment = step * (evt.key === "ArrowRight"? 1 : -1) * (evt.shiftKey? 10 : 1);
+					let newValue = this.value + increment;
+					newValue = Math.max(min, Math.min(newValue, max));
 
-			// 		this.value = newValue;
+					this.value = newValue;
 
-			// 		evt.preventDefault();
-			// 	}
-			// }
+					this.dispatchEvent(new InputEvent("input", { bubbles: true }));
+
+					evt.preventDefault();
+				}
+			}
 		};
 
 		for (let event in handlers) {
