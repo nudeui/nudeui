@@ -9,12 +9,9 @@ export default class MeterDiscrete extends HTMLElement {
 		<style>@import "${new URL("style.css", import.meta.url)}";</style>
 		<div id=value part=value></div><div id=inactive part="inactive"></div>`;
 
-		this.#internals = this.attachInternals?.();
-
-		if (this.#internals) {
-			this.#internals.role = "meter";
-			this.#internals.ariaValueMin = this.min;
-		}
+		this.#internals = this.attachInternals?.() ?? {};
+		this.#internals.role = "meter";
+		this.#internals.ariaValueMin = this.min;
 	}
 
 	get icon () {
@@ -98,7 +95,7 @@ export default class MeterDiscrete extends HTMLElement {
 function emojiToImage(emoji) {
 	// For debug: <rect stroke="black" fill="none" stroke-width="2" width="100%" height="100%" />
 	return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">`
-	+ `<text style="font-size: 80px" x="50%" y=".9em" dominant-baseline="middle" text-anchor="middle">${emoji}</text></svg>`
+	+ `<text style="font-size: 80px" x="50%" y=".85em" dominant-baseline="middle" text-anchor="middle">${emoji}</text></svg>`
 }
 
 let segmenter = new Intl.Segmenter("en");
