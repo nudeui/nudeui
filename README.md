@@ -19,6 +19,8 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 - [Switch](nd-switch)
 - [Button Group](button-group)
 - [Cycle Toggle](cycle-toggle)
+- [Discrete meter](meter-discrete)
+- [Nude rating](nd-rating)
 
 ## Wanna use them all?
 

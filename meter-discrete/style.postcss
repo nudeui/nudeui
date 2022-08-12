@@ -1,0 +1,21 @@
+:host {
+	display: inline-flex;
+	vertical-align: -.25em;
+	height: 1.2em;
+	user-select: none;
+}
+
+#value, #inactive {
+	background: var(--icon-url) 0 / auto 100%;
+}
+
+#value {
+	width: calc(var(--value) / var(--max) * 100%);
+}
+
+#inactive {
+	opacity: .5;
+	filter: saturate(50%) contrast(.5);
+	flex: 1;
+	background-position-x: right;
+}
