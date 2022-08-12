@@ -1,4 +1,4 @@
-import MeterDiscrete from "../meter-discrete/meter-discrete.js";
+import MeterDiscrete, {internals} from "../meter-discrete/meter-discrete.js";
 
 class NudeRating extends MeterDiscrete {
 	constructor () {
@@ -7,6 +7,17 @@ class NudeRating extends MeterDiscrete {
 
 	get readonly () {
 		return this.hasAttribute("readonly");
+	}
+
+	get value () {
+		return super.value;
+	}
+
+	set value (value) {
+		let oldValue = super.value;
+		super.value = value;
+
+		this[internals].setFormValue(value);
 	}
 
 	set readonly (readonly) {
@@ -74,6 +85,8 @@ class NudeRating extends MeterDiscrete {
 			click: evt => {
 				// Register change
 				value = this.value;
+
+				this.dispatchEvent(new InputEvent("input", { bubbles: true }));
 			},
 
 			// keydown: evt => {
@@ -94,6 +107,12 @@ class NudeRating extends MeterDiscrete {
 			this.addEventListener(event, handlers[event]);
 		}
 	}
+
+	get labels() {
+		return this[internals]?.labels;
+	}
+
+	static formAssociated = true;
 }
 
 function quantize (value, step) {

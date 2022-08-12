@@ -1,3 +1,5 @@
+export const internals = Symbol("internals");
+
 export default class MeterDiscrete extends HTMLElement {
 	#internals
 
@@ -9,9 +11,9 @@ export default class MeterDiscrete extends HTMLElement {
 		<style>@import "${new URL("style.css", import.meta.url)}";</style>
 		<div id=value part=value></div><div id=inactive part="inactive"></div>`;
 
-		this.#internals = this.attachInternals?.() ?? {};
-		this.#internals.role = "meter";
-		this.#internals.ariaValueMin = this.min;
+		this[internals] = this.attachInternals?.() ?? {};
+		this[internals].role = "meter";
+		this[internals].ariaValueMin = this.min;
 	}
 
 	get icon () {
@@ -73,17 +75,17 @@ export default class MeterDiscrete extends HTMLElement {
 			let max = this.max;
 			this.style.setProperty("aspect-ratio", `${max} / 1`);
 			this.style.setProperty("--max", max);
-			this.#internals.ariaValueMax = max;
+			this[internals].ariaValueMax = max;
 		}
 
 		if (!name || name === "value") {
 			let value = this.value;
 			this.style.setProperty("--value", value);
-			this.#internals.ariaValueNow = value;
+			this[internals].ariaValueNow = value;
 		}
 
 		if (!name || name === "icon") {
-			this.style.setProperty("--icon-url", `url('${ this.#iconURL }')`);
+			this.style.setProperty("--icon-image", `url('${ this.#iconURL }')`);
 		}
 	}
 

@@ -12,6 +12,14 @@ Like `<meter>`, but discrete. Useful to display ratings etc.
 
 <main>
 
+## Features
+
+- Scales with font size
+- Use emoji or custom icons
+- Styleable bar and inactive part
+- Uses [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) for accessibiity
+- Ultra light (3KB **unminified** and **uncompressed**!)
+
 ## Examples
 
 No attributes
