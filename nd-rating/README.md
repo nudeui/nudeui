@@ -6,7 +6,7 @@ id: nd-rating
 
 # `<nd-rating>`
 
-Like [`<nd-rating>`](../nd-rating/), but editable. Useful to display and set ratings etc.
+Like [`<meter-discrete>`](../meter-discrete/), but editable. Useful to display and set ratings etc.
 
 </header>
 
