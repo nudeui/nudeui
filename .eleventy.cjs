@@ -4,6 +4,11 @@ module.exports = config => {
 	let data = {
 		"layout": "page.njk",
 		"permalink": "{{ page.filePathStem | replace('README', '') }}/index.html",
+		eleventyComputed: {
+			defaultTitle: data => {
+				return data.css_only? `.${data.id}` : `<${data.id}>`;
+			}
+		}
 	};
 
 	for (let p in data) {
@@ -33,6 +38,6 @@ module.exports = config => {
 		templateFormats: ["md", "njk"],
 		dir: {
 			output: "."
-		}
+		},
 	};
 };
