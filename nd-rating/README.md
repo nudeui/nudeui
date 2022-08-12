@@ -17,6 +17,7 @@ Like [`<meter-discrete>`](../meter-discrete/), but editable. Useful to display a
 - All features of [`<meter-discrete>`](../meter-discrete/), plus:
 - Uses [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) to work like a built-in form element
 - Keyboard accessible (use arrow keys)
+- Ultra light (3KB **unminified** and **uncompressed** + another 3KB for `<meter-discrete>`)
 
 ## Examples
 
