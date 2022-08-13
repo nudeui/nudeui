@@ -1,0 +1,17 @@
+:host {
+	display: flex;
+	gap: .2em;
+}
+
+:host([vertical]) {
+	flex-flow: column;
+	align-items: stretch;
+}
+
+::slotted(input) {
+	flex: 1;
+}
+
+::slotted(button-group) {
+	margin: 0;
+}
