@@ -6,7 +6,11 @@ module.exports = config => {
 		"permalink": "{{ page.filePathStem | replace('README', '') }}/index.html",
 		eleventyComputed: {
 			defaultTitle: data => {
-				return data.css_only? `.${data.id}` : `<${data.id}>`;
+				if (data.id) {
+					return data.css_only? `.${data.id}` : `<${data.id}>`;
+				}
+
+				return "Nude UI: A collection of accessible, customizable, ultra-light web components";
 			}
 		}
 	};
