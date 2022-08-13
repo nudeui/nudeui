@@ -3,6 +3,7 @@ let elements = [
 	"cycle-toggle",
 	"meter-discrete",
 	"nd-rating",
+	"with-presets",
 ];
 
 await Promise.all(elements.map(id => import(`./${id}/${id}.js`)));

@@ -22,6 +22,10 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 - [Discrete meter](meter-discrete)
 - [Nude rating](nd-rating)
 
+## In progress
+
+- [Freeform text with presets](with-presets)
+
 ## Wanna use them all?
 
 ```js
