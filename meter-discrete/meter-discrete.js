@@ -63,7 +63,9 @@ export default class MeterDiscrete extends HTMLElement {
 	}
 
 	get #iconURL () {
-		return strLen(this.icon) === 1? emojiToImage(this.icon) : this.icon;
+		let isURL = this.icon.includes(".");
+
+		return isURL? this.icon : emojiToImage(this.icon);
 	}
 
 	static get observedAttributes() {
@@ -98,11 +100,6 @@ function emojiToImage(emoji) {
 	// For debug: <rect stroke="black" fill="none" stroke-width="2" width="100%" height="100%" />
 	return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">`
 	+ `<text style="font-size: 80px" x="50%" y=".85em" dominant-baseline="middle" text-anchor="middle">${emoji}</text></svg>`
-}
-
-let segmenter = new Intl.Segmenter("en");
-function strLen(str) {
-	return [...segmenter.segment(str)].length;
 }
 
 function quantize (value, step) {
