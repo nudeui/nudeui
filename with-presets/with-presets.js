@@ -22,7 +22,7 @@ export default class WithPresets extends HTMLElement {
 
 	isPreset (value) {
 		// Is there an option with this value?
-		value = value.replaceAll? value.replaceAll('"', '\\"') : value;
+		value = value?.replaceAll? value.replaceAll('"', '\\"') : value;
 		return !!this.findPreset(value);
 	}
 
