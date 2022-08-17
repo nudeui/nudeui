@@ -16,7 +16,7 @@ export default class ButtonGroup extends HTMLElement {
 		}
 
 		this.addEventListener("click", evt => {
-			let previousValue = this.value;
+			let previousValue = this.value + "";
 
 			let button = evt.target;
 
@@ -25,9 +25,9 @@ export default class ButtonGroup extends HTMLElement {
 			}
 
 			if (button) {
-				this.value = getValue(button);
+				this.#buttonChanged(button);
 
-				if (previousValue !== this.value) {
+				if (previousValue !== this.value + "") {
 					let evt = new InputEvent("input", {bubbles: true});
 					this.dispatchEvent(evt);
 				}
@@ -52,9 +52,32 @@ export default class ButtonGroup extends HTMLElement {
 			});
 
 			if (mutations.length > 0) {
-				this.value = getValue(this.pressedButton);
+				this.#buttonChanged();
 			}
 		});
+	}
+
+	#buttonChanged (button) {
+		if (this.multiple) {
+			this.#value ||= [];
+
+			if (button) {
+				let pressed = button.getAttribute("aria-pressed") === "true";
+				let value = getValue(button);
+
+				if (pressed) {
+					this.#value = this.#value.filter(v => v !== value);
+				}
+				else {
+					this.#value.push(value);
+				}
+			}
+
+			this.value = this.#value;
+		}
+		else {
+			this.value = getValue(button ?? this.pressedButton);
+		}
 	}
 
 	get name () {
@@ -63,6 +86,19 @@ export default class ButtonGroup extends HTMLElement {
 
 	set name (value) {
 		this.setAttribute("name", value);
+	}
+
+	get multiple () {
+		return this.hasAttribute("multiple");
+	}
+
+	set multiple (value) {
+		if (value) {
+			this.setAttribute("multiple", "");
+		}
+		else {
+			this.removeAttribute("multiple");
+		}
 	}
 
 	#value;
@@ -81,7 +117,10 @@ export default class ButtonGroup extends HTMLElement {
 				button.type = "button";
 			}
 
-			let ariaPressed = (getValue(button) === value).toString();
+			let buttonValue = getValue(button);
+			let pressed = this.multiple ? this.#value.includes(buttonValue) : this.#value === buttonValue;
+
+			let ariaPressed = pressed.toString();
 
 			if (ariaPressed !== button.getAttribute("aria-pressed")) {
 				button.setAttribute("aria-pressed", ariaPressed);
@@ -102,7 +141,7 @@ export default class ButtonGroup extends HTMLElement {
 	}
 
 	connectedCallback () {
-		this.value = getValue(this.pressedButton);
+		this.#buttonChanged();
 
 		this.#observer.observe(this, {
 			attributeFilter: ["aria-pressed"],

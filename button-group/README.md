@@ -53,6 +53,17 @@ Pre-selected state via `aria-pressed`:
 </button-group>
 ```
 
+Multiple:
+
+```html
+<button-group multiple oninput="button_multiple_value.textContent = this.value">
+	<button value="b"><span style="font-weight: bold">B</span></button>
+	<button value="i"><span style="font-style: italic">I</span></button>
+	<button value="u"><span style="text-decoration: underline">U</span></button>
+</button-group>
+<output id="button_multiple_value"></output>
+```
+
 Participates in form submission (requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
 
 ```html
