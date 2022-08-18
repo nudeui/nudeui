@@ -52,10 +52,12 @@ class NudeRating extends MeterDiscrete {
 
 	#startEditing () {
 		this.addEventListener("mouseenter", this.edit);
+		this.addEventListener("focus", this.edit);
 	}
 
 	#endEditing () {
 		this.removeEventListener("mouseenter", this.edit);
+		this.removeEventListener("focus", this.edit);
 	}
 
 	edit () {
@@ -108,6 +110,8 @@ class NudeRating extends MeterDiscrete {
 				}
 			}
 		};
+
+		handlers.blur = handlers.mouseleave;
 
 		for (let event in handlers) {
 			this.addEventListener(event, handlers[event]);
