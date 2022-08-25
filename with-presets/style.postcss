@@ -8,7 +8,8 @@
 	align-items: stretch;
 }
 
-::slotted(input) {
+::slotted(input),
+::slotted(:not(select):nth-child(2)) {
 	flex: 1;
 }
 

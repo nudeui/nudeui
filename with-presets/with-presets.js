@@ -64,8 +64,21 @@ export default class WithPresets extends HTMLElement {
 	}
 
 	connectedCallback () {
-		this.input = this.querySelector(":scope > input") || this.children[1];
-		this.select = this.querySelector(":scope > :not(input)") || this.children[0];
+		this.input = this.querySelector(":scope > input");
+		this.select = this.querySelector(":scope > select");
+
+		if (this.input && !this.select) {
+			this.select = this.querySelector(":scope > :not(input)");
+		}
+		else if (this.select && !this.input) {
+			this.input = this.querySelector(":scope > :not(select)");
+		}
+		else {
+			// Neither an <input> nor a <select> is used, go by child order
+			this.input = this.children[1];
+			this.select = this.children[0];
+		}
+
 
 		// Just in case
 		customElements.upgrade(this.input);
