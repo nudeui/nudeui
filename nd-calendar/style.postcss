@@ -10,8 +10,12 @@
 :host([rows=months]) {
 	grid-template-columns: auto repeat(31, 1fr);
 
-	& #headers :first-child {
-		grid-column: 2;
+	& #headers {
+		font-weight: normal;
+
+		& :first-child {
+			grid-column: 2;
+		}
 	}
 }
 
