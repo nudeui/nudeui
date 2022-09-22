@@ -25,8 +25,11 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 ## In progress
 
 - [Freeform text with presets](with-presets)
+- [Calendar](nd-calendar)
 
 ## Wanna use them all?
+
+This includes all components from the two categories above (existing and in progress).
 
 ```js
 import "https://nudeui.com/index.js";
