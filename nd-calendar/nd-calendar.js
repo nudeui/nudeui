@@ -53,7 +53,6 @@ export default class NudeCalendar extends HTMLElement {
 				for (let d = new BetterDate(low); d <= new BetterDate(high + dur.day); d.setDate(d.getDate() + 1)) {
 					dates.push(d.isoDate);
 				}
-				console.log(dates);
 				return dates.map(d => new BetterDate(d));
 			}
 
@@ -155,7 +154,12 @@ class BetterDate extends Date {
 	}
 
 	get isoDate () {
-		return this.toISOString().split("T")[0];
+		try {
+			return this.toISOString().split("T")[0];
+		}
+		catch (e) {
+			return "";
+		}
 	}
 
 	getComponent(component, format = "numeric") {
