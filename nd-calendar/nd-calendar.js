@@ -11,6 +11,7 @@ dur.month = dur.day * 30.4368;
 export default class NudeCalendar extends HTMLElement {
 	#headers
 	#calendar
+	#observer;
 
 	constructor() {
 		super();
@@ -23,6 +24,7 @@ export default class NudeCalendar extends HTMLElement {
 		`;
 		this.#headers = this.shadowRoot.getElementById("headers");
 		this.#calendar = this.shadowRoot.getElementById("calendar");
+		this.#observer = new MutationObserver(() => this.#render()).observe(this, { childList: true, subtree: true, attributeFilter: ["datetime"] });
 	}
 
 	#createHeaders () {
@@ -43,7 +45,16 @@ export default class NudeCalendar extends HTMLElement {
 
 			if (dt.includes("/")) {
 				// Date range
-				return dt.split("/").map(d => new BetterDate(d));
+				// add ALL dates between these
+				let [low, high] = dt.split("/").map(d => new BetterDate(d));
+
+				// Return all dates between low and high
+				let dates = [];
+				for (let d = new BetterDate(low); d <= new BetterDate(high + dur.day); d.setDate(d.getDate() + 1)) {
+					dates.push(d.isoDate);
+				}
+				console.log(dates);
+				return dates.map(d => new BetterDate(d));
 			}
 
 			return new BetterDate(dt);

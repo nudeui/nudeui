@@ -24,8 +24,8 @@ No attributes
 ```html
 <nd-calendar>
 	<time datetime="2022-09-05T00:00"></time> <!-- Times are ignored -->
-	<time datetime="2022-09-07"></time>
-	<time datetime="2022-09-11"></time>
+	<time datetime="2022-09-07 / 2022-09-10"></time> <!-- Range -->
+	<time datetime="2022-09-13"></time>
 </nd-calendar>
 ```
 
