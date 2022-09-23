@@ -24,7 +24,7 @@ export default class NudeCalendar extends HTMLElement {
 		`;
 		this.#headers = this.shadowRoot.getElementById("headers");
 		this.#calendar = this.shadowRoot.getElementById("calendar");
-		this.#observer = new MutationObserver(() => this.#render()).observe(this, { childList: true, subtree: true, attributeFilter: ["datetime"] });
+		this.#observe();
 	}
 
 	#createHeaders () {
@@ -38,7 +38,18 @@ export default class NudeCalendar extends HTMLElement {
 
 	}
 
+	#observe () {
+		this.#observer ??= new MutationObserver(() => this.#render());
+		this.#observer.observe(this, { childList: true, subtree: true, attributeFilter: ["datetime"] });
+	}
+
+	#unobserve () {
+		this.#observer.takeRecords();
+		this.#observer.disconnect();
+	}
+
 	#render() {
+		this.#unobserve();
 		this.#calendar.innerHTML = "";
 		let dates = [...this.children].flatMap(time => {
 			let dt = time.getAttribute("datetime");
@@ -50,14 +61,28 @@ export default class NudeCalendar extends HTMLElement {
 
 				// Return all dates between low and high
 				let dates = [];
-				for (let d = new BetterDate(low); d <= new BetterDate(high + dur.day); d.setDate(d.getDate() + 1)) {
-					dates.push(d.isoDate);
+				let daysApart = (high - low) / dur.day;
+
+				if (isNaN(high) || isNaN(low)) {
+					return [];
 				}
+
+				for (let d = new BetterDate(low), i = 0; d <= new BetterDate(high + dur.day); d.setDate(d.getDate() + 1)) {
+					i++;
+					dates.push(d.isoDate);
+					if (i > daysApart) break; // failsafe
+				}
+
 				return dates.map(d => new BetterDate(d));
 			}
 
 			return new BetterDate(dt);
-		}).sort((a, b) => a - b);
+		}).filter(d => !isNaN(d)).sort((a, b) => a - b);
+
+		if (dates.length === 0) {
+			this.#observe();
+			return;
+		}
 
 		let hasMin = this.hasAttribute("min");
 		let hasMax = this.hasAttribute("max");
@@ -99,16 +124,21 @@ export default class NudeCalendar extends HTMLElement {
 		this.dates = new Set(dates.map(d => d.isoDate));
 
 		let previousMonth;
-		for (let i = this.min; !(i > this.max); i.setDate(i.getDate() + 1)) {
-			const dayElement = document.createElement("time");
-			dayElement.part = "day" + (this.dates.has(i.isoDate) ? " active" : "");
-			dayElement.setAttribute("datetime", i.isoDate);
-			dayElement.title = i.toLocaleString("en-US", { dateStyle: "long" });
-			dayElement.style.setProperty("--weekday", i.weekday);
+		let daysApart = (this.max - this.min) / dur.day;
+		for (let date = this.min, i = 0; !(date > this.max); date.setDate(date.getDate() + 1)) {
+			if (isNaN(date)) {
+				return;
+			}
 
-			let year = i.getComponent("year");
-			let month = i.getComponent("month", "short");
-			let day = i.getComponent("day");
+			const dayElement = document.createElement("time");
+			dayElement.part = "day" + (this.dates.has(date.isoDate) ? " active" : "");
+			dayElement.setAttribute("datetime", date.isoDate);
+			dayElement.title = date.toLocaleString("en-US", { dateStyle: "long" });
+			dayElement.style.setProperty("--weekday", date.weekday);
+
+			let year = date.getComponent("year");
+			let month = date.getComponent("month", "short");
+			let day = date.getComponent("day");
 			dayElement.style.setProperty("--year", `"${year}"`);
 			dayElement.style.setProperty("--month", `"${month}"`);
 			dayElement.style.setProperty("--day", day);
@@ -119,8 +149,13 @@ export default class NudeCalendar extends HTMLElement {
 				dayElement.insertAdjacentHTML("beforebegin", `<div part="month" style="--month: "${month}";">${month}</div>`);
 			}
 
+			if (i > daysApart) break; // failsafe
+
 			previousMonth = month;
+			i++;
 		}
+
+		this.#observe();
 	}
 
 	static observedAttributes = ["rows"]
