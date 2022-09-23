@@ -50,7 +50,7 @@ export default class NudeCalendar extends HTMLElement {
 
 	#render() {
 		this.#unobserve();
-		this.#calendar.innerHTML = "";
+
 		let dates = [...this.children].flatMap(time => {
 			let dt = time.getAttribute("datetime");
 
@@ -83,6 +83,8 @@ export default class NudeCalendar extends HTMLElement {
 			this.#observe();
 			return;
 		}
+
+		this.#calendar.innerHTML = "";
 
 		let hasMin = this.hasAttribute("min");
 		let hasMax = this.hasAttribute("max");
