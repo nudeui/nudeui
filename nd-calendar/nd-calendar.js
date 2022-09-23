@@ -116,10 +116,7 @@ export default class NudeCalendar extends HTMLElement {
 
 			}
 			else {
-				if (this.max - this.min < dur.month) {
-					// If range is less than a month make it a month to today
-					this.min = new BetterDate(this.max - dur.month);
-				}
+				this.min = new BetterDate(this.max - dur.month);
 			}
 		}
 
