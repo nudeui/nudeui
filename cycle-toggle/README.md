@@ -106,15 +106,4 @@ Dynamic `aria-selected`:
 <button onclick="dynamic_selected.children[3].setAttribute('aria-selected', 'true')">Select 🙂</button>
 ```
 
-
-## Installation
-
-Just include the component's JS file and you're good:
-
-```html
-<script src="https://nudeui.com/cycle-toggle/cycle-toggle.js" type="module"></script>
-```
-
-In case you want to link to local files: CSS is fetched automatically, and assumed to be in the same directory as the JS file.
-
 </main>
