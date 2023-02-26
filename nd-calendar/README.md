@@ -6,7 +6,7 @@ id: nd-calendar
 
 # `<nd-calendar>`
 
-Display dates, date ranges, or date/time ranges by day or hour.
+Display dates and date ranges on a calendar by week or month
 
 </header>
 

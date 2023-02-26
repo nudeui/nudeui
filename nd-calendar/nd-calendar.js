@@ -86,10 +86,10 @@ export default class NudeCalendar extends HTMLElement {
 
 		this.#calendar.innerHTML = "";
 
-		let hasMin = this.hasAttribute("min");
-		let hasMax = this.hasAttribute("max");
-		this.min = hasMin && new BetterDate(this.getAttribute("min")) || dates[0];
-		this.max = hasMax && new BetterDate(this.getAttribute("max")) || dates.at(-1);
+		let hasMin = this.hasAttribute("start");
+		let hasMax = this.hasAttribute("end");
+		this.min = hasMin && new BetterDate(this.getAttribute("start")) || dates[0];
+		this.max = hasMax && new BetterDate(this.getAttribute("end")) || dates.at(-1);
 
 		if (!hasMax) {
 			if (this.getAttribute("rows") === "months") {
@@ -171,9 +171,136 @@ export default class NudeCalendar extends HTMLElement {
 	}
 }
 
-class BetterDate extends Date {
+export class NudeTimetable extends HTMLElement {
+	#headers
+	#calendar
+
+	constructor() {
+		super();
+
+		this.attachShadow({ mode: "open" });
+		this.shadowRoot.innerHTML = `
+		<style>@import "${new URL("style.css", import.meta.url)}";</style>
+		<div id="headers"></div>
+		<div id="hours">
+			${ Array(24).fill(1).map((a, i) => `<div style="--hour: ${i}">${String(i).padStart(2, "0")}:00</div>`).join("\n") }
+		</div>
+		<div id="calendar"></div>
+		`;
+		this.#headers = this.shadowRoot.getElementById("headers");
+		this.#calendar = this.shadowRoot.getElementById("calendar");
+	}
+
+	#render() {
+		this.#calendar.innerHTML = "";
+
+		this.min = this.getAttribute("start");
+		this.max = this.getAttribute("end");
+
+		let hasMin = this.hasAttribute("start");
+		let hasMax = this.hasAttribute("end");
+
+		if (this.min) {
+			this.start = new BetterDate(this.min);
+		}
+
+		if (this.max) {
+			this.end = new BetterDate(this.max);
+		}
+
+		if (isNaN(this.start)) {
+			hasMin = false;
+			delete this.start;
+		}
+
+		if (isNaN(this.end)) {
+			hasMax = false;
+			delete this.end;
+		}
+
+		if (!hasMin || !hasMax) {
+			let min, max;
+
+			for (let time of this.children) {
+				let raw = time.getAttribute("datetime");
+				let [low, high = low] = raw.split("/").map(d => new BetterDate(d));
+
+				if (min === undefined || low < min) {
+					min = low;
+				}
+
+				if (max === undefined || high >= max) {
+					max = high;
+				}
+			}
+
+			if (!hasMin) {
+				this.start = min;
+			}
+
+			if (!hasMax) {
+				this.end = max;
+			}
+		}
+
+		if (!hasMax) {
+			let now = new BetterDate();
+			if (now - this.max < dur.month) {
+				// If max is recent use today as the default max
+				this.max = now;
+			}
+		}
+
+		if (!hasMin) {
+			if (this.max - this.min < dur.month) {
+				// If range is less than a month make it a month to today
+				this.min = new BetterDate(this.max - dur.month);
+			}
+		}
+
+		let previousMonth;
+		for (let i = this.min; !(i > this.max); i.setDate(i.getDate() + 1)) {
+			const dayElement = document.createElement("time");
+			dayElement.part = "day";
+			dayElement.setAttribute("datetime", i.isoDate);
+			dayElement.title = i.toLocaleString("en-US", { dateStyle: "long" });
+
+			let year = i.getComponent("year");
+			let month = i.getComponent("month", "short");
+			let day = i.getComponent("day");
+			dayElement.style.setProperty("--year", `"${year}"`);
+			dayElement.style.setProperty("--month", `"${month}"`);
+			dayElement.style.setProperty("--day", day);
+
+			this.#calendar.appendChild(dayElement);
+
+			if (previousMonth !== month) {
+				dayElement.insertAdjacentHTML("beforebegin", `<div part="month" style="--month: "${month}";">${month}</div>`);
+			}
+
+			previousMonth = month;
+		}
+	}
+
+	static observedAttributes = []
+
+	attributeChangedCallback(name, oldValue, newValue) {
+		if (!name || name === "rows") {
+
+		}
+	}
+
+	connectedCallback() {
+		this.attributeChangedCallback();
+		this.#render();
+	}
+}
+
+export class BetterDate extends Date {
 	constructor(...args) {
+		args = args.map(a => typeof a === "string"? a.trim() : a);
 		super(...args);
+		this.source = args;
 
 		this.hasTimezone = typeof args[0] === "string" && /\+|Ζ/.test(args[0]) || args[0]?.hasTimezone;
 
