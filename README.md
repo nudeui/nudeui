@@ -20,7 +20,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 - [Button Group](button-group)
 - [Cycle Toggle](cycle-toggle)
 - [Discrete meter](meter-discrete)
-- [Nude rating](nd-rating)
+- [Rating](nd-rating)
 
 ## In progress
 
