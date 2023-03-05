@@ -27,7 +27,7 @@ export default class ImageInput extends HTMLElement {
 		<div id="drop-zone" part="dropzone">
 			<input id="url" part="input location"${ this.hasAttribute("autofocus") ? ' autofocus' : "" } />
 			<div id="upload-wrapper">
-				<input type="file" accept="image/*" capture="camera" />
+				<input type="file" accept="image/*" />
 				<slot name="browse">
 					<button part="button browse-button">Browse…</button>
 				</slot>
