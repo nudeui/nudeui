@@ -16,16 +16,16 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 
 ## Existing components
 
-- [Switch](nd-switch)
-- [Button Group](button-group)
-- [Cycle Toggle](cycle-toggle)
-- [Discrete meter](meter-discrete)
-- [Rating](nd-rating)
+- [Switch](nd-switch): On/off toggle switch
+- [Button Group](button-group): Group of buttons for selecting one or more values out of a set of options
+- [Cycle Toggle](cycle-toggle): Compact way to select one option from a group, click selects the next option
+- [Discrete meter](meter-discrete): Meter with discrete values shown as icons
+- [Rating](nd-rating): Like discrete meter, but editable via hovering and clicking
 
 ## In progress
 
-- [Freeform text with presets](with-presets)
-- [Calendar](nd-calendar)
+- [Freeform text with presets](with-presets): A combination of a text input and a select element
+- [Calendar](nd-calendar): Show dates on a calendar
 
 ## Wanna use them all?
 
