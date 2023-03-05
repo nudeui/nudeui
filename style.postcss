@@ -99,16 +99,19 @@ code, pre {
 	font-family: var(--font-mono);
 }
 
-button, input, textarea, select {
+button, input, textarea, select,
+::part(button), ::part(input) {
 	font: inherit;
 	box-sizing: border-box;
 }
 
-input:where([type="number"]) {
+input:where([type="number"]),
+::part(input-number) {
 	width: 3em;
 }
 
-input:where(:not([type]), [type="text"], [type="url"], [type="number"]), textarea, select {
+input:where(:not([type]), [type="text"], [type="url"], [type="number"]), textarea, select,
+::part(input), ::part(textarea), ::part(select) {
 	border: 1px solid hsl(var(--gray) 50% / .5);
 	border-radius: .2em;
 	padding: .2em .4em;
@@ -130,7 +133,7 @@ fieldset {
 	}
 }
 
-button {
+button, ::part(button) {
 	padding: .8em .9em;
 	border: 1px solid hsl(var(--gray) 0% / .2);
 	border-radius: calc(.15em + .15rem);
