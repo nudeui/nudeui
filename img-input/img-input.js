@@ -8,16 +8,31 @@ export default class ImageInput extends HTMLElement {
 		super();
 
 		this.attachShadow({ mode: "open" });
+
+
+		this.#internals = this.attachInternals?.();
+
+		if (this.#internals) {
+			// this.#internals.role = "region";
+		}
+	}
+
+	connectedCallback () {
+		if (this.shadowRoot.childNodes > 0) {
+			// Prevent multiple initializations
+			return;
+		}
+
 		this.shadowRoot.innerHTML = `<style>@import "${new URL("style.css", import.meta.url)}";</style>
 		<div id="drop-zone" part="dropzone">
-			<input type="url" id="url" part="input url" />
+			<input id="url" part="input location"${ this.hasAttribute("autofocus") ? ' autofocus' : "" } />
 			<div id="upload-wrapper">
 				<input type="file" accept="image/*" capture="camera" />
 				<slot name="browse">
-					<button part="button browse-button">Browse</button>
+					<button part="button browse-button">Browse…</button>
 				</slot>
 			</div>
-			<img id="preview" />
+			<img id="preview" part="preview" />
 		</div>`;
 
 		this.#el.input = this.shadowRoot.querySelector("input[part~=input]");
@@ -47,24 +62,23 @@ export default class ImageInput extends HTMLElement {
 		this.#el.dropZone.addEventListener("drop", e => {
 			this.files = [...e.dataTransfer.files];
 			this.#inputMethod = "drop";
-			this.#updatePreview();
+			this.#render();
 		});
 
 		this.#el.fileInput.addEventListener("change", e => {
 			this.files = [...e.target.files];
 			this.#inputMethod = "browse";
-			this.#updatePreview();
+			this.#render();
 		});
 
 		this.addEventListener("paste", e => {
-			// TODO distinguish text pastes (for editing URL/filename)
 			let files = [...e.clipboardData.items].filter(item => item.kind === "file" && /^image\//.test(item.type));
 
 			if (files.length > 0) {
 				// Images were pasted
 				this.files = files.map(item => item.getAsFile());
 				this.#inputMethod = "paste";
-				this.#updatePreview();
+				this.#render();
 			}
 		});
 
@@ -83,27 +97,38 @@ export default class ImageInput extends HTMLElement {
 				}
 
 				this.#inputMethod = "url";
-				this.#updatePreview();
+				this.#render();
 			}
 		});
 
-		this.#internals = this.attachInternals?.();
-
-		if (this.#internals) {
-			// this.#internals.role = "region";
-		}
+		this.#render();
 	}
 
-	#updatePreview () {
-		if (this.#inputMethod === "url") {
-			this.#el.preview.src = this.#el.input.value;
-			this.#el.input.type = "url";
+	#render () {
+		if (!this.#inputMethod || this.#inputMethod === "url") {
+			if (this.#inputMethod === "url") {
+				this.#el.preview.src = this.#el.input.value;
+			}
+
+			Object.assign(this.#el.input, {
+				type: "url",
+				ariaLabel: "URL",
+				placeholder: "https://"
+			});
 		}
 		else {
-			this.#el.preview.src = URL.createObjectURL(this.files[0])
+			this.#el.preview.src = URL.createObjectURL(this.files[0]);
 			this.#el.input.value = this.files[0].name;
-			this.#el.input.part.add("filename");
-			this.#el.input.type = "";
+
+			Object.assign(this.#el.input, {
+				type: "",
+				ariaLabel: "Filename",
+				placeholder: ""
+			});
+
+			requestAnimationFrame(() => {
+				this.#el.input.select();
+			});
 		}
 	}
 
@@ -113,6 +138,19 @@ export default class ImageInput extends HTMLElement {
 
 	set name (value) {
 		this.setAttribute("name", value);
+	}
+
+	get noPreview () {
+		return this.hasAttribute("nopreview");
+	}
+
+	set noPreview (value) {
+		if (value) {
+			this.setAttribute("nopreview", "");
+		}
+		else {
+			this.removeAttribute("nopreview");
+		}
 	}
 
 	// get multiple () {
@@ -127,8 +165,6 @@ export default class ImageInput extends HTMLElement {
 	// 		this.removeAttribute("multiple");
 	// 	}
 	// }
-
-	#value;
 
 	get value () {
 		return this.#el.value;
@@ -158,6 +194,10 @@ export default class ImageInput extends HTMLElement {
 
 	get labels() {
 		return this.#internals?.labels;
+	}
+
+	focus() {
+		this.#el.input.focus();
 	}
 
 	static get formAssociated() {

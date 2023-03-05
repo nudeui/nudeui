@@ -6,7 +6,7 @@ id: img-input
 
 # `<img-input>`
 
-Unified interface for image linking and uploading. Supports URL, drag-and-drop, pasting, or local uploads.
+Form control for image linking and uploading.
 
 </header>
 
@@ -14,14 +14,15 @@ Unified interface for image linking and uploading. Supports URL, drag-and-drop, 
 
 ## Features
 
+- Paste, drag & drop, upload, or provide a URL, all with the same unified API!
+- Inline preview (`nopreview` attribute to disable)
 - Uses [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) to work like a built-in form element
 - Ultra light
 
 ## TODO
 
-- [ ] Attribute for no preview
-- [ ] `multiple` attribute
-- [ ] Regargeting of input attributes (`autofocus`, `placeholder` etc)
+- `multiple` attribute?
+- Regargeting of input attributes (`autofocus`, `placeholder` etc)
 
 
 ## Examples
@@ -31,5 +32,18 @@ Basic
 ```html
 <img-input></img-input>
 ```
+
+No preview
+
+```html
+<img-input nopreview></img-input>
+```
+
+## CSS parts
+
+- `input`, `location` - The input element used for URL or filename
+- `dropzone` The drop zone
+- `button`, `browse-button` - The button used to open the file browser
+- `preview` - The preview image
 
 </main>
