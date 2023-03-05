@@ -10,7 +10,7 @@
     "build": "npm run build:html && npm run build:css",
     "watch:css": "npx postcss \"**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs --watch",
     "watch:html": "npx @11ty/eleventy --config=.eleventy.cjs --watch",
-    "watch": "npm run watch:css &! npm run watch:html"
+    "watch": "npx concurrently -n w: npm:watch:*"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/leaverou/nudeui#readme",
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "postcss": "^8.3.9",
     "postcss-cli": "^9.0.1",
     "postcss-nesting": "^8.0.1"
