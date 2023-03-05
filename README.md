@@ -24,6 +24,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 
 ## In progress
 
+- [Image input](img-input): Input an image via URL, file upload, drag-and-drop, or pasting
 - [Freeform text with presets](with-presets): A combination of a text input and a select element
 - [Calendar](nd-calendar): Show dates on a calendar
 
