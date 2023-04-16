@@ -2,6 +2,7 @@ export default class ImageInput extends HTMLElement {
 	#internals
 	#el = {}
 	#inputMethod
+	#previewURL
 	files = []
 	#initialized = false
 
@@ -26,6 +27,7 @@ export default class ImageInput extends HTMLElement {
 		this.#el.input = this.shadowRoot.querySelector("input[part~=input]");
 		this.#el.fileInput = this.shadowRoot.querySelector("input[type=file]");
 		this.#el.preview = this.shadowRoot.querySelector("img#preview");
+		this.#el.previewSlot = this.shadowRoot.querySelector("slot[name=preview]");
 		this.#el.dropZone = this.shadowRoot.querySelector("div#drop-zone");
 		this.#el.browseButton = this.shadowRoot.querySelector("button[part~=browse-button]");
 
@@ -34,6 +36,8 @@ export default class ImageInput extends HTMLElement {
 		if (this.#internals) {
 			// this.#internals.role = "region";
 		}
+
+		this.attributeChangedCallback();
 	}
 
 	connectedCallback () {
@@ -114,7 +118,7 @@ export default class ImageInput extends HTMLElement {
 	#render () {
 		if (!this.#inputMethod || this.#inputMethod === "url") {
 			if (this.#inputMethod === "url") {
-				this.#el.preview.src = this.#el.input.value;
+				this.#previewURL = this.#el.input.value;
 			}
 
 			Object.assign(this.#el.input, {
@@ -124,7 +128,7 @@ export default class ImageInput extends HTMLElement {
 			});
 		}
 		else {
-			this.#el.preview.src = URL.createObjectURL(this.files[0]);
+			this.#previewURL = URL.createObjectURL(this.files[0]);
 			this.#el.input.value = this.files[0].name;
 
 			Object.assign(this.#el.input, {
@@ -137,6 +141,14 @@ export default class ImageInput extends HTMLElement {
 				this.#el.input.select();
 			});
 		}
+
+		this.#renderPreview();
+	}
+
+	#renderPreview () {
+		if (this.preview !== "none" && this.#previewURL) {
+			this.#el.preview.src = this.#previewURL;
+		}
 	}
 
 	get name () {
@@ -147,17 +159,16 @@ export default class ImageInput extends HTMLElement {
 		this.setAttribute("name", value);
 	}
 
-	get noPreview () {
-		return this.hasAttribute("nopreview");
+	get inputMethod () {
+		return this.#inputMethod;
 	}
 
-	set noPreview (value) {
-		if (value) {
-			this.setAttribute("nopreview", "");
-		}
-		else {
-			this.removeAttribute("nopreview");
-		}
+	get preview () {
+		return this.getAttribute("preview") || "auto";
+	}
+
+	set preview (value) {
+		this.setAttribute("preview", value);
 	}
 
 	// get multiple () {
@@ -205,6 +216,33 @@ export default class ImageInput extends HTMLElement {
 
 	focus() {
 		this.#el.input.focus();
+	}
+
+	static get observedAttributes() {
+		return ["preview"];
+	}
+
+	attributeChangedCallback(name, oldValue) {
+		let value = this.getAttribute(name);
+
+		if (oldValue === value) {
+			return;
+		}
+
+		if (!name || name === "preview") {
+			this.#el.preview.style.display = value === "none" ? "none" : "";
+
+			if (value && !["auto", "none"].includes(value)) {
+				// Value is a CSS selector
+				this.#el.preview = this.ownerDocument.querySelector(value);
+			}
+			else {
+				this.#el.preview = this.#el.previewSlot.assignedElements()[0] // Is an element slotted?
+				                   || this.shadowRoot.querySelector("img[part~=preview]"); // get default element
+			}
+
+			this.#renderPreview();
+		}
 	}
 
 	static get formAssociated() {
