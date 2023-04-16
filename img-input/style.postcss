@@ -8,29 +8,14 @@
 		outline: 2px dashed hsl(0 0% 10% / .5);
 		outline-offset: 4px;
 	}
-
 }
 
 #url {
 	grid-area: url;
 }
 
-#upload-wrapper {
-	grid-area: browse;
-	display: flex;
-	position: relative;
-	overflow: hidden;
-	display: inline-block;
-
-	& input[type=file] {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		left: 0;
-		top: 0;
-		opacity: 0;
-		cursor: pointer;
-	}
+input[type=file] {
+	display: none;
 }
 
 #preview {

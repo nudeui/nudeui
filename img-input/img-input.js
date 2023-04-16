@@ -3,12 +3,31 @@ export default class ImageInput extends HTMLElement {
 	#el = {}
 	#inputMethod
 	files = []
+	#initialized = false
 
 	constructor () {
 		super();
 
 		this.attachShadow({ mode: "open" });
+		this.shadowRoot.innerHTML = `<style>@import "${new URL("style.css", import.meta.url)}";</style>
+		<input type="file" accept="image/*" />
+		<div id="drop-zone" part="dropzone">
+			<slot name="input">
+				<input id="url" part="input location"${ this.hasAttribute("autofocus") ? ' autofocus' : "" } />
+			</slot>
+			<slot name="browse">
+				<button part="button browse-button">Browse…</button>
+			</slot>
+		</div>
+		<slot name="preview">
+			<img id="preview" part="preview" />
+		</slot>`;
 
+		this.#el.input = this.shadowRoot.querySelector("input[part~=input]");
+		this.#el.fileInput = this.shadowRoot.querySelector("input[type=file]");
+		this.#el.preview = this.shadowRoot.querySelector("img#preview");
+		this.#el.dropZone = this.shadowRoot.querySelector("div#drop-zone");
+		this.#el.browseButton = this.shadowRoot.querySelector("button[part~=browse-button]");
 
 		this.#internals = this.attachInternals?.();
 
@@ -18,27 +37,14 @@ export default class ImageInput extends HTMLElement {
 	}
 
 	connectedCallback () {
-		if (this.shadowRoot.childNodes > 0) {
+		if (this.#initialized) {
 			// Prevent multiple initializations
 			return;
 		}
 
-		this.shadowRoot.innerHTML = `<style>@import "${new URL("style.css", import.meta.url)}";</style>
-		<div id="drop-zone" part="dropzone">
-			<input id="url" part="input location"${ this.hasAttribute("autofocus") ? ' autofocus' : "" } />
-			<div id="upload-wrapper">
-				<input type="file" accept="image/*" />
-				<slot name="browse">
-					<button part="button browse-button">Browse…</button>
-				</slot>
-			</div>
-			<img id="preview" part="preview" />
-		</div>`;
-
-		this.#el.input = this.shadowRoot.querySelector("input[part~=input]");
-		this.#el.fileInput = this.shadowRoot.querySelector("input[type=file]");
-		this.#el.preview = this.shadowRoot.querySelector("img#preview");
-		this.#el.dropZone = this.shadowRoot.querySelector("div#drop-zone");
+		this.#el.browseButton.addEventListener("click", () => {
+			this.#el.fileInput.click();
+		});
 
 		for (event of "drag dragstart dragend dragover dragenter dragleave drop".split(" ")) {
 			this.#el.dropZone.addEventListener(event, e => {
@@ -101,6 +107,7 @@ export default class ImageInput extends HTMLElement {
 			}
 		});
 
+		this.#initialized = true;
 		this.#render();
 	}
 
