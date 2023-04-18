@@ -3,7 +3,7 @@ export default class ImageInput extends HTMLElement {
 	#el = {}
 	#inputMethod
 	#previewURL
-	files = []
+	#files = []
 	#initialized = false
 
 	constructor () {
@@ -70,14 +70,16 @@ export default class ImageInput extends HTMLElement {
 		}
 
 		this.#el.dropZone.addEventListener("drop", e => {
-			this.files = [...e.dataTransfer.files];
+			this.#files = [...e.dataTransfer.files];
 			this.#inputMethod = "drop";
+			this.#internals?.setFormValue(this.#formValue);
 			this.#render();
 		});
 
 		this.#el.fileInput.addEventListener("change", e => {
-			this.files = [...e.target.files];
+			this.#files = [...e.target.files];
 			this.#inputMethod = "browse";
+			this.#internals?.setFormValue(this.#formValue);
 			this.#render();
 		});
 
@@ -86,13 +88,17 @@ export default class ImageInput extends HTMLElement {
 
 			if (files.length > 0) {
 				// Images were pasted
-				this.files = files.map(item => item.getAsFile());
+				this.#files = files.map(item => item.getAsFile());
+				console.log(this.#files)
 				this.#inputMethod = "paste";
+				this.#internals?.setFormValue(this.#formValue);
 				this.#render();
 			}
 		});
 
 		this.#el.input.addEventListener("input", e => {
+			let inputMethod = this.#inputMethod;
+
 			if (this.#inputMethod && this.#inputMethod !== "url") {
 				if (/^https?:\/\//.test(this.#el.input.value)) {
 					// Back to URL mode, discard the files we have
@@ -100,16 +106,15 @@ export default class ImageInput extends HTMLElement {
 				}
 			}
 
-			if (!this.#inputMethod || this.#inputMethod === "url") {
-				// User is editing the URL
-				if (this.files.length > 0) {
-					this.files = [];
-				}
-
-				this.#inputMethod = "url";
+			if (inputMethod !== this.#inputMethod) {
+				// Input method changed, re-render
 				this.#render();
 			}
+
+			this.#internals?.setFormValue(this.#formValue);
 		});
+
+
 
 		this.#initialized = true;
 		this.#render();
@@ -138,6 +143,7 @@ export default class ImageInput extends HTMLElement {
 			});
 
 			requestAnimationFrame(() => {
+				// TODO select only the filename (without the extension)
 				this.#el.input.select();
 			});
 		}
@@ -184,14 +190,28 @@ export default class ImageInput extends HTMLElement {
 	// 	}
 	// }
 
+	get #formValue () {
+		let fd = new FormData();
+		fd.set("file", this.files[0]);
+		fd.set("url", this.#inputMethod === "url"? this.#el.value : null);
+		return fd;
+	}
+
 	get value () {
 		return this.#el.value;
 	}
 
 	set value (value) {
-		this.#el.value = value;
-
-		this.#internals?.setFormValue(value);
+		if (!value) {
+			this.#el.value = value;
+			this.#internals?.setFormValue(this.#formValue);
+			this.files = [];
+		}
+		else {
+			// This is how the native file input works
+			// See https://html.spec.whatwg.org/multipage/input.html#dom-input-value-filename
+			throw new DOMException("InvalidStateError");
+		}
 	}
 
 	get files () {
@@ -199,9 +219,9 @@ export default class ImageInput extends HTMLElement {
 			return [];
 		}
 		else {
-			let files = [this.files[0]];
+			let files = this.#files.slice(0, 1); // we don't do multiple files yet
 
-			if (this.#el.input.value !== this.files[0].name) {
+			if (this.#el.input.value !== this.#files[0].name) {
 				// Filename edited
 				files[0] = new File([files[0]], this.#el.input.value, files[0]);
 			}
