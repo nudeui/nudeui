@@ -57,7 +57,7 @@ export default class NudeCalendar extends HTMLElement {
 			if (dt.includes("/")) {
 				// Date range
 				// add ALL dates between these
-				let [low, high] = dt.split("/").map(d => new BetterDate(d));
+				let [low, high] = dt.split("/").map(d => new BetterDate(d.trim()));
 
 				// Return all dates between low and high
 				let dates = [];
@@ -67,7 +67,7 @@ export default class NudeCalendar extends HTMLElement {
 					return [];
 				}
 
-				for (let d = new BetterDate(low), i = 0; d <= new BetterDate(high + dur.day); d.setDate(d.getDate() + 1)) {
+				for (let d = new BetterDate(low), i = 0; d <= new BetterDate(Number(high) + dur.day); d.setDate(d.getDate() + 1)) {
 					i++;
 					dates.push(d.isoDate);
 					if (i > daysApart) break; // failsafe
