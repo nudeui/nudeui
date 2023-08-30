@@ -7,7 +7,9 @@ let elements = [
 	"nd-calendar",
 ];
 
-await Promise.all(elements.map(id => import(`./${id}/${id}.js`)));
+for (let id of elements) {
+	import(`./${id}/${id}.js`);
+}
 
 // CSS only modules
 let modules = [
