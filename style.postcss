@@ -100,6 +100,7 @@ code, pre {
 }
 
 button, input, textarea, select,
+.button,
 ::part(button), ::part(input) {
 	font: inherit;
 	box-sizing: border-box;
@@ -133,7 +134,9 @@ fieldset {
 	}
 }
 
-button, ::part(button) {
+button,
+.button,
+::part(button) {
 	padding: .8em .9em;
 	border: 1px solid hsl(var(--gray) 0% / .2);
 	border-radius: calc(.15em + .15rem);
