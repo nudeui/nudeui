@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="img-input.js" type="module"></script>
+</head>
+<body>
+	<form id="form">
+		<button>Go</button>
+		<input type="file" name="native">
+		<img-input name="imginput"></img-input>
+	</form>
+	<script>
+		form.onsubmit = e => {
+			let o = Object.fromEntries(new FormData(form).entries());
+			console.log(o);
+			e.preventDefault();
+		};
+	</script>
+</body>
+</html>
