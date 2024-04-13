@@ -1,5 +1,5 @@
 // Website scripts
-import "../index.js";
+import "./index.js";
 import "https://prismjs.com/prism.js";
 import renderDemos from "./wc-demos.js";
 
