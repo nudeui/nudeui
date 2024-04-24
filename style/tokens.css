@@ -1,0 +1,36 @@
+:where(:root) {
+	--color-magenta-hs: var(--accent-color-hs);
+
+	--color-blue-hs: var(--accent-color-2-hs);
+	--color-blue: var(--accent-color-2);
+	--focus-color: var(--color-blue);
+
+	--color-neutral: oklch(50% 0.03 230);
+	--color-canvas: oklch(from canvas l 0.002 none);
+
+
+
+	--color-neutral-90a: color-mix(in oklch, var(--color-neutral) 90%, oklch(none none none / 0));
+	--color-neutral-80a: color-mix(in oklch, var(--color-neutral) 80%, oklch(none none none / 0));
+	--color-neutral-70a: color-mix(in oklch, var(--color-neutral) 70%, oklch(none none none / 0));
+	--color-neutral-50a: color-mix(in oklch, var(--color-neutral) 50%, oklch(none none none / 0));
+	--color-neutral-30a: color-mix(in oklch, var(--color-neutral) 30%, oklch(none none none / 0));
+	--color-neutral-20a: color-mix(in oklch, var(--color-neutral) 20%, oklch(none none none / 0));
+	--color-neutral-10a: color-mix(in oklch, var(--color-neutral) 10%, oklch(none none none / 0));
+
+	--color-neutral-95: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 96%);
+	--color-neutral-90: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 90%);
+	--color-neutral-80: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 80%);
+	--color-neutral-70: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 70%);
+
+	/* Semantic colors */
+	--accent-color-hs: 335 90%;
+	--accent-color: hsl(var(--accent-color-hs) 50%);
+
+	--accent-color-2-hs: 200 90%;
+	--accent-color-2: hsl(var(--accent-color-2-hs) 50%);
+
+	/* Fonts */
+	--font-body: system-ui, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--font-mono: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}

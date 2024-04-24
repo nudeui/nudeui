@@ -1,19 +1,9 @@
+@import url('style/tokens.css');
+@import url('style/forms.css');
+@import url('style/tables.css');
 @import url('https://prismjs.com/themes/prism-solarizedlight.min.css');
 
 :root {
-	--accent-color-hs: 335 90%;
-	--accent-color: hsl(var(--accent-color-hs) 50%);
-	--color-magenta-hs: var(--accent-color-hs);
-	--accent-color-2-hs: 200 90%;
-	--accent-color-2: hsl(var(--accent-color-2-hs) 50%);
-	--color-blue-hs: var(--accent-color-2-hs);
-	--color-blue: var(--accent-color-2);
-	--focus-color: var(--color-blue);
-	--gray: 220 10%;
-
-	--font-body: system-ui, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	--font-mono: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-
 	--page-width: 900px;
 }
 
@@ -99,99 +89,8 @@ code, pre {
 	font-family: var(--font-mono);
 }
 
-button, input, textarea, select,
-.button,
-::part(button), ::part(input) {
-	font: inherit;
-	box-sizing: border-box;
-}
-
-input:where([type="number"]),
-::part(input-number) {
-	width: 3em;
-}
-
-input:where(:not([type]), [type="text"], [type="url"], [type="number"]), textarea, select,
-::part(input), ::part(textarea), ::part(select) {
-	border: 1px solid hsl(var(--gray) 50% / .5);
-	border-radius: .2em;
-	padding: .2em .4em;
-	min-width: 4em;
-}
-
 iframe {
 	border: 0;
-}
-
-fieldset {
-	border: none;
-	margin: .5rem 0;
-	background: hsl(var(--gray) 50% / .1);
-	border-radius: .3em;
-
-	& > legend {
-		font-weight: bold;
-	}
-}
-
-button,
-.button,
-::part(button) {
-	padding: .8em .9em;
-	border: 1px solid hsl(var(--gray) 0% / .2);
-	border-radius: calc(.15em + .15rem);
-	background-color: white;
-	cursor: pointer;
-	font-size: var(--font-size-small);
-	text-decoration: none;
-	color: inherit;
-	transition-duration: .2s;
-	transition-property: background-color, border-color, color;
-	line-height: 1.1;
-	white-space: nowrap;
-
-	&:disabled {
-		cursor: not-allowed;
-		opacity: .5;
-	}
-
-	&:active,
-	&[aria-pressed="true"] {
-		box-shadow: 0 .1em .2em hsl(0 0% 0% / .2) inset, 0 0 0 2em hsl(var(--gray) 50% / .12) inset;
-	}
-
-	&:where(:enabled) {
-		&:hover {
-			border-color: hsl(var(--accent-color-hs) 80%);
-			background-color: hsl(var(--accent-color-hs) 95%);
-			color: hsl(var(--accent-color-hs) 15%);
-		}
-	}
-
-	/* Icon */
-	& i {
-		display: inline-block;
-		opacity: .7;
-	}
-
-	&.icon-prefix:where(:not(.icon-only)) i:first-of-type {
-		margin-right: .4em;
-	}
-
-	&.icon-suffix i:last-of-type {
-		margin-left: .4em;
-	}
-
-	&[type=submit] {
-		background: var(--accent-color-2);
-		color: white;
-
-		&:where(:enabled) {
-			&:hover {
-				border-color: hsl(var(--accent-color-2-hs) 80%);
-			}
-		}
-	}
 }
 
 .failed {
