@@ -1,0 +1,98 @@
+:host {
+	--_font-size-min: var(--font-size-min, 50%);
+	--_font-size-max: var(--font-size-max, 400%);
+
+	--color-neutral: oklch(50% 0.03 230);
+	--color-canvas: oklch(from canvas l 0.002 none);
+	--color-neutral-95: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 96%);
+	--color-neutral-90: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 90%);
+	--color-neutral-80: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 80%);
+	--color-neutral-70: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 70%);
+
+	display: flex;
+	flex-flow: column;
+	border: 1px solid var(--color-neutral-70);
+	border-radius: .3rem;
+	margin-block: .5em;
+}
+
+::slotted(pre) {
+	margin: 0 !important;
+	padding: .6em .8em;
+	background: var(--color-neutral-95);
+	border-top: 1px solid var(--color-neutral-80);
+	border-radius: inherit;
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+	font-size: 80%;
+}
+
+#toolbar {
+	display: flex;
+	gap: 1em;
+	border-bottom: 1px solid var(--color-neutral-80);
+
+	&:empty,
+	&:has(#adjusters:empty) {
+		display: none;
+	}
+
+	> * {
+		padding: .3rem .5rem;
+		flex: 1;
+
+		&:not(:first-child) {
+			border-left: 1px solid var(--color-neutral-80);
+		}
+	}
+}
+
+#adjusters {
+	display: flex;
+	flex: 1;
+	gap: 1em;
+}
+
+.adjuster {
+	flex: 1;
+
+	&.font-size {
+		display: flex;
+		gap: .1em;
+		align-items: center;
+
+		.small, .big {
+			font: 100%/1 serif;
+		}
+
+		.small {
+			font-size: var(--_font-size-min);
+		}
+
+		.big {
+			font-size: clamp(var(--_font-size-min), var(--_font-size-max), 200%);
+		}
+
+		input {
+			flex: 1;
+			height: .3em;
+		}
+	}
+}
+
+
+
+slot[name=demo] {
+	display: block;
+	--font-size-adjust: var(--adjust-font-size, 0.5);
+	--font-size-range-low: calc(100% - var(--_font-size-min));
+	--font-size-range-high: calc(var(--_font-size-max) - 100%);
+
+	padding: 1em;
+
+	font-size: calc(
+		var(--_font-size-min)
+		+ clamp(0, var(--font-size-adjust) * 2, 1) * var(--font-size-range-low)
+		+ clamp(0, (var(--font-size-adjust) - 0.5) * 2, 1) * var(--font-size-range-high)
+	);
+}

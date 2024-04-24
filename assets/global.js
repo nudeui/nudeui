@@ -1,7 +1,7 @@
 // Website scripts
 import "./index.js";
 import "https://prismjs.com/prism.js";
-import renderDemos from "./wc-demos.js";
+import HTMLDemo from "../html-demo/html-demo.js";
 
 if (!document.documentElement.matches(".no-home-link")) {
 	let h1 = document.querySelector("h1");
@@ -11,4 +11,4 @@ if (!document.documentElement.matches(".no-home-link")) {
 	}
 }
 
-renderDemos();
+HTMLDemo.wrapAll();

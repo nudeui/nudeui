@@ -21,6 +21,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 - [Cycle Toggle](cycle-toggle): Compact way to select one option from a group, click selects the next option
 - [Discrete meter](meter-discrete): Meter with discrete values shown as icons
 - [Rating](nd-rating): Like discrete meter, but editable via hovering and clicking
+- [HTML Demo](html-demo): Display demos of HTML content alongside their source code
 
 ## In progress
 

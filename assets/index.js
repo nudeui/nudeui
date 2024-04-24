@@ -5,6 +5,7 @@ let elements = [
 	"nd-rating",
 	"with-presets",
 	"nd-calendar",
+	"html-demo",
 ];
 
 await Promise.all(elements.map(id => import(`../${id}/${id}.js`)));
