@@ -1,0 +1,98 @@
+:host {
+	--_active-day-background: var(--active-day-background, var(--accent-color, hsl(220 60% 50%)));
+	--_inactive-day-background: var(--inactive-day-background, hsl(220 10% 70%));
+
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	grid-gap: .2em;
+}
+
+:host([rows=months]) {
+	grid-template-columns: auto repeat(31, 1fr)
+}
+
+:host([rows=months]) #headers {
+		font-weight: normal
+	}
+
+:host([rows=months]) #headers :first-child {
+			grid-column: 2;
+		}
+
+#calendar {
+	display: contents;
+}
+
+#headers {
+	display: contents;
+	color: hsl(var(--gray), 50%);
+	font-weight: bold;
+	text-align: center;
+}
+
+[part~="month"] {
+	grid-column: 1;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: var(--_inactive-day-background);
+	filter: brightness(80%);
+	align-self: center;
+	font-size: 75%;
+}
+
+[part~="day"] {
+	position: relative;
+	border-radius: .2em;
+	background: var(--_inactive-day-background);
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	overflow: hidden;
+	padding: .2em 0;
+	text-align: center;
+	container-type: inline-size
+}
+
+[part~="day"][part~="active"] {
+		background: var(--_active-day-background);
+	}
+
+[part~="day"]::after {
+		counter-reset: day var(--day);
+		content: counter(day);
+	}
+
+@container (max-width: 4em) {
+		[part~="day"]::before {
+			display: block;
+			font-size: 70%;
+		}
+
+		[part~="day"]::after {
+			display: block;
+		}
+	}
+
+:host(:not([rows=months])) [part~="day"] {
+		grid-column: var(--weekday)
+}
+
+:host(:not([rows=months])) [part~="day"]::before {
+			content: var(--month) " ";
+			font-weight: 300;
+		}
+
+:host([rows=months]) [part~="day"] {
+		font-size: 90%;
+		letter-spacing: -.03em;
+		grid-column: calc(var(--day) + 1)
+}
+
+:host(:not([rows=months])) [part~="month"] {
+		display: none;
+	}
+
+
+
+
+

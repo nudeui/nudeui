@@ -1,6 +1,6 @@
 import MeterDiscrete, {internals} from "../meter-discrete/meter-discrete.js";
 
-class NudeRating extends MeterDiscrete {
+export default class NudeRating extends MeterDiscrete {
 	constructor () {
 		super();
 

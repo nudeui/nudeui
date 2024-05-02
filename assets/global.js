@@ -1,7 +1,7 @@
 // Website scripts
-import "./index.js";
+import "../elements/index.js";
 import "https://prismjs.com/prism.js";
-import HTMLDemo from "../html-demo/html-demo.js";
+import HTMLDemo from "../elements/html-demo/html-demo.js";
 
 if (!document.documentElement.matches(".no-home-link")) {
 	let h1 = document.querySelector("h1");
