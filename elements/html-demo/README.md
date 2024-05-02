@@ -11,7 +11,7 @@ Great for documenting web components!
 
 </header>
 
-<main>
+
 
 ## Features
 
@@ -107,4 +107,3 @@ All parameters are optional.
 | `ignore` | `""` | A CSS selector for elements to ignore. |
 | `languages` | `["html", "markup"]` | The `language-xxx` classes whose code snippets to wrap |
 
-</main>

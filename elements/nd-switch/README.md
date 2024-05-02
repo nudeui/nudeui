@@ -12,7 +12,7 @@ CSS-only toggle switch
 
 </header>
 
-<main>
+
 
 ## Examples
 
@@ -56,4 +56,3 @@ Disabled:
 <input type="checkbox" class="nd-switch" disabled>
 ```
 
-</main>

@@ -10,7 +10,7 @@ Like [`<meter-discrete>`](../meter-discrete/), but editable. Useful to display a
 
 </header>
 
-<main>
+
 
 ## Features
 
@@ -71,4 +71,3 @@ Participates in form submission (requires [`ElementInternals`](https://developer
 </form>
 ```
 
-</main>

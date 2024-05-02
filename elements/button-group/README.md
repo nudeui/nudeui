@@ -12,8 +12,6 @@ Group of exclusive push buttons
 
 </header>
 
-<main>
-
 ## Features
 
 - Uses existing button styling present in the page
@@ -178,5 +176,3 @@ sl-button[aria-pressed="true"]::part(base) {
 	<sl-button>3</sl-button>
 </button-group>
 ```
-
-</main>

@@ -10,7 +10,7 @@ Display dates, date ranges, or date/time ranges by day or hour.
 
 </header>
 
-<main>
+
 
 ## Features
 
@@ -71,4 +71,3 @@ By months:
 </nd-calendar>
 ```
 
-</main>

@@ -10,7 +10,7 @@ Several improvements over the native `<input type=range>`.
 
 </header>
 
-<main>
+
 
 ## Features
 
@@ -83,4 +83,3 @@ In addition to the usual properties and methods of a slider (`min`, `max`, `step
 - `progressAt(value)`: Returns the progress at a given point, as a number between 0 and 1.
 - `valueAt(progress)`: Returns the value at a given progress, as a number between `min` and `max`.
 
-</main>

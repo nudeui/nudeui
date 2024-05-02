@@ -10,7 +10,7 @@ Drop-down menu that performs actions when items are clicked
 
 </header>
 
-<main>
+
 
 <section class="failed">
 
@@ -61,4 +61,3 @@ With customized menu label:
 </drop-down>
 ```
 
-</main>

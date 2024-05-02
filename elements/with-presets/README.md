@@ -10,7 +10,7 @@ A freeform text field with visible presets
 
 </header>
 
-<main>
+
 
 ## Features
 
@@ -71,4 +71,3 @@ With dynamic select:
 <button onclick='with_dynamic_select.children[0].insertAdjacentHTML("beforeend", `<option>${with_dynamic_select.select.children.length}</option>`)'>Add option</button>
 ```
 
-</main>

@@ -12,7 +12,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 
 </header>
 
-<main>
+
 
 <section id="components" class="language-html">
 
@@ -51,4 +51,3 @@ as well as a warning for other wanderers going down the same path.
 
 - [Drop down](elements/drop-down)
 
-</main>

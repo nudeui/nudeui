@@ -10,7 +10,7 @@ Form control for image linking and uploading.
 
 </header>
 
-<main>
+
 
 ## Features
 
@@ -84,4 +84,3 @@ The attribute can be dynamic as well:
 - `browse` to replace the default “Browse…” button
 - `preview` to replace the default preview image
 
-</main>

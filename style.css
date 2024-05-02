@@ -15,8 +15,7 @@ body {
 	font: 100%/1.5 var(--font-body);
 }
 
-body > *,
-body > md-block > * {
+body > * {
 	order: 10;
 	padding: 1em clamp(1em, 50vw - var(--page-width) / 2, 50vw);
 
@@ -79,10 +78,6 @@ nav {
 			text-decoration: none;
 		}
 	}
-}
-
-md-block {
-	display: contents;
 }
 
 code, pre {

@@ -11,7 +11,7 @@ Click to cycle through a variety of options
 
 </header>
 
-<main>
+
 
 ## Features
 
@@ -106,4 +106,3 @@ Dynamic `aria-selected`:
 <button onclick="dynamic_selected.children[3].setAttribute('aria-selected', 'true')">Select 🙂</button>
 ```
 
-</main>

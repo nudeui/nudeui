@@ -10,7 +10,7 @@ An element for propagating data changes between elements.
 
 </header>
 
-<main>
+
 
 ## Features
 
@@ -41,4 +41,3 @@ Show character count:
 
 
 
-</main>

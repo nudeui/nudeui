@@ -10,7 +10,7 @@ Like `<meter>`, but discrete. Useful to display ratings etc.
 
 </header>
 
-<main>
+
 
 ## Features
 
@@ -85,4 +85,3 @@ Actual image instead of emoji:
 
 * [`<nd-rating>`](../nd-rating), an editable version of `<meter-discrete>`
 
-</main>
