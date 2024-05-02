@@ -128,6 +128,10 @@ let self = class ProgressSlider extends HTMLElement {
 		else {
 			this.sliderElement.setAttribute(name, newValue);
 			this.valueElement.setAttribute(name, newValue);
+
+			if (["min", "max", "value"].includes(name)) {
+				this.style.setProperty("--progress", this.progress);
+			}
 		}
 	}
 }
