@@ -54,6 +54,10 @@ slot[name="value"] {
 		position: initial;
 		inset: initial;
 		translate: initial;
+
+		@container style(--value-position: start) {
+			order: -1;
+		}
 	}
 
 	/* Prevent input from moving all over the place as we type */
