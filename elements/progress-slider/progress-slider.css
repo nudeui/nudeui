@@ -54,7 +54,7 @@ slot[name="value"] {
 	}
 
 	&::after {
-		content: var(--tooltip-suffix);
+		content: var(--value-suffix);
 	}
 
 	input,
@@ -94,6 +94,6 @@ slot[name="value"] {
 	}
 }
 
-:host([show="progress"]) .slider-tooltip {
+:host([show="progress"]) :where(.slider-tooltip, slot[name="value"]) {
 	--value-suffix: "%";
 }
