@@ -84,10 +84,10 @@ let self = class ProgressSlider extends HTMLElement {
 		let value = this[source + "Element"].value;
 
 		if (source === "slider") {
-			this.valueElement.value = this.show === "progress" ? this.progressAt(value) : value;
+			this.valueElement.value = this.show === "progress" ? this.progressAt(value) * 100 : value;
 		}
 		else if (source === "value") {
-			this.sliderElement.value = this.show === "progress" ? this.valueAt(value) : value;
+			this.sliderElement.value = this.show === "progress" ? this.valueAt(value / 100) : value;
 		}
 
 		this.style.setProperty("--value", this.value);
@@ -127,10 +127,10 @@ let self = class ProgressSlider extends HTMLElement {
 		if (name === "show") {
 			if (newValue === "progress") {
 				this.valueElement.setAttribute("min", 0);
-				this.valueElement.setAttribute("max", 1);
+				this.valueElement.setAttribute("max", 100);
 
 				// `step` should be proportional to the one the component already has.
-				this.valueElement.setAttribute("step", this.step / (this.max - this.min));
+				this.valueElement.setAttribute("step", 100 * this.step / Math.abs(this.max - this.min));
 			}
 			else {
 				["min", "max", "step"].forEach(prop => this.valueElement.setAttribute(prop, this[prop]));
