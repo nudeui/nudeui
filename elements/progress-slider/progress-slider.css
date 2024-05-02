@@ -12,7 +12,7 @@ slot:not([name]) > * {
 .slider-tooltip,
 slot[name="value"] {
 	--_slider-thumb-width: var(--slider-thumb-width, 16px);
-	--_tooltip-background: var(--tooltip-background, hsl(0 0 0 / 80%));
+	--_tooltip-background: var(--tooltip-background, color-mix(in oklab, canvas 80%, oklab(none none none / 0%)));
 	--_tooltip-border-radius: var(--tooltip-border-radius, .3em);
 	--_tooltip-pointer-height: var(--tooltip-pointer-height, .3em);
 	--_tooltip-pointer-angle: var(--tooltip-pointer-angle, 90deg);
@@ -35,7 +35,7 @@ slot[name="value"] {
 	border: var(--_tooltip-pointer-height) solid transparent;
 	border-radius: calc(var(--_tooltip-border-radius) + var(--_tooltip-pointer-height));
 	text-align: center;
-	color: white;
+	color: canvastext;
 	background:
 		conic-gradient(from calc(-1 * var(--_tooltip-pointer-angle) / 2) at bottom, var(--_tooltip-background) var(--_tooltip-pointer-angle), transparent 0)
 			border-box bottom / 100% var(--_tooltip-pointer-height) no-repeat,
@@ -47,18 +47,6 @@ slot[name="value"] {
 		scale 200ms,
 		width 100ms,
 		left 200ms cubic-bezier(.17,.67,.49,1.48);
-
-	@container style(--value-position) {
-		--tooltip-pointer-height: 0;
-
-		position: initial;
-		inset: initial;
-		translate: initial;
-
-		@container style(--value-position: start) {
-			order: -1;
-		}
-	}
 
 	/* Prevent input from moving all over the place as we type */
 	&:focus-within {
@@ -103,6 +91,15 @@ slot[name="value"] {
 		/* visibility: hidden;
 		opacity: 0;
 		scale: .5; */
+	}
+
+	@container style(--value-position) {
+		display: contents;
+		color-scheme: inherit;
+
+		@container style(--value-position: start) {
+			order: -1;
+		}
 	}
 }
 
