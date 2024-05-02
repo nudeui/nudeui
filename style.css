@@ -5,6 +5,7 @@
 
 :root {
 	--page-width: 900px;
+	--page-margin-inline: clamp(1em, 50vw - var(--page-width) / 2, 50vw);
 }
 
 body {
@@ -15,14 +16,40 @@ body {
 	font: 100%/1.5 var(--font-body);
 }
 
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1.1;
+	margin-block: 1.5rem .5rem;
+}
+
+h2 {
+	font-size: 2.5rem;
+	font-weight: 300;
+	color: var(--accent-color);
+}
+
+ul, ol {
+	margin-block: .5rem 1rem;
+}
+
 body > * {
-	order: 10;
-	padding: 1em clamp(1em, 50vw - var(--page-width) / 2, 50vw);
+	&:is(header, nav, footer) {
+		padding-inline: var(--page-margin-inline);
+	}
+
+	&:not(header, nav, footer) {
+		margin-inline: var(--page-margin-inline);
+		order: 10;
+	}
+
+	header + nav + & {
+		margin-top: 1em;
+	}
 
 	&:is(header) {
 		order: 0;
 		background: var(--accent-color);
 		color: white;
+		padding-block: 1em;
 
 		& h1 {
 			margin: 0;
