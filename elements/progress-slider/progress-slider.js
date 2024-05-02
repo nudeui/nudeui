@@ -84,7 +84,7 @@ let self = class ProgressSlider extends HTMLElement {
 		let value = this[source + "Element"].value;
 
 		if (source === "slider") {
-			this.valueElement.value = this.show === "progress" ? this.progressAt(value) * 100 : value;
+			this.valueElement.value = this.show === "progress" ? +(this.progressAt(value) * 100).toPrecision(4) : value;
 		}
 		else if (source === "value") {
 			this.sliderElement.value = this.show === "progress" ? this.valueAt(value / 100) : value;
