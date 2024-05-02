@@ -1,5 +1,6 @@
 :host {
 	display: flex;
+	gap: .5em;
 	position: relative;
 }
 
@@ -99,6 +100,12 @@ slot[name="value"] {
 
 		@container style(--value-position: start) {
 			order: -1;
+		}
+
+		input,
+		&::slotted(input) {
+			all: revert-layer;
+			font: inherit;
 		}
 	}
 }
