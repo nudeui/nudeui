@@ -125,7 +125,16 @@ let self = class ProgressSlider extends HTMLElement {
 		}
 
 		if (name === "show") {
+			if (newValue === "progress") {
+				this.valueElement.setAttribute("min", 0);
+				this.valueElement.setAttribute("max", 1);
 
+				// `step` should be proportional to the one the component already has.
+				this.valueElement.setAttribute("step", this.step / (this.max - this.min));
+			}
+			else {
+				["min", "max", "step"].forEach(prop => this.valueElement.setAttribute(prop, this[prop]));
+			}
 		}
 		else {
 			this.sliderElement.setAttribute(name, newValue);
