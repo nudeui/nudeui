@@ -48,6 +48,14 @@ slot[name="value"] {
 		width 100ms,
 		left 200ms cubic-bezier(.17,.67,.49,1.48);
 
+	@container style(--value-position) {
+		--tooltip-pointer-height: 0;
+
+		position: initial;
+		inset: initial;
+		translate: initial;
+	}
+
 	/* Prevent input from moving all over the place as we type */
 	&:focus-within {
 		transition-delay: .5s;
