@@ -31,6 +31,8 @@ let self = class ProgressSlider extends HTMLElement {
 
 	handleEvent (event) {
 		if (event.type === "slotchange") {
+			// What is the source of truth?
+			// "slider" by default, but becomes "value" if no slider is slotted, but a spinner is.
 			let source = "slider";
 
 			for (let name in this.#slots) {
@@ -39,6 +41,10 @@ let self = class ProgressSlider extends HTMLElement {
 				let oldElement = this[elementProp];
 				let nodes = slot.assignedNodes();
 				let elements = slot.assignedElements();
+
+				if (elements[0] === oldElement) {
+					continue;
+				}
 
 				if (name === "slider" && elements.length === 0 && nodes.every(node => !node.nodeValue.trim())) {
 					// Literally every node assigned to this slot is an empty text node. Likely formatting, remove it.
