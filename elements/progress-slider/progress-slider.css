@@ -48,13 +48,25 @@ slot[name="value"] {
 		width 100ms,
 		left 200ms cubic-bezier(.17,.67,.49,1.48);
 
+	@container style(--value-position) {
+		--tooltip-pointer-height: 0;
+
+		position: initial;
+		inset: initial;
+		translate: initial;
+
+		@container style(--value-position: start) {
+			order: -1;
+		}
+	}
+
 	/* Prevent input from moving all over the place as we type */
 	&:focus-within {
 		transition-delay: .5s;
 	}
 
 	&::after {
-		content: var(--tooltip-suffix);
+		content: var(--value-suffix);
 	}
 
 	input,
@@ -94,6 +106,6 @@ slot[name="value"] {
 	}
 }
 
-:host([show="progress"]) .slider-tooltip {
+:host([show="progress"]) :where(.slider-tooltip, slot[name="value"]) {
 	--value-suffix: "%";
 }
