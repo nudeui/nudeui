@@ -55,6 +55,8 @@ let self = class ProgressSlider extends HTMLElement {
 				element ??= slot.firstElementChild;
 				this[elementProp] = element;
 
+				["min", "max", "step"].forEach(prop => this[elementProp][prop] = this[prop]);
+
 				if (oldElement !== this[elementProp]) {
 					oldElement?.removeEventListener("input", this);
 					this[elementProp]?.addEventListener("input", this);
