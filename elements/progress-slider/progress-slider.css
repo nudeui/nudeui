@@ -1,0 +1,99 @@
+:host {
+	display: flex;
+	position: relative;
+}
+
+.progress-slider,
+slot:not([name])::slotted(*),
+slot:not([name]) > * {
+	width: 100%;
+}
+
+.slider-tooltip,
+slot[name="value"] {
+	--_slider-thumb-width: var(--slider-thumb-width, 16px);
+	--_tooltip-background: var(--tooltip-background, hsl(0 0 0 / 80%));
+	--_tooltip-border-radius: var(--tooltip-border-radius, .3em);
+	--_tooltip-pointer-height: var(--tooltip-pointer-height, .3em);
+	--_tooltip-pointer-angle: var(--tooltip-pointer-angle, 90deg);
+
+	@supports (field-sizing: content) {
+		--field-sizing-width: auto;
+	}
+
+	position: absolute;
+	left: clamp(-20%,
+			100% * var(--progress)
+			- (var(--progress) - 0.5) * var(--_slider-thumb-width) / 2 /* center on slider thumb */
+		, 100%);
+	bottom: calc(100% + 3px);
+	translate: -50%;
+	transform-origin: bottom;
+	display: flex;
+	padding-block: .3em;
+	padding-inline: .4em;
+	border: var(--_tooltip-pointer-height) solid transparent;
+	border-radius: calc(var(--_tooltip-border-radius) + var(--_tooltip-pointer-height));
+	text-align: center;
+	color: white;
+	background:
+		conic-gradient(from calc(-1 * var(--_tooltip-pointer-angle) / 2) at bottom, var(--_tooltip-background) var(--_tooltip-pointer-angle), transparent 0)
+			border-box bottom / 100% var(--_tooltip-pointer-height) no-repeat,
+		var(--_tooltip-background) padding-box;
+	color-scheme: dark;
+	transition:
+		visibility 0s 200ms,
+		opacity 200ms,
+		scale 200ms,
+		width 100ms,
+		left 200ms cubic-bezier(.17,.67,.49,1.48);
+
+	/* Prevent input from moving all over the place as we type */
+	&:focus-within {
+		transition-delay: .5s;
+	}
+
+	&::after {
+		content: var(--tooltip-suffix);
+	}
+
+	input,
+	&::slotted(input) {
+		all: unset;
+	}
+
+	> input[type=number],
+	&:is(input[type=number]),
+	&::slotted(input[type=number]) {
+		--content-width: calc(var(--value-length) * 1ch);
+		field-sizing: content;
+		width: var(--field-sizing-width, calc(var(--content-width, 2ch) + 1.2em));
+		min-width: calc(2ch + 1.2em);
+		box-sizing: content-box;
+
+		&::-webkit-textfield-decoration-container {
+			gap: .2em;
+		}
+
+		@container style(--value-suffix) {
+			&::-webkit-textfield-decoration-container {
+				flex-flow: row-reverse;
+			}
+		}
+
+		/* Don’t auto hide the spin buttons */
+		&::-webkit-inner-spin-button {
+			opacity: 1;
+		}
+	}
+
+	&:not(:is(:focus-within, :hover) > *, .color-slider:is(:focus, :hover) + *, :focus, :hover) {
+		/* visibility: hidden;
+		opacity: 0;
+		scale: .5; */
+	}
+}
+
+:host([show="progress"]) .slider-tooltip {
+	--value-suffix: "%";
+}
