@@ -1,9 +1,9 @@
-let self = class ProgressSlider extends HTMLElement {
+let self = class NudeSlider extends HTMLElement {
 	sliderElement = null;
 	valueElement = null;
 	#slots = {};
 
-	static tagName = "progress-slider";
+	static tagName = "nd-slider";
 	static observedAttributes = ["min", "max", "step", "value", "show"];
 
 	constructor () {
