@@ -135,6 +135,7 @@ there is no (easy) way to get a reference to any of the other elements in the de
 ```html
 <html-demo isolate>
 	<pre id="isolated-demo" class="language-html"><code>
+		&lt;p>This demo has no actual content, but scroll down a bit 👇🏼 &lt;/p>
 		&lt;script>{
 			let pre = document.getElementById("isolated-demo");
 			let container = pre.closest("body > *");
