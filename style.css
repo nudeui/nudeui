@@ -14,39 +14,19 @@ body {
 	margin: 0;
 	min-height: 100vh;
 	font: 100%/1.5 var(--font-body);
-}
+	padding-inline: var(--page-margin-inline);
 
-h1, h2, h3, h4, h5, h6 {
-	line-height: 1.1;
-	margin-block: 1.5rem .5rem;
-}
-
-h2 {
-	font-size: 2.5rem;
-	font-weight: 300;
-	color: var(--accent-color);
-}
-
-ul, ol {
-	margin-block: .5rem 1rem;
-}
-
-body > * {
-	&:is(header, nav, footer) {
+	> :is(header, nav, footer) {
 		padding-inline: var(--page-margin-inline);
+
 	}
 
-	&:not(header, nav, footer):not(.full-width) {
-		margin-inline: var(--page-margin-inline);
-		order: 10;
+	> :is(header, nav, footer, .full-width) {
+		margin-inline: calc(-1 * var(--page-margin-inline));
 	}
 
-	header + nav + & {
-		margin-top: 1em;
-	}
-
-	&:is(header) {
-		order: 0;
+	> header {
+		order: -2;
 		background: var(--accent-color);
 		color: white;
 		padding-block: 1em;
@@ -80,6 +60,29 @@ body > * {
 			}
 		}
 	}
+
+	> nav {
+		order: -1;
+
+		& + * {
+			margin-top: 1em;
+		}
+	}
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1.1;
+	margin-block: 1.5rem .5rem;
+}
+
+h2 {
+	font-size: 2.5rem;
+	font-weight: 300;
+	color: var(--accent-color);
+}
+
+ul, ol {
+	margin-block: .5rem 1rem;
 }
 
 nav {
