@@ -133,12 +133,14 @@ let self = class HTMLDemoElement extends HTMLElement {
 				this.#el.demoNodes.forEach(node => node.remove());
 				this.#slots.demo.assign();
 				this.#slots.demo.innerHTML = this.code;
+				runScripts(this.#slots.demo.children);
 			}
 			else {
 				this.#dummy.innerHTML = this.code;
 				let nodes = [...this.#dummy.childNodes]
 				this.append(...nodes);
 				this.#slots.demo.assign(...nodes);
+				runScripts(nodes);
 			}
 		}
 		else {
@@ -247,6 +249,21 @@ let self = class HTMLDemoElement extends HTMLElement {
 function appendHTML (container, html) {
 	container.insertAdjacentHTML("beforeend", html);
 	return container.children[container.children.length - 1];
+}
+
+/**
+ * Execute any inline <scripts> in an array of nodes
+ * @param {Array<Node>} nodes
+ */
+function runScripts (nodes) {
+	for (let node of nodes) {
+		if (node.matches?.("script")) {
+			const clone = document.createElement("script");
+			node.getAttributeNames().forEach(name => clone.setAttribute(name, node.getAttribute(name)));
+			clone.append(node.innerHTML);
+			node.replaceWith(clone);
+		}
+	}
 }
 
 customElements.define("html-demo", self);
