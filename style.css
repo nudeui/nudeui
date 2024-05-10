@@ -73,6 +73,14 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	line-height: 1.1;
 	margin-block: 1.5rem .5rem;
+
+	.header-anchor {
+		color: inherit;
+
+		&:not(:hover, :focus) {
+			text-decoration: none;
+		}
+	}
 }
 
 h2 {

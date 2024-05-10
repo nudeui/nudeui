@@ -1,4 +1,6 @@
-// let markdownIt = require("markdown-it");
+let markdownIt = require("markdown-it");
+let markdownItAnchor = require("markdown-it-anchor");
+let markdownItAttrs = require("markdown-it-attrs");
 
 module.exports = config => {
 	let data = {
@@ -21,11 +23,16 @@ module.exports = config => {
 
 	config.setDataDeepMerge(true);
 
-	// config.setLibrary("md", markdownIt({
-	// 		html: true,
-	// 	})
-	// 	.disable("code")
-	// );
+	config.setLibrary("md", markdownIt({
+			html: true,
+		})
+		.disable("code")
+		.use(markdownItAttrs)
+		.use(markdownItAnchor, {
+			permalink: markdownItAnchor.permalink.headerLink(),
+			level: 2,
+		})
+	);
 
 	config.addFilter(
 		"relative",

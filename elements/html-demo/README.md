@@ -122,6 +122,8 @@ In code-first mode, any `<script>` elements will also be executed:
 </html-demo>
 ```
 
+#### Executing scripts in isolated mode { #script-isolate }
+
 Do note that there is **limited utility in doing this in isolated mode**, since
 there is no (easy) way to get a reference to any of the other elements in the demo:
 - [`document.currentScript` is `null` in shadow trees](https://html.spec.whatwg.org/multipage/dom.html#dom-document-currentscript-dev)
@@ -136,8 +138,7 @@ there is no (easy) way to get a reference to any of the other elements in the de
 		&lt;script>{
 			let pre = document.getElementById("isolated-demo");
 			let container = pre.closest("body > *");
-			console.log(container);
-			container.before("Hi from shadow tree script!");
+			container.after("Hi from shadow tree script!");
 		}&lt;/script>
 	</code></pre>
 </html-demo>
