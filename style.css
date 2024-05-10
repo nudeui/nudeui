@@ -36,7 +36,7 @@ body > * {
 		padding-inline: var(--page-margin-inline);
 	}
 
-	&:not(header, nav, footer) {
+	&:not(header, nav, footer):not(.full-width) {
 		margin-inline: var(--page-margin-inline);
 		order: 10;
 	}

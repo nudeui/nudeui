@@ -1,5 +1,8 @@
 table {
 	width: 100%;
+	width: -moz-available;
+	width: -webkit-fill-available;
+	width: stretch;
 	border-collapse: collapse;
 	border-spacing: 0;
 }
