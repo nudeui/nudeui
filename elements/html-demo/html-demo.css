@@ -3,7 +3,7 @@
 	--_font-size-max: var(--font-size-max, 400%);
 
 	--color-neutral: oklch(50% 0.03 230);
-	--color-canvas: oklch(from canvas l 0.002 none);
+	--color-canvas: color-mix(in oklch, canvas, oklch(none 0.002 none) 100%);
 	--color-neutral-95: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 96%);
 	--color-neutral-90: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 90%);
 	--color-neutral-80: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 80%);
