@@ -78,7 +78,7 @@ Actual image instead of emoji:
 
 
 ```html
-<meter-discrete value="3.5" icon="../logo.svg"></meter-discrete>
+<meter-discrete value="3.5" icon="/logo.svg"></meter-discrete>
 ```
 
 ## See also
