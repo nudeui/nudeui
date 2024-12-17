@@ -150,7 +150,7 @@ there is no (easy) way to get a reference to any of the other elements in the de
 The element class provides two helper methods for this very thing:
 
 ```js
-import HTMLDemoElement from "https://nudeui.com/html-demo/html-demo.js";
+import HTMLDemoElement from "https://nudeui.com/elements/html-demo/html-demo.js";
 
 HTMLDemoElement.wrapAll({
 	container: mySection,
