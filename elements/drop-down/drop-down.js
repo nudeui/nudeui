@@ -1,3 +1,5 @@
+import { observeElement } from "https://unpkg.com/select-events/src/coreFunctionality.js";
+
 if (!HTMLSlotElement.prototype.assign) {
 	// Include Imperative Slot Assignment polyfill
 	await import("https://unpkg.com/dom-slot-assign");
@@ -11,6 +13,7 @@ export default class DropDown extends HTMLElement {
 	#resizeObserver
 	#menu
 	#trigger
+	#reset
 
 	constructor () {
 		super();
@@ -101,6 +104,7 @@ export default class DropDown extends HTMLElement {
 	}
 
 	#childrenChanged () {
+		this.#reset?.();
 		let select = this.querySelectorAll(":scope > select")[0];
 		let trigger = this.querySelectorAll(":scope > :not(select)")[0];
 		this.#triggerSlot.assign(trigger);
@@ -108,6 +112,16 @@ export default class DropDown extends HTMLElement {
 
 		this.#trigger = trigger;
 		this.#menu = select;
+
+		if (select) {
+			const { disconnect } = observeElement(select, (select, selectOpened) => {
+				if (selectOpened)
+					this.#trigger.setAttribute("aria-pressed", "true");
+				else
+					this.#trigger.removeAttribute("aria-pressed");
+			});
+			this.#reset = () => disconnect();
+		}
 
 		let label = this.#menu.ariaLabel || "Select:";
 		this.#menu.insertAdjacentHTML("afterbegin", `<option style="opacity: .5" disabled selected>${label}</option>`);
