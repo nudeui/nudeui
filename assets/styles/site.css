@@ -1,0 +1,32 @@
+/* Component metadata badges, shown under the page title */
+
+.component-badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-3xs, 0.4em);
+	margin-block-start: calc(-0.5 * var(--size-s, 1em));
+
+	.badge {
+		--badge-color: var(--ui-color-text-quiet, GrayText);
+
+		padding: 0.1em 0.7em;
+		border: 1px solid color-mix(in oklab, var(--badge-color) 40%, transparent);
+		border-radius: 100vw;
+		background: color-mix(in oklab, var(--badge-color) 10%, transparent);
+		color: var(--badge-color);
+		font-size: var(--font-size-xs, 0.75rem);
+		font-weight: 600;
+	}
+
+	.badge[data-status="mature"] {
+		--badge-color: light-dark(hsl(140 60% 28%), hsl(140 45% 65%));
+	}
+
+	.badge[data-status="in-incubation"] {
+		--badge-color: light-dark(hsl(35 85% 32%), hsl(40 70% 65%));
+	}
+
+	.badge[data-status="failed"] {
+		--badge-color: light-dark(hsl(0 70% 42%), hsl(5 75% 70%));
+	}
+}

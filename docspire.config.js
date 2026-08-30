@@ -14,6 +14,7 @@ const site = {
 	id: "nudeui-site",
 	url: import.meta.url,
 	scripts: "./site.js",
+	styles: "site.css",
 	slots: {
 		"content.end": "installation",
 	},
@@ -45,6 +46,47 @@ const site = {
 				delete code.attrs.demo;
 
 				return { tag: "html-demo", content: [pre] };
+			});
+
+			return tree;
+		});
+
+		// Show the component’s metadata (status, type) as badges under the page title
+		config.addContentTransform((tree, data) => {
+			if (!data?.id) {
+				return tree;
+			}
+
+			let badges = [];
+			let status = data.component?.status;
+
+			if (status) {
+				badges.push({
+					tag: "span",
+					attrs: { class: "badge", "data-status": status.toLowerCase().replaceAll(" ", "-") },
+					content: [status],
+				});
+			}
+
+			badges.push({
+				tag: "span",
+				attrs: { class: "badge", "data-type": data.css_only ? "css" : "js" },
+				content: [data.css_only ? "CSS-only" : "JS"],
+			});
+
+			let done = false;
+			tree.match("h1", node => {
+				if (done) {
+					return node;
+				}
+
+				done = true;
+
+				return [node, "\n", {
+					tag: "p",
+					attrs: { class: "component-badges" },
+					content: badges,
+				}];
 			});
 
 			return tree;
