@@ -27,7 +27,7 @@ const site = {
 	id: "nudeui-site",
 	url: import.meta.url,
 	scripts: "./site.js",
-	styles: "site.css",
+	styles: ["site.css", "demos.css"],
 	icons: ICONS,
 	data: { statusIcons: STATUS_ICONS },
 	slots: {
