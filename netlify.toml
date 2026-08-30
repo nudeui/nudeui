@@ -1,0 +1,7 @@
+[build]
+	command = "npm run build"
+	publish = "_site"
+
+[build.environment]
+	# Docspire needs a modern Node (import attributes, etc.)
+	NODE_VERSION = "22"
