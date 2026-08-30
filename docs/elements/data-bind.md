@@ -1,14 +1,18 @@
 ---
+title: "<data-bind>"
+description: "Declaratively bind data from a source element to a target element"
 id: data-bind
+order: 10
+component:
+  name: Data bind
+  status: In incubation
 ---
-
-<header>
+<script type="module" src="/elements/data-bind/data-bind.js"></script>
 
 # `<data-bind>`
 
 An element for propagating data changes between elements.
 
-</header>
 
 
 
@@ -23,7 +27,7 @@ An element for propagating data changes between elements.
 
 Display slider value:
 
-```html
+```html {demo}
 <data-bind>
 	<input type="range" data-bind-source></textarea>
 	<span data-bind="value"></span>
@@ -32,7 +36,7 @@ Display slider value:
 
 Show character count:
 
-```html
+```html {demo}
 <data-bind>
 	<textarea data-bind-source></textarea>
 	<span data-bind="value.length"></span>

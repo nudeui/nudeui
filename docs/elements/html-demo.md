@@ -1,15 +1,19 @@
 ---
+title: "<html-demo>"
+description: "Display demos of HTML content alongside their source code"
 id: html-demo
+order: 6
+component:
+  name: HTML Demo
+  status: Mature
 ---
-
-<header>
+<script type="module" src="/elements/html-demo/html-demo.js"></script>
 
 # `<html-demo>`
 
 An element for displaying HTML content alongside its source code.
 Great for documenting web components!
 
-</header>
 
 
 
@@ -38,7 +42,7 @@ From most to least likely to be implemented:
 
 Code-first:
 
-```html
+```html {demo}
 <html-demo>
 	<pre class="language-html"><code>
 		&lt;input type=range>
@@ -48,7 +52,7 @@ Code-first:
 
 Content-first:
 
-```html
+```html {demo}
 <html-demo id=foo>
 	<input type=range>
 </html-demo>
@@ -58,7 +62,7 @@ Content-first:
 
 Only `font-size` for now:
 
-```html
+```html {demo}
 <html-demo adjust="font-size">
 	<button>Click me</button>
 </html-demo>
@@ -83,7 +87,7 @@ This works with both modes:
 <tr>
 <td>
 
-```html
+```html {demo}
 <html-demo isolate>
 	<button>Click me</button>
 </html-demo>
@@ -91,7 +95,7 @@ This works with both modes:
 </td>
 <td>
 
-```html
+```html {demo}
 <html-demo isolate>
 	<pre class="language-html"><code>
 		&lt;button>Click me&lt;/button>
@@ -109,7 +113,7 @@ This works with both modes:
 
 In code-first mode, any `<script>` elements will also be executed:
 
-```html
+```html {demo}
 <html-demo>
 	<pre class="language-html"><code>
 		&lt;button>Click me&lt;/button>
@@ -132,7 +136,7 @@ there is no (easy) way to get a reference to any of the other elements in the de
 - `this` will be the global `window` object or `undefined` in module scripts.
 
 
-```html
+```html {demo}
 <html-demo isolate>
 	<pre id="isolated-demo" class="language-html"><code>
 		&lt;p>This demo has no actual content, but scroll down a bit 👇🏼 &lt;/p>

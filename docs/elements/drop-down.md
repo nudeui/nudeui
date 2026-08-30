@@ -1,14 +1,18 @@
 ---
-title: <drop-down>
+title: "<drop-down>"
+description: "Drop-down menu that performs actions when items are clicked"
 id: drop-down
+order: 100
+component:
+  name: Drop down
+  status: Failed
 ---
-<header>
+<script type="module" src="/elements/drop-down/drop-down.js"></script>
 
 # `<drop-down>`
 
 Drop-down menu that performs actions when items are clicked
 
-</header>
 
 
 
@@ -37,7 +41,7 @@ so when the menu is closed with no selection, `aria-pressed` lingers until the b
 
 Basic:
 
-```html
+```html {demo}
 <drop-down>
 	<button>Click me</button>
 	<select>
@@ -50,7 +54,7 @@ Basic:
 
 With customized menu label:
 
-```html
+```html {demo}
 <drop-down>
 	<button>+</button>
 	<select aria-label="Create new…">

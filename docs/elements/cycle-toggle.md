@@ -1,15 +1,18 @@
 ---
-title: <cycle-toggle>
+title: "<cycle-toggle>"
+description: "Compact way to select one option from a group, click selects the next option"
 id: cycle-toggle
+order: 3
+component:
+  name: Cycle Toggle
+  status: Mature
 ---
-
-<header>
+<script type="module" src="/elements/cycle-toggle/cycle-toggle.js"></script>
 
 # `<cycle-toggle>`
 
 Click to cycle through a variety of options
 
-</header>
 
 
 
@@ -24,7 +27,7 @@ Click to cycle through a variety of options
 
 Basic, no selected option:
 
-```html
+```html {demo}
 <label for="mood">Mood:</label>
 <cycle-toggle id="mood">
 	<span>😔</span>
@@ -37,7 +40,7 @@ Basic, no selected option:
 
 Pre-selected option:
 
-```html
+```html {demo}
 <label for="mood2">Mood:</label>
 <cycle-toggle id="mood2">
 	<span>😔</span>
@@ -50,7 +53,7 @@ Pre-selected option:
 
 With values (any child element works):
 
-```html
+```html {demo}
 <label for="mood3">Mood:</label>
 <cycle-toggle id="mood3">
 	<data value="sad">😔</data>
@@ -62,7 +65,7 @@ With values (any child element works):
 
 With styles:
 
-```html
+```html {demo}
 <cycle-toggle>
 	<data value="" style="opacity: .4">👍🏼</data>
 	<data value="1">👍🏼</data>
@@ -71,7 +74,7 @@ With styles:
 
 Readonly:
 
-```html
+```html {demo}
 <cycle-toggle id="readonly_toggle" readonly>
 	<span>😔</span>
 	<span>😕</span>
@@ -84,7 +87,7 @@ Readonly:
 
 Set `element.value`:
 
-```html
+```html {demo}
 <cycle-toggle id="toggle_rate">
 	<data value="1">👍🏼</data>
 	<data value="-1">👎🏼</data>
@@ -95,7 +98,7 @@ Set `element.value`:
 
 Dynamic `aria-selected`:
 
-```html
+```html {demo}
 <cycle-toggle id="dynamic_selected">
 	<span>😔</span>
 	<span>😕</span>

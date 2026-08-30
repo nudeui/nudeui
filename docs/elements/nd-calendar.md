@@ -1,14 +1,18 @@
 ---
+title: "<nd-calendar>"
+description: "Show dates on a calendar"
 id: nd-calendar
+order: 9
+component:
+  name: Calendar
+  status: In incubation
 ---
-
-<header>
+<script type="module" src="/elements/nd-calendar/nd-calendar.js"></script>
 
 # `<nd-calendar>`
 
 Display dates, date ranges, or date/time ranges by day or hour.
 
-</header>
 
 
 
@@ -21,7 +25,7 @@ Display dates, date ranges, or date/time ranges by day or hour.
 
 No attributes
 
-```html
+```html {demo}
 <nd-calendar>
 	<time datetime="2022-09-05T00:00"></time> <!-- Times are ignored -->
 	<time datetime="2022-09-07 / 2022-09-10"></time> <!-- Range -->
@@ -30,7 +34,7 @@ No attributes
 ```
 
 Custom max
-```html
+```html {demo}
 <nd-calendar max="2022-09-15">
 	<time datetime="2022-09-05"></time>
 	<time datetime="2022-09-07"></time>
@@ -39,7 +43,7 @@ Custom max
 ```
 
 Custom min
-```html
+```html {demo}
 <nd-calendar min="2022-09-01">
 	<time datetime="2022-09-05"></time>
 	<time datetime="2022-09-07"></time>
@@ -48,7 +52,7 @@ Custom min
 ```
 
 Custom min and max
-```html
+```html {demo}
 <nd-calendar min="2022-08-01" max="2022-09-30">
 	<time datetime="2022-09-05"></time>
 	<time datetime="2022-09-07"></time>
@@ -58,7 +62,7 @@ Custom min and max
 
 By months:
 
-```html
+```html {demo}
 <nd-calendar rows="months">
 	<time datetime="2022-05-02"></time>
 	<time datetime="2022-05-12"></time>

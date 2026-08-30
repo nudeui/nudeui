@@ -1,16 +1,19 @@
 ---
-title: Nude switch
+title: "Nude switch"
+description: "On/off toggle switch"
 id: nd-switch
 css_only: true
+order: 1
+component:
+  name: Switch
+  status: Mature
 ---
-
-<header>
+<link rel="stylesheet" href="/elements/nd-switch/nd-switch.css">
 
 # Nude switch
 
 CSS-only toggle switch
 
-</header>
 
 
 
@@ -18,25 +21,25 @@ CSS-only toggle switch
 
 Basic:
 
-```html
+```html {demo}
 <input type="checkbox" class="nd-switch">
 ```
 
 Bigger:
 
-```html
+```html {demo}
 <input type="checkbox" class="nd-switch" style="font-size: 200%">
 ```
 
 With larger and smaller thumb:
 
-```html
+```html {demo}
 <input type="checkbox" class="nd-switch" style="--nd-thumb-margin: -.2em">
 <input type="checkbox" class="nd-switch" style="--nd-thumb-margin: .2em">
 ```
 
 Different colors:
-```html
+```html {demo}
 <input type="checkbox" class="nd-switch" style="
 	--nd-thumb-color: black;
 	--nd-switch-color: white; border: 1px solid black;
@@ -46,13 +49,13 @@ Different colors:
 
 Right to left:
 
-```html
+```html {demo}
 <input type="checkbox" class="nd-switch" dir="rtl">
 ```
 
 Disabled:
 
-```html
+```html {demo}
 <input type="checkbox" class="nd-switch" disabled>
 ```
 
