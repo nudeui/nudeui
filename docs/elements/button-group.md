@@ -1,16 +1,20 @@
 ---
+title: "<button-group>"
+description: "Group of buttons for selecting one or more values out of a set of options"
 id: button-group
-title: <button-group>
-includes: '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.81/dist/themes/light.css" /><script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.81/dist/shoelace.js"></script>'
+order: 2
+component:
+  name: Button Group
+  status: Mature
 ---
-
-<header>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.81/dist/themes/light.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.81/dist/shoelace.js"></script>
+<script type="module" src="/elements/button-group/button-group.js"></script>
 
 # `<button-group>`
 
 Group of exclusive push buttons
 
-</header>
 
 ## Features
 
@@ -24,7 +28,7 @@ Group of exclusive push buttons
 
 Basic, no selected option:
 
-```html
+```html {demo}
 <button-group>
 	<button>Design</button>
 	<button>Preview</button>
@@ -33,7 +37,7 @@ Basic, no selected option:
 
 Providing values:
 
-```html
+```html {demo}
 <button-group id="temporal" oninput="out.textContent = this.value">
 	<button value="">None</button>
 	<button value="d">Dates</button>
@@ -45,7 +49,7 @@ Providing values:
 
 Pre-selected state via `aria-pressed`:
 
-```html
+```html {demo}
 <button-group>
 	<button>Design</button>
 	<button aria-pressed="true">Preview</button>
@@ -54,7 +58,7 @@ Pre-selected state via `aria-pressed`:
 
 Multiple:
 
-```html
+```html {demo}
 <button-group multiple oninput="button_multiple_value.textContent = this.value">
 	<button value="b"><span style="font-weight: bold">B</span></button>
 	<button value="i"><span style="font-style: italic">I</span></button>
@@ -65,7 +69,7 @@ Multiple:
 
 Participates in form submission (requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
 
-```html
+```html {demo}
 <form action="about:blank" target="_blank">
 	<button-group name="favorite_letter">
 		<button>A</button>
@@ -82,7 +86,7 @@ Participates in form submission (requires [`ElementInternals`](https://developer
 
 Vertical
 
-```html
+```html {demo}
 <button-group name="type" vertical>
 	<button value="garlic" aria-pressed="true">Garlic</button>
 	<button value="msg">MSG</button>
@@ -92,7 +96,7 @@ Vertical
 
 Separate
 
-```html
+```html {demo}
 <button-group name="type" separate>
 	<button>Salt</button>
 	<button>Pepper</button>
@@ -107,7 +111,7 @@ Separate
 
 Dynamically setting `element.value`:
 
-```html
+```html {demo}
 <button-group id="group1">
 	<button>A</button>
 	<button aria-pressed="true">B</button>
@@ -118,7 +122,7 @@ Dynamically setting `element.value`:
 
 Dynamically adding `aria-pressed` attribute:
 
-```html
+```html {demo}
 <button-group id="group2">
 	<button>A</button>
 	<button aria-pressed="true">B</button>
@@ -129,7 +133,7 @@ Dynamically adding `aria-pressed` attribute:
 
 Dynamically adding options:
 
-```html
+```html {demo}
 <button-group id="group3">
 	<button>1</button>
 	<button>2</button>
@@ -142,7 +146,7 @@ Dynamically adding options:
 `<button-group>` has an implicit ARIA Role of `region`, so adding an `aria-label` should make it work as a landmark out of the box
 (requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
 
-```html
+```html {demo}
 <button-group aria-label="View switcher">
 	<button>Design</button>
 	<button aria-pressed="true">Preview</button>
@@ -151,7 +155,7 @@ Dynamically adding options:
 
 Regular labels should work too (requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
 
-```html
+```html {demo}
 <label for="view-switcher">View:</label>
 <button-group id="view-switcher">
 	<button>Design</button>
@@ -163,7 +167,7 @@ You don't even need to use an actual `<button>`, [custom elements](https://shoel
 should work too
 (presentation needs work, but functionality is there):
 
-```html
+```html {demo}
 <style>
 sl-button[aria-pressed="true"]::part(base) {
 	background: var(--sl-color-primary-100);

@@ -1,14 +1,18 @@
 ---
+title: "<meter-discrete>"
+description: "Meter with discrete values shown as icons"
 id: meter-discrete
+order: 4
+component:
+  name: Discrete meter
+  status: Mature
 ---
-
-<header>
+<script type="module" src="/elements/meter-discrete/meter-discrete.js"></script>
 
 # `<meter-discrete>`
 
 Like `<meter>`, but discrete. Useful to display ratings etc.
 
-</header>
 
 
 
@@ -24,31 +28,31 @@ Like `<meter>`, but discrete. Useful to display ratings etc.
 
 No attributes
 
-```html
+```html {demo}
 <meter-discrete></meter-discrete>
 ```
 
 Without specifying icon
 
-```html
+```html {demo}
 <meter-discrete max="5" value="2.5"></meter-discrete>
 ```
 
 With custom icon, and a max of 10
 
-```html
+```html {demo}
 <meter-discrete max="10" value="6.6" icon="❤️"></meter-discrete>
 ```
 
 With step
 
-```html
+```html {demo}
 <meter-discrete max="10" value="6.6" step="0.5" icon="❤️"></meter-discrete>
 ```
 
 Dynamic value
 
-```html
+```html {demo}
 <meter-discrete max="5" value="3.5" icon="💩"></meter-discrete>
 <button onclick="this.previousElementSibling.value = Math.random() * 5">Random value</button>
 ```
@@ -56,7 +60,7 @@ Dynamic value
 Different styles
 
 
-```html
+```html {demo}
 <style>
 #minimal_rating {
 	font-size: 200%;
@@ -77,7 +81,7 @@ Different styles
 Actual image instead of emoji:
 
 
-```html
+```html {demo}
 <meter-discrete value="3.5" icon="/logo.svg"></meter-discrete>
 ```
 

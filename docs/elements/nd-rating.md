@@ -1,14 +1,18 @@
 ---
+title: "<nd-rating>"
+description: "Like discrete meter, but editable via hovering and clicking"
 id: nd-rating
+order: 5
+component:
+  name: Rating
+  status: Mature
 ---
-
-<header>
+<script type="module" src="/elements/nd-rating/nd-rating.js"></script>
 
 # `<nd-rating>`
 
 Like [`<meter-discrete>`](../meter-discrete/), but editable. Useful to display and set ratings etc.
 
-</header>
 
 
 
@@ -23,21 +27,21 @@ Like [`<meter-discrete>`](../meter-discrete/), but editable. Useful to display a
 
 Basic
 
-```html
+```html {demo}
 <nd-rating max="5" value="3.5"></nd-rating>
 <button onclick="this.previousElementSibling.readonly = !this.previousElementSibling.readonly">Toggle readonly</button>
 ```
 
 With step
 
-```html
+```html {demo}
 <nd-rating max="5" value="3.5" step="0.1" style="font-size: 200%"></nd-rating>
 ```
 
 Different styles
 
 
-```html
+```html {demo}
 <style>
 #minimal_rating {
 	font-size: 200%;
@@ -58,13 +62,13 @@ Different styles
 Actual image instead of emoji:
 
 
-```html
+```html {demo}
 <nd-rating value="3.5" icon="../logo.svg"></nd-rating>
 ```
 
 Participates in form submission (requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
 
-```html
+```html {demo}
 <form action="about:blank" target="_blank">
 	<nd-rating name="myrating"></nd-rating>
 	<button type=submit>Submit</button>

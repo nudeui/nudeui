@@ -1,14 +1,17 @@
 ---
+title: "<nd-slider>"
+description: "Several improvements over the native <input type=range>"
 id: nd-slider
+order: 11
 ---
+<script type="module" src="/elements/nd-slider/nd-slider.js"></script>
+
 <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/components/format-number/format-number.js"></script>
-<header>
 
 # `<nd-slider>`
 
 Several improvements over the native `<input type=range>`.
 
-</header>
 
 
 
@@ -23,13 +26,13 @@ Several improvements over the native `<input type=range>`.
 
 Simplest version:
 
-```html
+```html {demo}
 <nd-slider></nd-slider>
 ```
 
 You can also *provide* a specific slider element yourself so it can be easier to style or customize:
 
-```html
+```html {demo}
 <nd-slider>
 	<input type=range>
 </nd-slider>
@@ -37,7 +40,7 @@ You can also *provide* a specific slider element yourself so it can be easier to
 
 You can also provide a specific element for the value:
 
-```html
+```html {demo}
 <nd-slider>
 	<sl-format-number slot="value" type="currency" currency="USD"></sl-format-number>
 </nd-slider>
@@ -49,7 +52,7 @@ If it has a `value` property it will be assumed to be editable, otherwise it wil
 
 All usual slider attributes work and are simply copied to the slider and spinner elements:
 
-```html
+```html {demo}
 <nd-slider min="-180" max="180" step="0.01"></nd-slider>
 ```
 
@@ -59,7 +62,7 @@ You are encouraged to provide a slider with the right attributes from the start,
 
 By default the number is shown as a read/write tooltip, but you can make it display inline:
 
-```html
+```html {demo}
 <nd-slider style="--value-position: end"></nd-slider>
 ```
 
@@ -69,7 +72,7 @@ which means [at the time of this writing, it won’t work in Firefox](https://ca
 
 By default shown is the slider value, but you can switch to showing (and editing) the progress instead:
 
-```html
+```html {demo}
 <nd-slider show="progress"></nd-slider>
 ```
 

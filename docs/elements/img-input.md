@@ -1,14 +1,18 @@
 ---
+title: "<img-input>"
+description: "Input an image via URL, file upload, drag-and-drop, or pasting"
 id: img-input
+order: 7
+component:
+  name: Image input
+  status: In incubation
 ---
-
-<header>
+<script type="module" src="/elements/img-input/img-input.js"></script>
 
 # `<img-input>`
 
 Form control for image linking and uploading.
 
-</header>
 
 
 
@@ -29,7 +33,7 @@ Form control for image linking and uploading.
 
 Basic
 
-```html
+```html {demo}
 <img-input></img-input>
 ```
 
@@ -40,20 +44,20 @@ There are two ways to customize this: using the `preview` slot, or the `preview`
 
 You can set the `preview` attribute to `none` for no preview:
 
-```html
+```html {demo}
 <img-input preview="none"></img-input>
 ```
 
 You can also set it to a CSS selector pointing to another element:
 
-```html
+```html {demo}
 <img-input preview="#preview"></img-input>
 <img id="preview">
 ```
 
 Alternatively, you can use the `preview` slot to provide your own `<img>` element:
 
-```html
+```html {demo}
 <img-input>
   <img slot="preview">
 </img-input>
@@ -63,7 +67,7 @@ Please note that if the `preview` attribute is set, the `preview` slot will be i
 
 The attribute can be dynamic as well:
 
-```html
+```html {demo}
 <img-input></img-input>
 <button onclick="this.previousElementSibling.preview =
   this.previousElementSibling.preview === 'none' ? '' : 'none'">

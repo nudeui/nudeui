@@ -1,0 +1,24 @@
+<table>
+<thead>
+<tr>
+	<th>Name</th>
+	<th>Tag</th>
+	<th>Description</th>
+	<th>Type(s)</th>
+	<th>Status</th>
+</tr>
+</thead>
+<tbody>
+{% for item in collections.components %}
+{% if item.data.component.status != "Failed" %}
+<tr>
+	<td><a href="{{ root }}{{ item.url }}">{{ item.data.component.name }}</a></td>
+	<td><code>&lt;{{ item.data.id }}&gt;</code></td>
+	<td>{{ item.data.description }}</td>
+	<td>{{ "CSS-only" if item.data.css_only else "JS" }}</td>
+	<td>{{ item.data.component.status }}</td>
+</tr>
+{% endif %}
+{% endfor %}
+</tbody>
+</table>

@@ -1,3 +1,5 @@
-index.html
+_site
+.docspire
+node_modules
 nd-calendar/style.css
 button-group/style.css

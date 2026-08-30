@@ -1,14 +1,18 @@
 ---
+title: "<with-presets>"
+description: "A combination of a text input and a select element"
 id: with-presets
+order: 8
+component:
+  name: Freeform text with presets
+  status: In incubation
 ---
-
-<header>
+<script type="module" src="/elements/with-presets/with-presets.js"></script>
 
 # `<with-presets>`
 
 A freeform text field with visible presets
 
-</header>
 
 
 
@@ -24,7 +28,7 @@ A freeform text field with visible presets
 
 With select:
 
-```html
+```html {demo}
 <with-presets id="with_select">
 	<select>
 		<option value="[time(time, 'minutes')]">HH:ii</option>
@@ -38,7 +42,7 @@ With select:
 
 With [`<button-group>`](../button-group/):
 
-```html
+```html {demo}
 <button-group>
 	<button>1</button>
 	<button value="2">Two</button>
@@ -47,7 +51,7 @@ With [`<button-group>`](../button-group/):
 </button-group>
 ```
 
-```html
+```html {demo}
 <with-presets id="with_buttongroup">
 	<button-group>
 		<button>1</button>
@@ -62,7 +66,7 @@ With [`<button-group>`](../button-group/):
 
 With dynamic select:
 
-```html
+```html {demo}
 <with-presets vertical id="with_dynamic_select">
 	<select size="4">
 	</select>

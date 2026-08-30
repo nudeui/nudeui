@@ -2,14 +2,15 @@
   "name": "nudeui",
   "version": "0.0.1",
   "description": "",
-  "main": "index.html",
+  "main": "elements/index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "npx postcss \"**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs",
-    "build:html": "npx @11ty/eleventy --config=.eleventy.cjs",
-    "build": "npm run build:html && npm run build:css",
-    "watch:css": "npx postcss \"**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs --watch",
-    "watch:html": "npx @11ty/eleventy --config=.eleventy.cjs --watch",
+    "build:css": "npx postcss \"elements/**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs",
+    "build:html": "npx docspire",
+    "build": "npm run build:css && npm run build:html",
+    "watch:css": "npx postcss \"elements/**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs --watch",
+    "watch:html": "npx docspire --serve",
     "watch": "npx concurrently -n w: npm:watch:*"
   },
   "repository": {
@@ -28,8 +29,7 @@
   "homepage": "https://github.com/leaverou/nudeui#readme",
   "devDependencies": {
     "concurrently": "^7.6.0",
-    "markdown-it-anchor": "^8.6.7",
-    "markdown-it-attrs": "^4.1.6",
+    "docspire": "^0.0.3",
     "postcss": "^8.3.9",
     "postcss-cli": "^9.0.1",
     "postcss-nesting": "^8.0.1"
