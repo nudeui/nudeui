@@ -4,8 +4,7 @@ description: "On/off toggle switch"
 id: nd-switch
 css_only: true
 order: 1
-component:
-  status: Mature
+status: Mature
 ---
 <link rel="stylesheet" href="/elements/nd-switch/nd-switch.css">
 

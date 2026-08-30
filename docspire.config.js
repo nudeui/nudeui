@@ -4,7 +4,7 @@ import landing from "docspire/plugins/landing";
  * Site-specific Docspire plugin:
  * - Copies the element sources into the output, since they are served straight
  *   from the site (e.g. https://nudeui.com/elements/index.js)
- * - Provides a `components` collection (pages with `component` metadata, in `order`)
+ * - Provides a `components` collection (pages with a `status`, in `order`)
  *   that drives the component table on the homepage
  * - Appends the installation instructions (templates/installation.njk) to every component page
  * - Turns ```html {demo} code blocks into live demos, using our very own <html-demo>
@@ -43,7 +43,7 @@ const site = {
 
 		config.addCollection("components", api =>
 			api.getAll()
-				.filter(page => page.data.component)
+				.filter(page => page.data.status)
 				.sort((a, b) => (a.data.order ?? 1) - (b.data.order ?? 1)),
 		);
 
@@ -73,7 +73,7 @@ const site = {
 			}
 
 			let badges = [];
-			let status = data.component?.status;
+			let status = data.status;
 			let syntax = data.css_only ? `.${data.id}` : `&lt;${data.id}&gt;`;
 
 			badges.push({

@@ -3,8 +3,7 @@ title: "Calendar"
 description: "Show dates on a calendar"
 id: nd-calendar
 order: 9
-component:
-  status: In incubation
+status: In incubation
 ---
 <script type="module" src="/elements/nd-calendar/nd-calendar.js"></script>
 

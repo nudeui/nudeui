@@ -3,8 +3,7 @@ title: "HTML Demo"
 description: "Display demos of HTML content alongside their source code"
 id: html-demo
 order: 6
-component:
-  status: Mature
+status: Mature
 ---
 <script type="module" src="/elements/html-demo/html-demo.js"></script>
 

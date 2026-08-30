@@ -3,8 +3,7 @@ title: "Image input"
 description: "Input an image via URL, file upload, drag-and-drop, or pasting"
 id: img-input
 order: 7
-component:
-  status: In incubation
+status: In incubation
 ---
 <script type="module" src="/elements/img-input/img-input.js"></script>
 

@@ -3,8 +3,7 @@ title: "Discrete meter"
 description: "Meter with discrete values shown as icons"
 id: meter-discrete
 order: 4
-component:
-  status: Mature
+status: Mature
 ---
 <script type="module" src="/elements/meter-discrete/meter-discrete.js"></script>
 

@@ -3,8 +3,7 @@ title: "Rating"
 description: "Like discrete meter, but editable via hovering and clicking"
 id: nd-rating
 order: 5
-component:
-  status: Mature
+status: Mature
 ---
 <script type="module" src="/elements/nd-rating/nd-rating.js"></script>
 

@@ -3,8 +3,7 @@ title: "Freeform text with presets"
 description: "A combination of a text input and a select element"
 id: with-presets
 order: 8
-component:
-  status: In incubation
+status: In incubation
 ---
 <script type="module" src="/elements/with-presets/with-presets.js"></script>
 

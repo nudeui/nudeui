@@ -3,8 +3,7 @@ title: "Drop down"
 description: "Drop-down menu that performs actions when items are clicked"
 id: drop-down
 order: 100
-component:
-  status: Failed
+status: Failed
 ---
 <script type="module" src="/elements/drop-down/drop-down.js"></script>
 

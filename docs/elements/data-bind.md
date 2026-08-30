@@ -3,8 +3,7 @@ title: "Data bind"
 description: "Declaratively bind data from a source element to a target element"
 id: data-bind
 order: 10
-component:
-  status: In incubation
+status: In incubation
 ---
 <script type="module" src="/elements/data-bind/data-bind.js"></script>
 

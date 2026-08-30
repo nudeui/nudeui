@@ -3,8 +3,7 @@ title: "Cycle Toggle"
 description: "Compact way to select one option from a group, click selects the next option"
 id: cycle-toggle
 order: 3
-component:
-  status: Mature
+status: Mature
 ---
 <script type="module" src="/elements/cycle-toggle/cycle-toggle.js"></script>
 

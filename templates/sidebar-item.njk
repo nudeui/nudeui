@@ -8,7 +8,7 @@
 				href: root + url,
 				class: ["sidebar-group-title" if children.length > 0, "current" if url | isCurrentPage]
 			} | attr }}>{{ sidebarPage.data.title }}
-			{%- set status = sidebarPage.data.component.status %}
+			{%- set status = sidebarPage.data.status %}
 			{%- if status and status != "Mature" and statusIcons[status] %} <span class="icon status-icon" data-status="{{ status | lower | replace(" ", "-") }}" role="img" aria-label="{{ status }}" title="{{ status }}"></span>{% endif %}</{{ tag }}>
 
 		{% if children.length > 0 %}
