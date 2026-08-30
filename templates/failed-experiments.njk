@@ -1,7 +1,0 @@
-<ul>
-{% for item in collections.components %}
-{% if item.data.component.status == "Failed" %}
-<li><a href="{{ root }}{{ item.url }}">{{ item.data.component.name }}</a> — {{ item.data.description }}</li>
-{% endif %}
-{% endfor %}
-</ul>

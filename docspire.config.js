@@ -2,10 +2,10 @@ import landing from "docspire/plugins/landing";
 
 /**
  * Site-specific Docspire plugin:
- * - Copies the element sources into the output, since they are the actual product,
- *   served straight from the site (e.g. https://nudeui.com/elements/index.js)
+ * - Copies the element sources into the output, since they are served straight
+ *   from the site (e.g. https://nudeui.com/elements/index.js)
  * - Provides a `components` collection (pages with `component` metadata, in `order`)
- *   that drives the generated component tables
+ *   that drives the component table on the homepage
  * - Appends the installation instructions (templates/installation.njk) to every component page
  * - Turns ```html {demo} code blocks into live demos, using our very own <html-demo>
  *   (loaded, with the rest of the mature components, by assets/scripts/site.js)

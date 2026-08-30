@@ -26,7 +26,28 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 
 ## Components
 
-{% include "components-table.njk" %}
+<table>
+<thead>
+<tr>
+	<th>Name</th>
+	<th>Tag</th>
+	<th>Description</th>
+	<th>Type(s)</th>
+	<th>Status</th>
+</tr>
+</thead>
+<tbody>
+{%- for item in collections.components %}{% if item.data.component.status != "Failed" %}
+<tr>
+	<td><a href="{{ root }}{{ item.url }}">{{ item.data.component.name }}</a></td>
+	<td><code>&lt;{{ item.data.id }}&gt;</code></td>
+	<td>{{ item.data.description }}</td>
+	<td>{{ "CSS-only" if item.data.css_only else "JS" }}</td>
+	<td>{{ item.data.component.status }}</td>
+</tr>
+{%- endif %}{% endfor %}
+</tbody>
+</table>
 
 ## Wanna use them all?
 
@@ -44,4 +65,6 @@ Do not use. These have serious flaws and are likely incomplete.
 They are included here only in case someone else wants to look into fixing their issues,
 as well as a warning for other wanderers going down the same path.
 
-{% include "failed-experiments.njk" %}
+{% for item in collections.components %}{% if item.data.component.status == "Failed" -%}
+- [{{ item.data.component.name }}]({{ root }}{{ item.url }}) — {{ item.data.description }}
+{% endif %}{% endfor %}
