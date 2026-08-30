@@ -1,0 +1,11 @@
+{# Component metadata (syntax, status, type), shown under the page title #}
+<p class="component-badges">
+	<code class="badge badge-syntax">{{ ("." + id) if css_only else ("<" + id + ">") }}</code>
+	{%- if status %}
+	<span {{ {
+			class: ["badge", "icon-before" if statusIcons[status]],
+			"data-status": status | lower | replace(" ", "-")
+		} | attr }}>{{ status }}</span>
+	{%- endif %}
+	<span class="badge" data-type="{{ 'css' if css_only else 'js' }}">{{ "CSS-only" if css_only else "JS" }}</span>
+</p>

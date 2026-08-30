@@ -60,38 +60,13 @@ const site = {
 			return tree;
 		});
 
-		// Show the component’s metadata (syntax, status, type) as badges under the page title
+		// Render component-badges.njk (the component’s metadata) right after the page title
 		config.addContentTransform((tree, data) => {
 			if (!data?.id) {
 				return tree;
 			}
 
-			let badges = [];
-			let status = data.status;
-			let syntax = data.css_only ? `.${data.id}` : `&lt;${data.id}&gt;`;
-
-			badges.push({
-				tag: "code",
-				attrs: { class: "badge badge-syntax" },
-				content: [syntax],
-			});
-
-			if (status) {
-				badges.push({
-					tag: "span",
-					attrs: {
-						class: STATUS_ICONS[status] ? "badge icon-before" : "badge",
-						"data-status": status.toLowerCase().replaceAll(" ", "-"),
-					},
-					content: [status],
-				});
-			}
-
-			badges.push({
-				tag: "span",
-				attrs: { class: "badge", "data-type": data.css_only ? "css" : "js" },
-				content: [data.css_only ? "CSS-only" : "JS"],
-			});
+			let badges = config.njkEnv.render("component-badges.njk", data);
 
 			let done = false;
 			tree.match("h1", node => {
@@ -100,12 +75,7 @@ const site = {
 				}
 
 				done = true;
-
-				return [node, "\n", {
-					tag: "p",
-					attrs: { class: "component-badges" },
-					content: badges,
-				}];
+				return [node, "\n", badges];
 			});
 
 			return tree;
