@@ -10,11 +10,18 @@ import landing from "docspire/plugins/landing";
  * - Turns ```html {demo} code blocks into live demos, using our very own <html-demo>
  *   (loaded, with the rest of the mature components, by assets/scripts/site.js)
  */
+const STATUS_ICONS = {
+	"Mature": "✅",
+	"In incubation": "🐣",
+	"Failed": "💀",
+};
+
 const site = {
 	id: "nudeui-site",
 	url: import.meta.url,
 	scripts: "./site.js",
 	styles: "site.css",
+	data: { statusIcons: STATUS_ICONS },
 	slots: {
 		"content.end": "installation",
 	},
@@ -51,7 +58,7 @@ const site = {
 			return tree;
 		});
 
-		// Show the component’s metadata (status, type) as badges under the page title
+		// Show the component’s metadata (syntax, status, type) as badges under the page title
 		config.addContentTransform((tree, data) => {
 			if (!data?.id) {
 				return tree;
@@ -59,12 +66,20 @@ const site = {
 
 			let badges = [];
 			let status = data.component?.status;
+			let syntax = data.css_only ? `.${data.id}` : `&lt;${data.id}&gt;`;
+
+			badges.push({
+				tag: "code",
+				attrs: { class: "badge badge-syntax" },
+				content: [syntax],
+			});
 
 			if (status) {
+				let icon = STATUS_ICONS[status];
 				badges.push({
 					tag: "span",
 					attrs: { class: "badge", "data-status": status.toLowerCase().replaceAll(" ", "-") },
-					content: [status],
+					content: [icon ? `${icon} ${status}` : status],
 				});
 			}
 

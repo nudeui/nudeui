@@ -1,15 +1,14 @@
 ---
-title: "<nd-rating>"
+title: "Rating"
 description: "Like discrete meter, but editable via hovering and clicking"
 id: nd-rating
 order: 5
 component:
-  name: Rating
   status: Mature
 ---
 <script type="module" src="/elements/nd-rating/nd-rating.js"></script>
 
-# `<nd-rating>`
+# Rating
 
 Like [`<meter-discrete>`](../meter-discrete/), but editable. Useful to display and set ratings etc.
 

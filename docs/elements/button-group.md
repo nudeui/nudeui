@@ -1,17 +1,16 @@
 ---
-title: "<button-group>"
+title: "Button Group"
 description: "Group of buttons for selecting one or more values out of a set of options"
 id: button-group
 order: 2
 component:
-  name: Button Group
   status: Mature
 ---
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.81/dist/themes/light.css" />
 <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.81/dist/shoelace.js"></script>
 <script type="module" src="/elements/button-group/button-group.js"></script>
 
-# `<button-group>`
+# Button Group
 
 Group of exclusive push buttons
 

@@ -1,15 +1,14 @@
 ---
-title: "<cycle-toggle>"
+title: "Cycle Toggle"
 description: "Compact way to select one option from a group, click selects the next option"
 id: cycle-toggle
 order: 3
 component:
-  name: Cycle Toggle
   status: Mature
 ---
 <script type="module" src="/elements/cycle-toggle/cycle-toggle.js"></script>
 
-# `<cycle-toggle>`
+# Cycle Toggle
 
 Click to cycle through a variety of options
 

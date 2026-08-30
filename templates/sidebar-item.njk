@@ -1,0 +1,22 @@
+{# Same as Docspire’s sidebar-item.njk, plus a status icon on components whose status warrants attention #}
+{% if sidebarPage.data.shown -%}
+	<li>
+		{% set children = sidebarPage.data.children %}
+		{% set url = sidebarPage.data.url or sidebarPage.url %}
+		{% set tag = "a" if url else "span" %}
+		<{{ tag }} {{ {
+				href: root + url,
+				class: ["sidebar-group-title" if children.length > 0, "current" if url | isCurrentPage]
+			} | attr }}>{{ sidebarPage.data.title }}
+			{%- set status = sidebarPage.data.component.status %}
+			{%- if status and status != "Mature" and statusIcons[status] %} <span class="status-icon" title="{{ status }}">{{ statusIcons[status] }}</span>{% endif %}</{{ tag }}>
+
+		{% if children.length > 0 %}
+			<ul>
+				{% for sidebarPage in children %}
+					{% include 'sidebar-item.njk' %}
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</li>
+{%- endif %}

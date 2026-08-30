@@ -29,4 +29,18 @@
 	.badge[data-status="failed"] {
 		--badge-color: light-dark(hsl(0 70% 42%), hsl(5 75% 70%));
 	}
+
+	.badge-syntax {
+		--badge-color: var(--ui-color-text, CanvasText);
+
+		background: var(--color-bg-soft, color-mix(in oklab, var(--badge-color) 8%, transparent));
+		font-family: var(--font-mono, monospace);
+		font-weight: 500;
+	}
+}
+
+/* Status icons next to noteworthy components in the sidebar */
+#sidebar .status-icon {
+	font-size: 75%;
+	cursor: help;
 }

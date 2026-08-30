@@ -1,15 +1,14 @@
 ---
-title: "<html-demo>"
+title: "HTML Demo"
 description: "Display demos of HTML content alongside their source code"
 id: html-demo
 order: 6
 component:
-  name: HTML Demo
   status: Mature
 ---
 <script type="module" src="/elements/html-demo/html-demo.js"></script>
 
-# `<html-demo>`
+# HTML Demo
 
 An element for displaying HTML content alongside its source code.
 Great for documenting web components!

@@ -39,7 +39,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 <tbody>
 {%- for item in collections.components %}{% if item.data.component.status != "Failed" %}
 <tr>
-	<td><a href="{{ root }}{{ item.url }}">{{ item.data.component.name }}</a></td>
+	<td><a href="{{ root }}{{ item.url }}">{{ item.data.title }}</a></td>
 	<td><code>&lt;{{ item.data.id }}&gt;</code></td>
 	<td>{{ item.data.description }}</td>
 	<td>{{ "CSS-only" if item.data.css_only else "JS" }}</td>
@@ -66,5 +66,5 @@ They are included here only in case someone else wants to look into fixing their
 as well as a warning for other wanderers going down the same path.
 
 {% for item in collections.components %}{% if item.data.component.status == "Failed" -%}
-- [{{ item.data.component.name }}]({{ root }}{{ item.url }}) — {{ item.data.description }}
+- [{{ item.data.title }}]({{ root }}{{ item.url }}) — {{ item.data.description }}
 {% endif %}{% endfor %}
