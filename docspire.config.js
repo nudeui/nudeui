@@ -1,10 +1,17 @@
 import landing from "docspire/plugins/landing";
+import icons from "./icons.js";
+
+const STATUS_ICONS = {
+	"Mature": "circle-check",
+	"In incubation": "flask",
+	"Failed": "trash",
+};
 
 /**
  * Site-specific Docspire plugin:
  * - Copies the element sources into the output, since they are served straight
  *   from the site (e.g. https://nudeui.com/elements/index.js)
- * - Provides a `components` collection (pages with `component` metadata, in `order`)
+ * - Provides a `components` collection (pages with a `status`, in `order`)
  *   that drives the component table on the homepage
  * - Appends the installation instructions (templates/installation.njk) to every component page
  * - Turns ```html {demo} code blocks into live demos, using our very own <html-demo>
@@ -14,6 +21,9 @@ const site = {
 	id: "nudeui-site",
 	url: import.meta.url,
 	scripts: "./site.js",
+	styles: ["site.css", "demos.css"],
+	icons,
+	data: { statusIcons: STATUS_ICONS },
 	slots: {
 		"content.end": "installation",
 	},
@@ -27,7 +37,7 @@ const site = {
 
 		config.addCollection("components", api =>
 			api.getAll()
-				.filter(page => page.data.component)
+				.filter(page => page.data.status)
 				.sort((a, b) => (a.data.order ?? 1) - (b.data.order ?? 1)),
 		);
 
@@ -45,6 +55,27 @@ const site = {
 				delete code.attrs.demo;
 
 				return { tag: "html-demo", content: [pre] };
+			});
+
+			return tree;
+		});
+
+		// Render component-badges.njk (the component’s metadata) right after the page title
+		config.addContentTransform((tree, data) => {
+			if (!data?.id) {
+				return tree;
+			}
+
+			let badges = config.njkEnv.render("component-badges.njk", data);
+
+			let done = false;
+			tree.match("h1", node => {
+				if (done) {
+					return node;
+				}
+
+				done = true;
+				return [node, "\n", badges];
 			});
 
 			return tree;

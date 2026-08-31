@@ -37,13 +37,13 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 </tr>
 </thead>
 <tbody>
-{%- for item in collections.components %}{% if item.data.component.status != "Failed" %}
+{%- for item in collections.components %}{% if item.data.status != "Failed" %}
 <tr>
-	<td><a href="{{ root }}{{ item.url }}">{{ item.data.component.name }}</a></td>
+	<td><a href="{{ root }}{{ item.url }}">{{ item.data.title }}</a></td>
 	<td><code>&lt;{{ item.data.id }}&gt;</code></td>
 	<td>{{ item.data.description }}</td>
 	<td>{{ "CSS-only" if item.data.css_only else "JS" }}</td>
-	<td>{{ item.data.component.status }}</td>
+	<td>{{ item.data.status }}</td>
 </tr>
 {%- endif %}{% endfor %}
 </tbody>
@@ -65,6 +65,6 @@ Do not use. These have serious flaws and are likely incomplete.
 They are included here only in case someone else wants to look into fixing their issues,
 as well as a warning for other wanderers going down the same path.
 
-{% for item in collections.components %}{% if item.data.component.status == "Failed" -%}
-- [{{ item.data.component.name }}]({{ root }}{{ item.url }}) — {{ item.data.description }}
+{% for item in collections.components %}{% if item.data.status == "Failed" -%}
+- [{{ item.data.title }}]({{ root }}{{ item.url }}) — {{ item.data.description }}
 {% endif %}{% endfor %}

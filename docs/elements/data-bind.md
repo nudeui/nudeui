@@ -1,15 +1,13 @@
 ---
-title: "<data-bind>"
+title: "Data bind"
 description: "Declaratively bind data from a source element to a target element"
 id: data-bind
 order: 10
-component:
-  name: Data bind
-  status: In incubation
+status: In incubation
 ---
 <script type="module" src="/elements/data-bind/data-bind.js"></script>
 
-# `<data-bind>`
+# Data bind
 
 An element for propagating data changes between elements.
 

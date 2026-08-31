@@ -2,6 +2,10 @@
 	command = "npm run build"
 	publish = "_site"
 
+[build.processing]
+	# The site is built on native ES modules; legacy asset optimization breaks them
+	skip_processing = true
+
 [build.environment]
 	# Docspire needs a modern Node (import attributes, etc.)
 	NODE_VERSION = "22"

@@ -1,15 +1,13 @@
 ---
-title: "<with-presets>"
+title: "Freeform text with presets"
 description: "A combination of a text input and a select element"
 id: with-presets
 order: 8
-component:
-  name: Freeform text with presets
-  status: In incubation
+status: In incubation
 ---
 <script type="module" src="/elements/with-presets/with-presets.js"></script>
 
-# `<with-presets>`
+# Freeform text with presets
 
 A freeform text field with visible presets
 

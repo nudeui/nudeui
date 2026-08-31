@@ -1,15 +1,13 @@
 ---
-title: "<nd-calendar>"
+title: "Calendar"
 description: "Show dates on a calendar"
 id: nd-calendar
 order: 9
-component:
-  name: Calendar
-  status: In incubation
+status: In incubation
 ---
 <script type="module" src="/elements/nd-calendar/nd-calendar.js"></script>
 
-# `<nd-calendar>`
+# Calendar
 
 Display dates, date ranges, or date/time ranges by day or hour.
 

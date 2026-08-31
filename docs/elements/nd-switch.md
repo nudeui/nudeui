@@ -1,16 +1,14 @@
 ---
-title: "Nude switch"
+title: "Switch"
 description: "On/off toggle switch"
 id: nd-switch
 css_only: true
 order: 1
-component:
-  name: Switch
-  status: Mature
+status: Mature
 ---
 <link rel="stylesheet" href="/elements/nd-switch/nd-switch.css">
 
-# Nude switch
+# Switch
 
 CSS-only toggle switch
 

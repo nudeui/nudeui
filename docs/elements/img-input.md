@@ -1,15 +1,13 @@
 ---
-title: "<img-input>"
+title: "Image input"
 description: "Input an image via URL, file upload, drag-and-drop, or pasting"
 id: img-input
 order: 7
-component:
-  name: Image input
-  status: In incubation
+status: In incubation
 ---
 <script type="module" src="/elements/img-input/img-input.js"></script>
 
-# `<img-input>`
+# Image input
 
 Form control for image linking and uploading.
 
