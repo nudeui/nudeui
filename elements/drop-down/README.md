@@ -5,7 +5,7 @@ id: drop-down
 order: 100
 status: Failed
 ---
-<script type="module" src="/elements/drop-down/drop-down.js"></script>
+<script type="module" src="./drop-down.js"></script>
 
 # Drop down
 

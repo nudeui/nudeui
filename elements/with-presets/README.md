@@ -5,7 +5,7 @@ id: with-presets
 order: 8
 status: In incubation
 ---
-<script type="module" src="/elements/with-presets/with-presets.js"></script>
+<script type="module" src="./with-presets.js"></script>
 
 # Freeform text with presets
 

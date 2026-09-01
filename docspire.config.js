@@ -87,5 +87,9 @@ export default {
 	title: "Nude UI",
 	description: "A collection of accessible, customizable, ultra-light web components",
 	icon: "/logo.svg",
+	// Each component documents itself, in a README.md that also renders on GitHub
+	import: {
+		"elements/:name/README.md": "/elements/:name/",
+	},
 	plugins: [landing, site],
 };

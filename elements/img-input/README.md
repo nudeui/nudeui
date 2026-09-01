@@ -5,7 +5,7 @@ id: img-input
 order: 7
 status: In incubation
 ---
-<script type="module" src="/elements/img-input/img-input.js"></script>
+<script type="module" src="./img-input.js"></script>
 
 # Image input
 
