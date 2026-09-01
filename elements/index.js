@@ -3,6 +3,8 @@ export { default as CycleToggle } from "./cycle-toggle/cycle-toggle.js";
 export { default as MeterDiscrete } from "./meter-discrete/meter-discrete.js";
 export { default as NudeRating } from "./nd-rating/nd-rating.js";
 export { default as HTMLDemoElement } from "./html-demo/html-demo.js";
+// CSS-only, but needs this shim until typed attr() ships everywhere
+export * as ProgressRing from "./progress-ring/progress-ring.js";
 
 // CSS-only modules
 document.head.insertAdjacentHTML("beforeend", `<link rel="stylesheet" href="${new URL(`index.css`, import.meta.url)}" />`);
