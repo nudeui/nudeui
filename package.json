@@ -11,6 +11,7 @@
     "./*/style.css": "./components/*/style.css"
   },
   "scripts": {
+    "release": "npm whoami >/dev/null 2>&1 || npm login && release-it",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "npx postcss \"components/**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs",
     "build:html": "npx docspire",
@@ -38,6 +39,7 @@
     "docspire": "^0.0.3",
     "postcss": "^8.3.9",
     "postcss-cli": "^9.0.1",
-    "postcss-nesting": "^8.0.1"
+    "postcss-nesting": "^8.0.1",
+    "release-it": "^21.0.2"
   }
 }
