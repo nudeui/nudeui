@@ -30,6 +30,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 | [Freeform text with presets](elements/with-presets) | `<with-presets>` | A combination of a text input and a select element | JS | In incubation |
 | [Calendar](elements/nd-calendar) | `<nd-calendar>` | Show dates on a calendar | JS | In incubation |
 | [Data bind](elements/data-bind) | `<data-bind>` | Declaratively bind data from a source element to a target element | JS | In incubation |
+| [Progress ring](elements/progress-ring) | `<progress class="ring">` | Circular spinner or progress ring, from a bare `<progress>` and no extra elements | CSS-only | In incubation |
 
 </section>
 

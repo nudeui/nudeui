@@ -1,0 +1,180 @@
+/**
+ * Styling a bare <progress> — or any element with the right ARIA — as a circular spinner/ring,
+ * with no extra elements: only CSS on the element and its ::before.
+ *
+ * - No value = indeterminate spinner, reproducing the Web Awesome <wa-spinner> geometry
+ *   (2s linear spin + 1.5s ease-in-out dash animation). <progress> has :indeterminate for this;
+ *   anything else is determinate exactly when it carries aria-valuenow, as ARIA defines it.
+ * - With a value = determinate ring, driven by attr() off value/max or aria-valuenow/aria-valuemax.
+ * - Any label is the element's own content — a real, announced child — rather than generated content,
+ *   which also sidesteps Gecko generating no pseudo-elements at all on <progress>.
+ * - .cap-flat drops the round caps (two radial-gradient dots on the stroke centerline, positioned
+ *   with sin()/cos()).
+ * - The ring cutout uses background-clip: border-area for real transparency; where unsupported the ring
+ *   is masked instead — on ::before where there may be content to keep unmasked, on the element itself
+ *   for <progress>, which can have neither content nor (in Gecko) pseudo-elements.
+ * - The spin is an angle added to the gradient, not a rotate on the element, so content (a button's
+ *   icon, a label) stays upright, and it inherits the ring's accent color.
+ *
+ * Every knob is read twice: unprefixed (--size) first, then --progress-ring-* — so a ring-specific
+ * setting on the element wins over a --progress-ring-* one set high up for a whole region. The short
+ * names are deliberately not registered: making them non-inheriting would take a document-global
+ * @property, which would reach far outside this component.
+ *
+ * Requires: @property, advanced attr() with type(), border-area or mask. Only Chromium ships typed
+ * attr() so far, so elsewhere the determinate ring needs progress-ring.js, which does nothing but copy the
+ * attributes into --value/--max. The math stays here either way.
+ *
+ * Caveats:
+ * - Gecko locks the native bar's display with !important in its UA sheet, so the bar is hidden with
+ *   background: none, not display: none.
+ * - Round caps with value=0 show a dot at 12 o'clock (same as SVG round linecaps).
+ * - The masked ::before sits under the label via z-index: -1, so it is hidden if the ring itself
+ *   creates a stacking context (opacity, filter, transform…).
+ * - The label is the author's to keep in sync with the value; only the arc is computed here.
+ */
+
+/* Animation state. Internal, but registered — hence a prefix, and hence not named with a leading _ */
+@property --progress-ring-rotation  { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
+@property --progress-ring-arc-start { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
+@property --progress-ring-arc-end   { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
+@property --progress-ring-pct       { syntax: "<number>"; inherits: false; initial-value: 0; }
+
+progress.ring,
+.progress-ring {
+	--_value-default: var(--value-default, var(--progress-ring-value-default, 0));
+	--_track-color: var(--track-color, var(--progress-ring-track-color, #e4e4e7));
+	--_accent-color: var(--accent-color, var(--progress-ring-accent-color, #2563eb));
+	@supports (color: accentcolor) {
+		--_accent-color: var(--accent-color, var(--progress-ring-accent-color, accentcolor));
+	}
+
+	--_main: conic-gradient(from var(--_from), var(--_accent-color) calc(var(--_to) - var(--_from)), transparent 0);
+	--_r: calc(var(--_size) / 2 - var(--_track-width) / 2);
+	--_caps: radial-gradient(circle at calc(50% + var(--_r) * sin(var(--_from))) calc(50% - var(--_r) * cos(var(--_from))),
+				var(--_accent-color) calc(var(--_track-width) / 2 - .5px), transparent calc(var(--_track-width) / 2)),
+			radial-gradient(circle at calc(50% + var(--_r) * sin(var(--_to))) calc(50% - var(--_r) * cos(var(--_to))),
+				var(--_accent-color) calc(var(--_track-width) / 2 - .5px), transparent calc(var(--_track-width) / 2)),;
+	--_ring: var(--_caps) var(--_main) var(--_track-color);
+	--_cutout: radial-gradient(farthest-side,
+		transparent calc(100% - var(--_track-width) - .5px),
+		#000 calc(100% - var(--_track-width))
+	);
+
+	appearance: none;
+	flex: none;
+	position: relative;
+	box-sizing: border-box;
+	inline-size: var(--_size);
+	block-size: var(--_size);
+	border-radius: 50%;
+	display: inline-grid;
+	place-content: center;
+	vertical-align: middle; /* UA sheets align <progress> differently, and an empty grid has no baseline */
+	color: var(--_accent-color);
+	font-weight: 600;
+
+	/* The ring is the element's own background, clipped to a transparent border area */
+	@supports (background-clip: border-area) {
+		border: var(--_track-width) solid transparent;
+		background: var(--_ring);
+		background-origin: border-box;
+		background-clip: border-area;
+	}
+
+	/* Without it the ring is masked out of a full disc, so there is no border to reserve — and any UA one to drop */
+	@supports not (background-clip: border-area) {
+		border: 0;
+	}
+
+	/* Round caps: a dot at each end of the arc, on the stroke centerline */
+	&.cap-flat {
+		--_caps: ;
+	}
+}
+
+/* Indeterminate: spinner */
+progress.ring:indeterminate,
+.progress-ring:not([aria-valuenow]) {
+	--_size: var(--size, var(--progress-ring-size, 1em));
+	--_track-width: var(--track-width, var(--progress-ring-track-width, 2px));
+	/* SVG circles start at 3 o'clock, conic gradients at 12 */
+	--_from: calc(90deg + var(--progress-ring-rotation) + var(--progress-ring-arc-start));
+	--_to: calc(90deg + var(--progress-ring-rotation) + var(--progress-ring-arc-end));
+
+	animation:
+		progress-ring-spin var(--speed, var(--progress-ring-speed, 2s)) linear infinite,
+		progress-ring-dash 1.5s ease-in-out infinite;
+}
+
+/* Determinate */
+progress.ring:not(:indeterminate),
+.progress-ring[aria-valuenow] {
+	--_size: var(--size, var(--progress-ring-size, 3.5em));
+	--_track-width: var(--track-width, var(--progress-ring-track-width, .25em));
+	--progress-ring-pct: calc(var(--_value) / var(--_max) * 100);
+	--_from: 0deg;
+	--_to: calc(var(--progress-ring-pct) * 3.6deg);
+
+	transition: --progress-ring-pct .35s;
+}
+
+/*
+ * Which attributes hold the numbers. --_value-attr / --_max-attr say it once for progress-ring.js;
+ * the attr() calls repeat it because attr() cannot yet take a var() as its attribute name
+ * (valid per css-values-5, implemented nowhere) — collapse them into one pair when it can.
+ */
+progress.ring {
+	--_value-attr: value;
+	--_max-attr: max;
+	--_max-default: var(--max-default, var(--progress-ring-max-default, 1));
+	--_value: var(--value, var(--progress-ring-value, attr(value type(<number>), var(--_value-default))));
+	--_max: var(--max, var(--progress-ring-max, attr(max type(<number>), var(--_max-default))));
+
+	/* Native bars would otherwise paint over the ring */
+	&::-webkit-progress-bar { display: none; }
+	&::-webkit-progress-value { display: none; }
+	/* Gecko's UA sheet locks the bar's display with !important, so take its background away instead */
+	&::-moz-progress-bar { background: none; }
+
+	/* Gecko generates no ::before on <progress>, and there is no content to protect, so mask the element */
+	@supports not (background-clip: border-area) {
+		background: var(--_ring);
+		mask: var(--_cutout);
+	}
+}
+
+.progress-ring {
+	--_value-attr: aria-valuenow;
+	--_max-attr: aria-valuemax;
+	/* ARIA's default max, unlike <progress>'s 1 */
+	--_max-default: var(--max-default, var(--progress-ring-max-default, 100));
+	--_value: var(--value, var(--progress-ring-value, attr(aria-valuenow type(<number>), var(--_value-default))));
+	--_max: var(--max, var(--progress-ring-max, attr(aria-valuemax type(<number>), var(--_max-default))));
+
+	/* Move the ring to ::before so that masking it leaves the content alone */
+	@supports not (background-clip: border-area) {
+		/* The ring sits behind the element's own background, so there must not be one (buttons have a UA one) */
+		background: none;
+
+		&::before {
+			content: "";
+			position: absolute;
+			z-index: -1;
+			inset: 0;
+			border-radius: inherit;
+			background: var(--_ring);
+			mask: var(--_cutout);
+		}
+	}
+}
+
+@keyframes progress-ring-spin {
+	to { --progress-ring-rotation: 1turn; }
+}
+
+@keyframes progress-ring-dash {
+	from { --progress-ring-arc-start: 0deg;   --progress-ring-arc-end: 3deg; }
+	50%  { --progress-ring-arc-start: 100deg; --progress-ring-arc-end: 358deg; }
+	to   { --progress-ring-arc-start: 355deg; --progress-ring-arc-end: 360deg; }
+}

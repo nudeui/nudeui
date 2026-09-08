@@ -1,3 +1,4 @@
 /* Import all CSS-only modules */
 
 @import url("./nd-switch/nd-switch.css");
+@import url("./progress-ring/progress-ring.css");
