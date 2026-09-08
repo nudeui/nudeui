@@ -1,8 +1,7 @@
 /**
  * Fallback for engines without advanced attr(): copy the attributes --_value-attr / --_max-attr name
- * into --progress-ring-value / --progress-ring-max. Raw attribute values, exactly what attr() would
- * produce — the math that turns them into a percentage stays in the CSS, as does which attributes to
- * read and what they default to.
+ * into --value / --max. Raw attribute values, exactly what attr() would produce — the math that turns
+ * them into a percentage stays in the CSS, as does which attributes to read and what they default to.
  */
 
 const SELECTOR = "progress.ring, .progress-ring";
@@ -61,10 +60,10 @@ export function sync (rings = document.querySelectorAll(SELECTOR)) {
 			let value = attribute ? ring.getAttribute(attribute) : null;
 
 			if (value === null || isNaN(value)) {
-				value = style.getPropertyValue(`--${property}-default`).trim();
+				value = style.getPropertyValue(`--_${property}-default`).trim();
 			}
 
-			ring.style.setProperty(`--progress-ring-${property}`, value);
+			ring.style.setProperty(`--${property}`, value);
 		}
 	}
 }

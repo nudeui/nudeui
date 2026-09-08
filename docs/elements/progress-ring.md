@@ -19,12 +19,8 @@ no extra elements. Use it on a `<progress>`, or on anything carrying the right A
 - **No extra markup.** The ring is the element’s own background and border area.
 - **Indeterminate or determinate**, chosen the way the platform already says: `:indeterminate` for
   `<progress>`, presence of `aria-valuenow` for everything else.
-- **Real transparency** in the middle, via `background-clip: border-area` (masked where unsupported),
-  so it works on any backdrop.
+- **Real transparency** in the middle so it works on any backdrop.
 - **Scales with `font-size`**, or set `--size` directly.
-- **Any content stays upright and announced** — the spin is an angle in the gradient, not a `rotate`
-  on the element, so a percentage label or a button icon inside the ring is a real child, not
-  generated content.
 
 ## Examples
 
@@ -70,8 +66,8 @@ else, `aria-valuenow` and `aria-valuemax`:
 <div class="progress-ring" role="progressbar" aria-valuenow="37" aria-valuemax="100">37%</div>
 ```
 
-The label is your own content, so it is announced and stays upright — but it is also yours to keep in
-sync with the value. Only the arc is computed here.
+The label is your own content.
+It is announced, but it is also yours to keep in sync with the value. Only the arc is computed here.
 
 Changing the value transitions:
 
@@ -121,7 +117,7 @@ cell and point the button at the ring with `aria-describedby`.
 		border: 0;
 		padding: 0;
 		background: none;
-		color: var(--accent-color);
+		color: var(--accent-color, var(--progress-ring-accent-color, accentcolor));
 		cursor: pointer;
 		display: grid;
 		place-content: center;
@@ -151,32 +147,31 @@ cell and point the button at the ring with `aria-describedby`.
 
 ## Customization
 
-Every knob is read as a *default*, not declared, so you can set any of them on an ancestor and have a
-whole region of rings pick it up.
+Every knob is read twice: **unprefixed for a single ring, `--progress-ring-*` for a whole region**. Both
+are read as defaults rather than declared, and the unprefixed one is read first, so a value set on the
+ring itself wins over a `--progress-ring-*` set high up on an ancestor.
 
 | Property | Description | Default |
 |----------|-------------|---------|
-| `--size` | Ring diameter | `1em` (spinner), `3.5em` (determinate) |
-| `--track-width` | Stroke thickness | `2px` (spinner), `.25em` (determinate) |
-| `--accent-color` | Arc and label color | `accentcolor`, falling back to `#2563eb` |
-| `--track-color` | The groove behind the arc | `#e4e4e7` |
-| `--speed` | Time for one full rotation (spinner only) | `2s` |
-| `--value-default` | Value used when the attribute is missing or not a number | `0` |
-| `--max-default` | Max used when the attribute is missing or not a number | `1` on `<progress>`, `100` with ARIA |
+| `--size` / `--progress-ring-size` | Ring diameter | `1em` (spinner), `3.5em` (determinate) |
+| `--track-width` / `--progress-ring-track-width` | Stroke thickness | `2px` (spinner), `.25em` (determinate) |
+| `--accent-color` / `--progress-ring-accent-color` | Arc and label color | `accentcolor`, falling back to `#2563eb` |
+| `--track-color` / `--progress-ring-track-color` | The groove behind the arc | `#e4e4e7` |
+| `--speed` / `--progress-ring-speed` | Time for one full rotation (spinner only) | `2s` |
+| `--value` / `--progress-ring-value` | Overrides the value read from the attribute | — |
+| `--max` / `--progress-ring-max` | Overrides the max read from the attribute | — |
+| `--value-default` / `--progress-ring-value-default` | Value used when the attribute is missing or not a number | `0` |
+| `--max-default` / `--progress-ring-max-default` | Max used when the attribute is missing or not a number | `1` on `<progress>`, `100` with ARIA |
 
-Note that `--accent-color` and `--track-color` are deliberately generic: they are meant to be set once,
-high up, by your design system.
+So `--progress-ring-accent-color` on your `:root` colors every ring on the page, while `--accent-color`
+on one ring colors only that ring.
 
 ## Browser support
 
 The determinate ring reads its numbers straight from the attributes with
 [typed `attr()`](https://developer.mozilla.org/en-US/docs/Web/CSS/attr), which only Chromium ships so
 far. Everywhere else you need `progress-ring.js`, which does nothing but copy those attributes into
-`--progress-ring-value` and `--progress-ring-max` — all the math stays in the CSS.
-
-```html
-<script src="https://nudeui.com/elements/progress-ring/progress-ring.js" type="module"></script>
-```
+`--value` and `--max` — all the math stays in the CSS.
 
 It no-ops entirely on engines with typed `attr()`, and keeps rings in sync as attributes change or new
 rings are added. For rings inside a shadow root, call `observe(root)` yourself.
@@ -184,12 +179,12 @@ rings are added. For rings inside a shadow root, call `observe(root)` yourself.
 **Don’t want the script?** Set the two custom properties yourself, inline, next to the attribute:
 
 ```html
-<progress class="ring" value="37" max="100" style="--progress-ring-value: 37; --progress-ring-max: 100"></progress>
+<progress class="ring" value="37" max="100" style="--value: 37; --max: 100"></progress>
 ```
 
 You still need `value` / `aria-valuenow` on the element — that is what makes it determinate (and
-accessible) — but the ring will then draw without any JS anywhere. They have to be set inline, or in a
-rule that beats the component’s own, since the component declares them from `attr()`.
+accessible) — but the ring will then draw without any JS anywhere. `--value` takes precedence over the
+attribute, so it can come from any rule, not just inline styles.
 
 Spinners need none of this and work everywhere. `background-clip: border-area` is progressive
 enhancement: without it the ring is masked instead, which looks the same in every case except when the

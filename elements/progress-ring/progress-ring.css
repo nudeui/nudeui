@@ -16,9 +16,14 @@
  * - The spin is an angle added to the gradient, not a rotate on the element, so content (a button's
  *   icon, a label) stays upright, and it inherits the ring's accent color.
  *
+ * Every knob is read twice: unprefixed (--size) first, then --progress-ring-* — so a ring-specific
+ * setting on the element wins over a --progress-ring-* one set high up for a whole region. The short
+ * names are deliberately not registered: making them non-inheriting would take a document-global
+ * @property, which would reach far outside this component.
+ *
  * Requires: @property, advanced attr() with type(), border-area or mask. Only Chromium ships typed
  * attr() so far, so elsewhere the determinate ring needs progress-ring.js, which does nothing but copy the
- * attributes into --progress-ring-value/--progress-ring-max. The math stays here either way.
+ * attributes into --value/--max. The math stays here either way.
  *
  * Caveats:
  * - Gecko locks the native bar's display with !important in its UA sheet, so the bar is hidden with
@@ -29,21 +34,19 @@
  * - The label is the author's to keep in sync with the value; only the arc is computed here.
  */
 
+/* Animation state. Internal, but registered — hence a prefix, and hence not named with a leading _ */
 @property --progress-ring-rotation  { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
 @property --progress-ring-arc-start { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
 @property --progress-ring-arc-end   { syntax: "<angle>";  inherits: false; initial-value: 0deg; }
-@property --progress-ring-value     { syntax: "<number>"; inherits: false; initial-value: 0; }
-@property --progress-ring-max       { syntax: "<number>"; inherits: false; initial-value: 1; }
 @property --progress-ring-pct       { syntax: "<number>"; inherits: false; initial-value: 0; }
 
 progress.ring,
 .progress-ring {
-	--value-default: 0;
-	/* Defaults, not declarations, so every knob can also be set on an ancestor */
-	--_track-color: var(--track-color, #e4e4e7);
-	--_accent-color: var(--accent-color, #2563eb);
+	--_value-default: var(--value-default, var(--progress-ring-value-default, 0));
+	--_track-color: var(--track-color, var(--progress-ring-track-color, #e4e4e7));
+	--_accent-color: var(--accent-color, var(--progress-ring-accent-color, #2563eb));
 	@supports (color: accentcolor) {
-		--_accent-color: var(--accent-color, accentcolor);
+		--_accent-color: var(--accent-color, var(--progress-ring-accent-color, accentcolor));
 	}
 
 	--_main: conic-gradient(from var(--_from), var(--_accent-color) calc(var(--_to) - var(--_from)), transparent 0);
@@ -64,48 +67,52 @@ progress.ring,
 	box-sizing: border-box;
 	inline-size: var(--_size);
 	block-size: var(--_size);
-	border: var(--_track-width) solid transparent;
 	border-radius: 50%;
-	background: var(--_ring);
-	background-origin: border-box;
-	background-clip: border-area;
 	display: inline-grid;
 	place-content: center;
 	vertical-align: middle; /* UA sheets align <progress> differently, and an empty grid has no baseline */
 	color: var(--_accent-color);
 	font-weight: 600;
 
+	/* The ring is the element's own background, clipped to a transparent border area */
+	@supports (background-clip: border-area) {
+		border: var(--_track-width) solid transparent;
+		background: var(--_ring);
+		background-origin: border-box;
+		background-clip: border-area;
+	}
+
+	/* Without it the ring is masked out of a full disc, so there is no border to reserve — and any UA one to drop */
+	@supports not (background-clip: border-area) {
+		border: 0;
+	}
+
 	/* Round caps: a dot at each end of the arc, on the stroke centerline */
 	&.cap-flat {
 		--_caps: ;
-	}
-
-	/* No border-area: mask the ring instead of clipping the background to the border */
-	@supports not (background-clip: border-area) {
-		border: 0;
 	}
 }
 
 /* Indeterminate: spinner */
 progress.ring:indeterminate,
 .progress-ring:not([aria-valuenow]) {
-	--_size: var(--size, 1em);
-	--_track-width: var(--track-width, 2px);
+	--_size: var(--size, var(--progress-ring-size, 1em));
+	--_track-width: var(--track-width, var(--progress-ring-track-width, 2px));
 	/* SVG circles start at 3 o'clock, conic gradients at 12 */
 	--_from: calc(90deg + var(--progress-ring-rotation) + var(--progress-ring-arc-start));
 	--_to: calc(90deg + var(--progress-ring-rotation) + var(--progress-ring-arc-end));
 
 	animation:
-		progress-ring-spin var(--speed, 2s) linear infinite,
+		progress-ring-spin var(--speed, var(--progress-ring-speed, 2s)) linear infinite,
 		progress-ring-dash 1.5s ease-in-out infinite;
 }
 
 /* Determinate */
 progress.ring:not(:indeterminate),
 .progress-ring[aria-valuenow] {
-	--_size: var(--size, 3.5em);
-	--_track-width: var(--track-width, .25em);
-	--progress-ring-pct: calc(var(--progress-ring-value) / var(--progress-ring-max) * 100);
+	--_size: var(--size, var(--progress-ring-size, 3.5em));
+	--_track-width: var(--track-width, var(--progress-ring-track-width, .25em));
+	--progress-ring-pct: calc(var(--_value) / var(--_max) * 100);
 	--_from: 0deg;
 	--_to: calc(var(--progress-ring-pct) * 3.6deg);
 
@@ -120,17 +127,19 @@ progress.ring:not(:indeterminate),
 progress.ring {
 	--_value-attr: value;
 	--_max-attr: max;
-	--max-default: 1;
-	--progress-ring-value: attr(value type(<number>), var(--value-default));
-	--progress-ring-max: attr(max type(<number>), var(--max-default));
+	--_max-default: var(--max-default, var(--progress-ring-max-default, 1));
+	--_value: var(--value, var(--progress-ring-value, attr(value type(<number>), var(--_value-default))));
+	--_max: var(--max, var(--progress-ring-max, attr(max type(<number>), var(--_max-default))));
 
-	/* Native bars would otherwise paint over the ring (display is !important in Gecko's UA sheet) */
-	&::-webkit-progress-bar { display: none; background: none; }
-	&::-webkit-progress-value { display: none; background: none; }
-	&::-moz-progress-bar { display: none; background: none; }
+	/* Native bars would otherwise paint over the ring */
+	&::-webkit-progress-bar { display: none; }
+	&::-webkit-progress-value { display: none; }
+	/* Gecko's UA sheet locks the bar's display with !important, so take its background away instead */
+	&::-moz-progress-bar { background: none; }
 
 	/* Gecko generates no ::before on <progress>, and there is no content to protect, so mask the element */
 	@supports not (background-clip: border-area) {
+		background: var(--_ring);
 		mask: var(--_cutout);
 	}
 }
@@ -138,12 +147,14 @@ progress.ring {
 .progress-ring {
 	--_value-attr: aria-valuenow;
 	--_max-attr: aria-valuemax;
-	--max-default: 100; /* ARIA's default, unlike <progress>'s 1 */
-	--progress-ring-value: attr(aria-valuenow type(<number>), var(--value-default));
-	--progress-ring-max: attr(aria-valuemax type(<number>), var(--max-default));
+	/* ARIA's default max, unlike <progress>'s 1 */
+	--_max-default: var(--max-default, var(--progress-ring-max-default, 100));
+	--_value: var(--value, var(--progress-ring-value, attr(aria-valuenow type(<number>), var(--_value-default))));
+	--_max: var(--max, var(--progress-ring-max, attr(aria-valuemax type(<number>), var(--_max-default))));
 
 	/* Move the ring to ::before so that masking it leaves the content alone */
 	@supports not (background-clip: border-area) {
+		/* The ring sits behind the element's own background, so there must not be one (buttons have a UA one) */
 		background: none;
 
 		&::before {
