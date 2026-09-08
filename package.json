@@ -4,6 +4,12 @@
   "description": "",
   "main": "components/index.js",
   "type": "module",
+  "exports": {
+    ".": "./components/index.js",
+    "./style.css": "./components/index.css",
+    "./*": "./components/*/*.js",
+    "./*/style.css": "./components/*/style.css"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "npx postcss \"components/**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs",
