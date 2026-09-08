@@ -6,8 +6,8 @@ css_only: true
 order: 12
 status: In incubation
 ---
-<link rel="stylesheet" href="/elements/progress-ring/progress-ring.css">
-<script type="module" src="/elements/progress-ring/progress-ring.js"></script>
+<link rel="stylesheet" href="/components/progress-ring/progress-ring.css">
+<script type="module" src="/components/progress-ring/progress-ring.js"></script>
 
 # Progress ring
 

@@ -5,7 +5,7 @@ id: html-demo
 order: 6
 status: Mature
 ---
-<script type="module" src="/elements/html-demo/html-demo.js"></script>
+<script type="module" src="/components/html-demo/html-demo.js"></script>
 
 # HTML Demo
 
@@ -152,7 +152,7 @@ there is no (easy) way to get a reference to any of the other elements in the de
 The element class provides two helper methods for this very thing:
 
 ```js
-import HTMLDemoElement from "https://nudeui.com/elements/html-demo/html-demo.js";
+import HTMLDemoElement from "https://nudeui.com/components/html-demo/html-demo.js";
 
 HTMLDemoElement.wrapAll({
 	container: mySection,

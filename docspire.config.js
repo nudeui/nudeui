@@ -9,8 +9,8 @@ const STATUS_ICONS = {
 
 /**
  * Site-specific Docspire plugin:
- * - Copies the element sources into the output, since they are served straight
- *   from the site (e.g. https://nudeui.com/elements/index.js)
+ * - Copies the component sources into the output, since they are served straight
+ *   from the site (e.g. https://nudeui.com/components/index.js)
  * - Provides a `components` collection (pages with a `status`, in `order`)
  *   that drives the component table on the homepage
  * - Appends the installation instructions (templates/installation.njk) to every component page
@@ -29,7 +29,7 @@ const site = {
 	},
 	plugin (config) {
 		config.addPassthroughCopy({
-			"elements": "elements",
+			"components": "components",
 			"logo.svg": "logo.svg",
 			"_headers": "_headers",
 			"_redirects": "_redirects",

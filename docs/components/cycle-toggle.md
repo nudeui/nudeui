@@ -5,7 +5,7 @@ id: cycle-toggle
 order: 3
 status: Mature
 ---
-<script type="module" src="/elements/cycle-toggle/cycle-toggle.js"></script>
+<script type="module" src="/components/cycle-toggle/cycle-toggle.js"></script>
 
 # Cycle Toggle
 

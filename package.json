@@ -2,14 +2,14 @@
   "name": "nudeui",
   "version": "0.0.1",
   "description": "",
-  "main": "elements/index.js",
+  "main": "components/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "npx postcss \"elements/**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs",
+    "build:css": "npx postcss \"components/**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs",
     "build:html": "npx docspire",
     "build": "npm run build:css && npm run build:html",
-    "watch:css": "npx postcss \"elements/**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs --watch",
+    "watch:css": "npx postcss \"components/**/*.postcss\" --base . --dir . --ext .css --config postcss.config.cjs --watch",
     "watch:html": "npx docspire --serve",
     "watch": "npx concurrently -n w: npm:watch:*"
   },

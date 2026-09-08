@@ -5,7 +5,7 @@ id: nd-rating
 order: 5
 status: Mature
 ---
-<script type="module" src="/elements/nd-rating/nd-rating.js"></script>
+<script type="module" src="/components/nd-rating/nd-rating.js"></script>
 
 # Rating
 

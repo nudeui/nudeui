@@ -6,7 +6,7 @@ css_only: true
 order: 1
 status: Mature
 ---
-<link rel="stylesheet" href="/elements/nd-switch/nd-switch.css">
+<link rel="stylesheet" href="/components/nd-switch/nd-switch.css">
 
 # Switch
 
