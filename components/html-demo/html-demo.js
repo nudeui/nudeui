@@ -1,4 +1,4 @@
-let styleURL = new URL("./html-demo.css", import.meta.url);
+let styleURL = new URL("./style.css", import.meta.url);
 
 let Prism = globalThis.Prism;
 if (!Prism) {
