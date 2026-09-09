@@ -36,7 +36,7 @@
   "homepage": "https://github.com/leaverou/nudeui#readme",
   "devDependencies": {
     "concurrently": "^7.6.0",
-    "docspire": "git+https://github.com/docspired/docspire.git#claude/component-readme-docspire-am2h5g",
+    "docspire": "^0.0.4",
     "postcss": "^8.3.9",
     "postcss-cli": "^9.0.1",
     "postcss-nesting": "^8.0.1",
