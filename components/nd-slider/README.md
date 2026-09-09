@@ -4,11 +4,7 @@ description: "Several improvements over the native <input type=range>"
 id: nd-slider
 order: 11
 ---
-<<<<<<<< HEAD:components/nd-slider/README.md
 <script type="module" src="./nd-slider.js"></script>
-========
-<script type="module" src="/components/nd-slider/nd-slider.js"></script>
->>>>>>>> origin/main:docs/components/nd-slider.md
 
 <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/components/format-number/format-number.js"></script>
 

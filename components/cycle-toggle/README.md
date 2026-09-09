@@ -5,11 +5,7 @@ id: cycle-toggle
 order: 3
 status: Mature
 ---
-<<<<<<<< HEAD:components/cycle-toggle/README.md
 <script type="module" src="./cycle-toggle.js"></script>
-========
-<script type="module" src="/components/cycle-toggle/cycle-toggle.js"></script>
->>>>>>>> origin/main:docs/components/cycle-toggle.md
 
 # Cycle Toggle
 

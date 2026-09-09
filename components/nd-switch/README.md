@@ -6,11 +6,7 @@ css_only: true
 order: 1
 status: Mature
 ---
-<<<<<<<< HEAD:components/nd-switch/README.md
 <link rel="stylesheet" href="./style.css">
-========
-<link rel="stylesheet" href="/components/nd-switch/style.css">
->>>>>>>> origin/main:docs/components/nd-switch.md
 
 # Switch
 

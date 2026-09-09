@@ -5,11 +5,7 @@ id: html-demo
 order: 6
 status: Mature
 ---
-<<<<<<<< HEAD:components/html-demo/README.md
 <script type="module" src="./html-demo.js"></script>
-========
-<script type="module" src="/components/html-demo/html-demo.js"></script>
->>>>>>>> origin/main:docs/components/html-demo.md
 
 # HTML Demo
 
