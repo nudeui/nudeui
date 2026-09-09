@@ -5,7 +5,11 @@ id: img-input
 order: 7
 status: In incubation
 ---
+<<<<<<<< HEAD:components/img-input/README.md
 <script type="module" src="./img-input.js"></script>
+========
+<script type="module" src="/components/img-input/img-input.js"></script>
+>>>>>>>> origin/main:docs/components/img-input.md
 
 # Image input
 

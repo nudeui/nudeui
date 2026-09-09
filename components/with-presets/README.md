@@ -5,7 +5,11 @@ id: with-presets
 order: 8
 status: In incubation
 ---
+<<<<<<<< HEAD:components/with-presets/README.md
 <script type="module" src="./with-presets.js"></script>
+========
+<script type="module" src="/components/with-presets/with-presets.js"></script>
+>>>>>>>> origin/main:docs/components/with-presets.md
 
 # Freeform text with presets
 

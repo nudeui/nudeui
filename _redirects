@@ -1,5 +1,6 @@
-/button-group/* /elements/button-group/:splat 301
-/meter-discrete/* /elements/meter-discrete/:splat 301
-/with-presets/* /elements/with-presets/:splat 301
-/cycle-toggle/* /elements/cycle-toggle/:splat 301
-/nd-:tag/* /elements/nd-:tag/:splat 301
+/button-group/* /components/button-group/:splat 301
+/meter-discrete/* /components/meter-discrete/:splat 301
+/with-presets/* /components/with-presets/:splat 301
+/cycle-toggle/* /components/cycle-toggle/:splat 301
+/nd-:tag/* /components/nd-:tag/:splat 301
+/elements/* /components/:splat 301

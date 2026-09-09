@@ -5,7 +5,11 @@ id: nd-calendar
 order: 9
 status: In incubation
 ---
+<<<<<<<< HEAD:components/nd-calendar/README.md
 <script type="module" src="./nd-calendar.js"></script>
+========
+<script type="module" src="/components/nd-calendar/nd-calendar.js"></script>
+>>>>>>>> origin/main:docs/components/nd-calendar.md
 
 # Calendar
 

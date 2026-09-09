@@ -5,7 +5,11 @@ id: data-bind
 order: 10
 status: In incubation
 ---
+<<<<<<<< HEAD:components/data-bind/README.md
 <script type="module" src="./data-bind.js"></script>
+========
+<script type="module" src="/components/data-bind/data-bind.js"></script>
+>>>>>>>> origin/main:docs/components/data-bind.md
 
 # Data bind
 

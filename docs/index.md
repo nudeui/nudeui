@@ -6,7 +6,7 @@ hero:
   imageAlt: Nude UI logo
   actions:
     - text: Browse components
-      href: /elements/
+      href: /components/
     - text: GitHub
       href: https://github.com/leaverou/nudeui
       icon: github
@@ -54,7 +54,7 @@ A work in progress. Try them out and [provide feedback](https://github.com/leave
 This includes all components marked as mature:
 
 ```js
-import "https://nudeui.com/elements/index.js";
+import "https://nudeui.com/components/index.js";
 ```
 
 Components still being incubated will need to be included individually.
