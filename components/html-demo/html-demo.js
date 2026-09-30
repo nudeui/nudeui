@@ -1,4 +1,5 @@
-let styleURL = new URL("./style.css", import.meta.url);
+const styles = new CSSStyleSheet();
+fetch(new URL("style.css", import.meta.url)).then(r => r.text()).then(css => styles.replace(css));
 
 let Prism = globalThis.Prism;
 if (!Prism) {
@@ -30,8 +31,8 @@ let self = class HTMLDemoElement extends HTMLElement {
 		// TODO CodePen
 		// https://assets.codepen.io/t-1/codepen-logo.svg
 
+		this.shadowRoot.adoptedStyleSheets = [styles];
 		this.shadowRoot.innerHTML = `
-			<style>@import url("${ styleURL }")</style>
 			<div id="toolbar">
 				<div id="adjusters"></div>
 				<slot name="toolbar"></slot>

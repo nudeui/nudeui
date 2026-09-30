@@ -1,3 +1,6 @@
+const styles = new CSSStyleSheet();
+fetch(new URL("style.css", import.meta.url)).then(r => r.text()).then(css => styles.replace(css));
+
 export default class WithPresets extends HTMLElement {
 	#observer
 
@@ -5,7 +8,8 @@ export default class WithPresets extends HTMLElement {
 		super();
 
 		this.attachShadow({ mode: "open" });
-		this.shadowRoot.innerHTML = `<style>@import "${new URL("style.css", import.meta.url)}";</style><slot></slot>`;
+		this.shadowRoot.adoptedStyleSheets = [styles];
+		this.shadowRoot.innerHTML = `<slot></slot>`;
 
 		this.customValue = this.getAttribute("customvalue") ?? "";
 

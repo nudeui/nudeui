@@ -1,3 +1,6 @@
+const styles = new CSSStyleSheet();
+fetch(new URL("style.css", import.meta.url)).then(r => r.text()).then(css => styles.replace(css));
+
 export default class ImageInput extends HTMLElement {
 	#internals
 	#el = {}
@@ -10,7 +13,8 @@ export default class ImageInput extends HTMLElement {
 		super();
 
 		this.attachShadow({ mode: "open" });
-		this.shadowRoot.innerHTML = `<style>@import "${new URL("style.css", import.meta.url)}";</style>
+		this.shadowRoot.adoptedStyleSheets = [styles];
+		this.shadowRoot.innerHTML = `
 		<input type="file" accept="image/*" />
 		<div id="drop-zone" part="dropzone">
 			<slot name="input">

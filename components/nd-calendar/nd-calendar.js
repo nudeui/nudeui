@@ -1,3 +1,6 @@
+const styles = new CSSStyleSheet();
+fetch(new URL("style.css", import.meta.url)).then(r => r.text()).then(css => styles.replace(css));
+
 const DAYS_OF_WEEK = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const dur = { ms: 1 };
@@ -17,8 +20,8 @@ export default class NudeCalendar extends HTMLElement {
 		super();
 
 		this.attachShadow({ mode: "open" });
+		this.shadowRoot.adoptedStyleSheets = [styles];
 		this.shadowRoot.innerHTML = `
-		<style>@import "${new URL("style.css", import.meta.url)}";</style>
 		<div id="headers"></div>
 		<div id="calendar"></div>
 		`;

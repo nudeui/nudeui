@@ -1,3 +1,6 @@
+const styles = new CSSStyleSheet();
+fetch(new URL("style.css", import.meta.url)).then(r => r.text()).then(css => styles.replace(css));
+
 if (!HTMLSlotElement.prototype.assign) {
 	// Include Imperative Slot Assignment polyfill
 	await import("https://unpkg.com/dom-slot-assign");
@@ -16,7 +19,8 @@ export default class CycleToggle extends HTMLElement {
 			slotAssignment: "manual",
 			delegatesFocus: true,
 		});
-		this.shadowRoot.innerHTML = `<style>@import "${new URL("style.css", import.meta.url)}";</style><button><slot name="selected"></slot></button>`;
+		this.shadowRoot.adoptedStyleSheets = [styles];
+		this.shadowRoot.innerHTML = `<button><slot name="selected"></slot></button>`;
 		this.#selectedSlot = this.shadowRoot.querySelector("slot");
 
 		this.#internals = this.attachInternals?.();
