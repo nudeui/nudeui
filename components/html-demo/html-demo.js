@@ -1,4 +1,5 @@
-let styleURL = new URL("./style.css", import.meta.url);
+const styles = new CSSStyleSheet();
+fetch(new URL("style.css", import.meta.url)).then(r => r.text()).then(css => styles.replace(css));
 
 let Prism = globalThis.Prism;
 if (!Prism) {
@@ -30,8 +31,8 @@ let self = class HTMLDemoElement extends HTMLElement {
 		// TODO CodePen
 		// https://assets.codepen.io/t-1/codepen-logo.svg
 
+		this.shadowRoot.adoptedStyleSheets = [styles];
 		this.shadowRoot.innerHTML = `
-			<style>@import url("${ styleURL }")</style>
 			<div id="toolbar">
 				<div id="adjusters"></div>
 				<slot name="toolbar"></slot>
@@ -111,6 +112,9 @@ let self = class HTMLDemoElement extends HTMLElement {
 		this.#el.codeElements = [...this.#slots.code.assignedNodes()];
 		this.#el.demoNodes = [...this.#slots.demo.assignedNodes()];
 
+		// Children explicitly slotted into the demo are rendered but stay out of the code
+		let demoOnly = this.#el.demoNodes.filter(node => node.slot === "demo");
+
 		// Once source is determined mutations can't change it
 		this.source ??= this.getAttribute("source") ?? (this.#el.codeElements.length > 0 ? "code" : "content");
 		this.isolate = this.hasAttribute("isolate");
@@ -128,24 +132,26 @@ let self = class HTMLDemoElement extends HTMLElement {
 
 			// TODO handle scripts
 
+			this.#dummy.innerHTML = this.code;
+			let nodes = [...this.#dummy.childNodes];
+
 			if (this.isolate) {
 				// Remove past demo nodes
 				this.#el.demoNodes.forEach(node => node.remove());
 				this.#slots.demo.assign();
-				this.#slots.demo.innerHTML = this.code;
-				runScripts(this.#slots.demo.children);
+				this.#slots.demo.replaceChildren(...demoOnly, ...nodes);
 			}
 			else {
-				this.#dummy.innerHTML = this.code;
-				let nodes = [...this.#dummy.childNodes]
 				this.append(...nodes);
-				this.#slots.demo.assign(...nodes);
-				runScripts(nodes);
+				this.#slots.demo.assign(...demoOnly, ...nodes);
 			}
+
+			runScripts(nodes);
 		}
 		else {
 			// Get code from content
-			this.code = this.#el.demoNodes.map(el => el.outerHTML ?? el.textContent).join("");
+			let sourceNodes = this.#el.demoNodes.filter(node => !demoOnly.includes(node));
+			this.code = sourceNodes.map(el => el.outerHTML ?? el.textContent).join("");
 
 			// TODO Clean up markup
 			let pre = document.createElement("pre");

@@ -107,6 +107,25 @@ This works with both modes:
 
 
 
+### Demo-only content
+
+Children with `slot="demo"` are rendered in the demo but left out of the code.
+This is useful for helper styles or setup that would clutter the snippet.
+Works in both modes, and in isolated mode they move into the shadow tree along with the demo:
+
+```html {demo}
+<html-demo isolate>
+	<style slot="demo">
+		.fancy {
+			background: rebeccapurple;
+			color: white;
+			font-weight: bold;
+		}
+	</style>
+	<button class="fancy">Click me</button>
+</html-demo>
+```
+
 ### Execute script
 
 In code-first mode, any `<script>` elements will also be executed:

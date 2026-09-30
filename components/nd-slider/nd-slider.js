@@ -1,3 +1,6 @@
+const styles = new CSSStyleSheet();
+fetch(new URL("style.css", import.meta.url)).then(r => r.text()).then(css => styles.replace(css));
+
 let self = class NudeSlider extends HTMLElement {
 	sliderElement = null;
 	valueElement = null;
@@ -10,9 +13,8 @@ let self = class NudeSlider extends HTMLElement {
 		super();
 
 		this.attachShadow({mode: "open"});
-		let styleURL = new URL(self.tagName + ".css", import.meta.url);
+		this.shadowRoot.adoptedStyleSheets = [styles];
 		this.shadowRoot.innerHTML = `
-			<style>@import url("${ styleURL }")</style>
 			<slot>
 				<input type="range">
 			</slot>
