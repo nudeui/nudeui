@@ -82,6 +82,14 @@
 
 
 
+iframe {
+	display: block;
+	width: 100%;
+	border: 0;
+	/* Size to content where supported; elsewhere set a height via ::part(iframe) */
+	frame-sizing: content-block-size;
+}
+
 slot[name=demo] {
 	display: block;
 	--font-size-adjust: var(--adjust-font-size, 0.5);

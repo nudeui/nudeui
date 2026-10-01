@@ -113,11 +113,12 @@ let self = class HTMLDemoElement extends HTMLElement {
 		this.#el.demoNodes = [...this.#slots.demo.assignedNodes()];
 
 		// Children explicitly slotted into the demo are rendered but stay out of the code
-		let demoOnly = this.#el.demoNodes.filter(node => node.slot === "demo");
+		let demoOnly = [...this.children].filter(el => el.slot === "demo");
 
 		// Once source is determined mutations can't change it
 		this.source ??= this.getAttribute("source") ?? (this.#el.codeElements.length > 0 ? "code" : "content");
-		this.isolate = this.hasAttribute("isolate");
+		// false | "shadow" | "iframe"
+		this.isolate = this.hasAttribute("isolate") && (this.getAttribute("isolate") === "iframe" ? "iframe" : "shadow");
 
 		if (this.source == "code") {
 			// Code-first
@@ -130,28 +131,30 @@ let self = class HTMLDemoElement extends HTMLElement {
 				return;
 			}
 
-			// TODO handle scripts
+			if (this.isolate !== "iframe") {
+				// TODO handle scripts
 
-			this.#dummy.innerHTML = this.code;
-			let nodes = [...this.#dummy.childNodes];
+				this.#dummy.innerHTML = this.code;
+				let nodes = [...this.#dummy.childNodes];
 
-			if (this.isolate) {
-				// Remove past demo nodes
-				this.#el.demoNodes.forEach(node => node.remove());
-				this.#slots.demo.assign();
-				this.#slots.demo.replaceChildren(...demoOnly, ...nodes);
+				if (this.isolate) {
+					// Remove past demo nodes
+					this.#el.demoNodes.forEach(node => node.remove());
+					this.#slots.demo.assign();
+					this.#slots.demo.replaceChildren(...demoOnly, ...nodes);
+				}
+				else {
+					this.append(...nodes);
+					this.#slots.demo.assign(...demoOnly, ...nodes);
+				}
+
+				runScripts(nodes);
 			}
-			else {
-				this.append(...nodes);
-				this.#slots.demo.assign(...demoOnly, ...nodes);
-			}
-
-			runScripts(nodes);
 		}
 		else {
 			// Get code from content
 			let sourceNodes = this.#el.demoNodes.filter(node => !demoOnly.includes(node));
-			this.code = sourceNodes.map(el => el.outerHTML ?? el.textContent).join("");
+			this.code = serialize(sourceNodes);
 
 			// TODO Clean up markup
 			let pre = document.createElement("pre");
@@ -163,12 +166,18 @@ let self = class HTMLDemoElement extends HTMLElement {
 			this.append(pre);
 			this.#slots.code.assign(pre);
 
-			if (this.isolate) {
+			if (this.isolate === "shadow") {
 				// Move demo nodes to shadow root
 				let fragment = document.createDocumentFragment();
 				fragment.append(...this.#el.demoNodes);
 				this.#slots.demo.replaceChildren(...fragment.childNodes);
 			}
+		}
+
+		if (this.isolate === "iframe") {
+			// Unslot light DOM children instead of removing them: they stop rendering, but demo-only ones survive re-renders
+			this.#slots.demo.assign();
+			this.#slots.demo.replaceChildren(createFrame(serialize(demoOnly) + this.code));
 		}
 
 		Prism.highlightAllUnder(this);
@@ -255,6 +264,36 @@ let self = class HTMLDemoElement extends HTMLElement {
 function appendHTML (container, html) {
 	container.insertAdjacentHTML("beforeend", html);
 	return container.children[container.children.length - 1];
+}
+
+/**
+ * Serialize nodes back to HTML
+ * @param {Node[]} nodes
+ * @returns {string}
+ */
+function serialize (nodes) {
+	let container = document.createElement("div");
+	container.append(...nodes.map(node => node.cloneNode(true)));
+	return container.innerHTML;
+}
+
+/**
+ * Create an iframe rendering the given HTML as its own document.
+ * Relative URLs resolve against the page and the document opts into
+ * responsive embedded sizing (https://developer.chrome.com/blog/responsive-iframes)
+ * so the frame can size itself to its content where supported.
+ * @param {string} html
+ * @returns {HTMLIFrameElement}
+ */
+function createFrame (html) {
+	let iframe = document.createElement("iframe");
+	iframe.part = "iframe";
+	iframe.title = "Demo";
+	iframe.srcdoc = `<!DOCTYPE html>
+<base href="${ document.baseURI }">
+<meta name="responsive-embedded-sizing" content="allow-origins=*">
+${ html }`;
+	return iframe;
 }
 
 /**

@@ -18,7 +18,7 @@ Great for documenting web components!
 ## Features
 
 - Provide a code snippet and it will create the demo, or provide the demo and it will create the code snippet.
-- Demo inherits page styles but you can optionally isolate
+- Demo inherits page styles but you can optionally isolate it, in a shadow tree or an iframe
 - Executes `<script>` tags (in code-first mode)
 
 ### Roadmap
@@ -72,7 +72,7 @@ Use `--font-size-min` and `--font-size-max` to set the range (default: `50%` to 
 
 By default the demo is rendered in the light DOM, and thus inherits the normal page styles.
 In most cases, this is what you want.
-If not, you can use the `isolate` attribute to use the UA’s default styles.
+If not, you can use the `isolate` attribute to render the demo in a shadow tree, with the UA’s default styles.
 This works with both modes:
 
 <table>
@@ -104,14 +104,45 @@ This works with both modes:
 </tr>
 </table>
 
+#### Isolating in an iframe { #isolate-iframe }
 
+Use `isolate="iframe"` to render the demo as its own document, in an `<iframe>`.
+This gives you full isolation: styles, ids, `document` and `window` all behave as they would in a standalone page,
+and (in code-first mode) so do scripts, without any of the [shadow tree caveats](#script-isolate).
+Relative URLs resolve against the current page, so you can reference local assets and scripts as usual:
 
+```html {demo}
+<html-demo isolate="iframe">
+	<pre class="language-html"><code>
+		&lt;img src="../../logo.svg" alt="Nude UI logo" width="100">
+		&lt;script>
+			document.currentScript.replaceWith("Hi from iframe script!");
+		&lt;/script>
+	</code></pre>
+</html-demo>
+```
+
+The iframe is exposed as the `iframe` part.
+In browsers that support [responsive iframes](https://developer.chrome.com/blog/responsive-iframes) it grows to fit its content
+(but not below the default iframe height of `150px`).
+Elsewhere, set its height yourself.
+Do that conditionally, since any explicit height turns content sizing off:
+
+```css
+@supports not (frame-sizing: content-block-size) {
+	html-demo::part(iframe) {
+		height: 20em;
+	}
+}
+```
+
+Adjusters do not currently affect iframe demos.
 
 ### Demo-only content
 
 Children with `slot="demo"` are rendered in the demo but left out of the code.
 This is useful for helper styles or setup that would clutter the snippet.
-Works in both modes, and in isolated mode they move into the shadow tree along with the demo:
+Works in both modes, and in isolated mode they go into the shadow tree or iframe along with the demo:
 
 ```html {demo}
 <html-demo isolate>
@@ -145,8 +176,9 @@ In code-first mode, any `<script>` elements will also be executed:
 
 #### Executing scripts in isolated mode { #script-isolate }
 
-Do note that there is **limited utility in doing this in isolated mode**, since
-there is no (easy) way to get a reference to any of the other elements in the demo:
+Do note that there is **limited utility in doing this in shadow tree isolation** (plain `isolate`), since
+there is no (easy) way to get a reference to any of the other elements in the demo
+(none of this applies to [`isolate="iframe"`](#isolate-iframe)):
 - [`document.currentScript` is `null` in shadow trees](https://html.spec.whatwg.org/multipage/dom.html#dom-document-currentscript-dev)
 - All `document.querySelector*()` or `document.getElementBy*()` calls will query the light DOM
 - Ids will not create variables
