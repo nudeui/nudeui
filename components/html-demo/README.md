@@ -5,7 +5,7 @@ id: html-demo
 order: 6
 status: Mature
 ---
-<script type="module" src="/components/html-demo/html-demo.js"></script>
+<script type="module" src="./html-demo.js"></script>
 
 # HTML Demo
 
