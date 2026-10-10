@@ -128,6 +128,7 @@ let self = class HTMLDemoElement extends HTMLElement {
 			this.code = this.#el.codeElements.map(code => code.textContent).join("\n");
 
 			if (previousCode === this.code) {
+				this.#observe();
 				return;
 			}
 
