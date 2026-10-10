@@ -9,6 +9,11 @@
 	--color-neutral-80: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 80%);
 	--color-neutral-70: color-mix(in oklch, var(--color-neutral), var(--color-canvas) 70%);
 
+	/* Toolbar button icons: Font Awesome Free 7.3.1, CC BY 4.0 (https://fontawesome.com/license/free) */
+	--_icon-open: var(--icon-open, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0-201.4 201.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3 448 192c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 96C35.8 96 0 131.8 0 176L0 432c0 44.2 35.8 80 80 80l256 0c44.2 0 80-35.8 80-80l0-80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 80c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l80 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 96z'/%3E%3C/svg%3E"));
+	--_icon-codepen: var(--icon-codepen, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M502.3 159.7l-234-156c-8-4.9-16.5-5-24.6 0l-234 156c-6 4-9.7 11.1-9.7 18.3L0 334c0 7.1 3.7 14.3 9.7 18.3l234 156c8 4.9 16.5 5 24.6 0l234-156c6-4 9.7-11.1 9.7-18.3l0-156c0-7.1-3.7-14.3-9.7-18.3zM278 63.1l172.3 114.9-76.9 51.4-95.4-63.7 0-102.6zm-44 0L234 165.7 138.6 229.4 61.7 178 234 63.1zM44 219.1L99.1 256 44 292.8 44 219.1zM234 448.8L61.7 334 138.6 282.6 234 346.3 234 448.8zM256 308l-77.7-52 77.7-52 77.7 52-77.7 52zm22 140.9l0-102.6 95.4-63.7 76.9 51.4-172.3 114.9zm190-156l-55.1-36.9 55.1-36.9 0 73.7z'/%3E%3C/svg%3E"));
+	--_icon-reload: var(--icon-reload, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M488 192l-144 0c-9.7 0-18.5-5.8-22.2-14.8s-1.7-19.3 5.2-26.2l46.7-46.7c-75.3-58.6-184.3-53.3-253.5 15.9-75 75-75 196.5 0 271.5s196.5 75 271.5 0c8.2-8.2 15.5-16.9 21.9-26.1 10.1-14.5 30.1-18 44.6-7.9s18 30.1 7.9 44.6c-8.5 12.2-18.2 23.8-29.1 34.7-100 100-262.1 100-362 0S-25 175 75 75c94.3-94.3 243.7-99.6 344.3-16.2L471 7c6.9-6.9 17.2-8.9 26.2-5.2S512 14.3 512 24l0 144c0 13.3-10.7 24-24 24z'/%3E%3C/svg%3E"));
+
 	display: flex;
 	flex-flow: column;
 	border: 1px solid var(--color-neutral-70);
@@ -28,22 +33,13 @@
 }
 
 #toolbar {
-	display: flex;
+	display: none;
 	gap: 1em;
 	border-bottom: 1px solid var(--color-neutral-80);
 
-	&:empty,
-	&:has(#adjusters:empty) {
-		display: none;
-	}
-
-	> * {
-		padding: .3rem .5rem;
-		flex: 1;
-
-		&:not(:first-child) {
-			border-left: 1px solid var(--color-neutral-80);
-		}
+	/* Only shown when it has content, rendered or slotted */
+	&:has(#adjusters > *, #buttons > :not(slot), slot.assigned) {
+		display: flex;
 	}
 }
 
@@ -51,6 +47,47 @@
 	display: flex;
 	flex: 1;
 	gap: 1em;
+	padding: .3rem .5rem;
+
+	&:not(:empty) ~ #buttons {
+		border-inline-start: 1px solid var(--color-neutral-80);
+	}
+}
+
+#buttons {
+	display: flex;
+	align-items: center;
+	gap: .2em;
+	padding: .1rem .3rem;
+
+	button {
+		padding: .4em;
+		border: 0;
+		border-radius: .2em;
+		background: none;
+		color: var(--color-neutral);
+		font: inherit;
+		line-height: 1;
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			background: var(--color-neutral-90);
+			color: inherit;
+		}
+
+		/* Icon as a mask, so it takes the button's text color */
+		&::before {
+			content: "";
+			display: block;
+			width: 1.2em;
+			height: 1.2em;
+			background: currentColor;
+			mask: var(--icon) center / contain no-repeat;
+			/* Keep the mask fill in forced-colors mode; currentColor still follows the forced text color */
+			forced-color-adjust: none;
+		}
+	}
 }
 
 .adjuster {

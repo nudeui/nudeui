@@ -1,3 +1,6 @@
+import * as buttons from "./buttons.js";
+/** @import { ToolbarButton } from "./buttons.js" */
+
 const styles = new CSSStyleSheet();
 fetch(new URL("style.css", import.meta.url)).then(r => r.text()).then(css => styles.replace(css));
 
@@ -14,12 +17,17 @@ if (!Prism.plugins.NormalizeWhitespace) {
 let self = class HTMLDemoElement extends HTMLElement {
 	#el = {};
 	#slots = {};
+	#demoOnly = [];
+	/** Aborts the listener waiting for an unregistered button */
+	#pending = null;
 	adjust = {};
 	#observer = new MutationObserver((mutations) => {
 		this.#assignSlots();
 		this.#render();
 	});
 	#dummy = document.createElement("div");
+
+	static observedAttributes = ["adjust", "buttons"];
 
 	constructor () {
 		super();
@@ -28,14 +36,12 @@ let self = class HTMLDemoElement extends HTMLElement {
 			slotAssignment: "manual"
 		});
 
-		// TODO CodePen
-		// https://assets.codepen.io/t-1/codepen-logo.svg
-
 		this.shadowRoot.adoptedStyleSheets = [styles];
 		this.shadowRoot.innerHTML = `
 			<div id="toolbar">
 				<div id="adjusters"></div>
 				<slot name="toolbar"></slot>
+				<div id="buttons"><slot name="buttons"></slot></div>
 			</div>
 			<slot name="demo" data-default></slot>
 			<slot name="code" data-assign="pre"></slot>
@@ -47,6 +53,10 @@ let self = class HTMLDemoElement extends HTMLElement {
 			if (!slot.name || slot.dataset.default !== undefined) {
 				this.#slots.default = slot;
 			}
+
+			// CSS cannot see slot assignments, so expose whether a slot has content
+			// NOTE Replace with :has-slotted once it is Baseline
+			slot.addEventListener("slotchange", () => slot.classList.toggle("assigned", slot.assignedNodes().length > 0));
 		}
 
 		for (let el of this.shadowRoot.querySelectorAll("[id]")) {
@@ -57,8 +67,15 @@ let self = class HTMLDemoElement extends HTMLElement {
 	connectedCallback () {
 		this.#assignSlots();
 		this.#render();
+		this.#renderToolbar();
 
 		this.#observe();
+	}
+
+	attributeChangedCallback () {
+		if (this.isConnected) {
+			this.#renderToolbar();
+		}
 	}
 
 	#observe () {
@@ -70,6 +87,7 @@ let self = class HTMLDemoElement extends HTMLElement {
 	}
 
 	disconnectedCallback () {
+		this.#pending?.abort();
 		this.#unoobserve();
 	}
 
@@ -113,12 +131,10 @@ let self = class HTMLDemoElement extends HTMLElement {
 		this.#el.demoNodes = [...this.#slots.demo.assignedNodes()];
 
 		// Children explicitly slotted into the demo are rendered but stay out of the code
-		let demoOnly = [...this.children].filter(el => el.slot === "demo");
+		let demoOnly = this.#demoOnly = [...this.children].filter(el => el.slot === "demo");
 
 		// Once source is determined mutations can't change it
 		this.source ??= this.getAttribute("source") ?? (this.#el.codeElements.length > 0 ? "code" : "content");
-		// false | "shadow" | "iframe"
-		this.isolate = this.hasAttribute("isolate") && (this.getAttribute("isolate") === "iframe" ? "iframe" : "shadow");
 
 		if (this.source == "code") {
 			// Code-first
@@ -178,12 +194,22 @@ let self = class HTMLDemoElement extends HTMLElement {
 		if (this.isolate === "iframe") {
 			// Unslot light DOM children instead of removing them: they stop rendering, but demo-only ones survive re-renders
 			this.#slots.demo.assign();
-			this.#slots.demo.replaceChildren(createFrame(serialize(demoOnly) + this.code));
+			this.#slots.demo.replaceChildren(createFrame(this.srcdoc));
 		}
 
 		Prism.highlightAllUnder(this);
 
-		// Render adjusters
+		this.#observe();
+	}
+
+	/** @type {false | "shadow" | "iframe"} */
+	get isolate () {
+		return this.hasAttribute("isolate") && (this.getAttribute("isolate") === "iframe" ? "iframe" : "shadow");
+	}
+
+	#renderToolbar () {
+		this.#pending?.abort();
+		this.#pending = null;
 		this.#el.adjusters.innerHTML = "";
 
 		if (this.hasAttribute("adjust")) {
@@ -193,7 +219,20 @@ let self = class HTMLDemoElement extends HTMLElement {
 			}
 		}
 
-		this.#observe();
+		// An empty `buttons` attribute means all of them
+		this.#el.buttons.querySelectorAll("button").forEach(button => button.remove());
+
+		if (this.hasAttribute("buttons")) {
+			let buttons = new Set(this.getAttribute("buttons").trim().split(/\s+/).filter(Boolean));
+
+			if (buttons.size === 0) {
+				buttons = Object.keys(self.buttons);
+			}
+
+			for (let button of buttons) {
+				this.#renderButton(button);
+			}
+		}
 	}
 
 	#renderAdjuster (adjuster) {
@@ -212,6 +251,57 @@ let self = class HTMLDemoElement extends HTMLElement {
 		});
 
 		return container;
+	}
+
+	#renderButton (name) {
+		let definition = self.buttons[name];
+
+		if (!definition) {
+			// Not registered yet: render the toolbar again once something is
+			if (!this.#pending) {
+				this.#pending = new AbortController();
+				self.buttons.addEventListener("register", () => this.#renderToolbar(), { signal: this.#pending.signal });
+			}
+
+			return null;
+		}
+
+		if (!(definition.available?.call(this) ?? true)) {
+			return null;
+		}
+
+		let button = document.createElement("button");
+		button.type = "button";
+		button.title = button.ariaLabel = definition.label;
+		let icon = definition.icon ?? name;
+		// Built-in icons resolve through --_icon-* (with their default), custom ones straight from --icon-*
+		button.style.setProperty("--icon", `var(--_icon-${ icon }, var(--icon-${ icon }))`);
+		button.addEventListener("click", event => definition.action.call(this, event));
+
+		this.#slots.buttons.before(button);
+		return button;
+	}
+
+	/**
+	 * Demo markup: demo-only children followed by the code
+	 * @type {string}
+	 */
+	get markup () {
+		return serialize(this.#demoOnly) + (this.code ?? "");
+	}
+
+	/**
+	 * The demo as a standalone HTML document, as rendered in iframes or new tabs.
+	 * Relative URLs resolve against the page and the document opts into
+	 * responsive embedded sizing (https://developer.chrome.com/blog/responsive-iframes)
+	 * so iframes can size themselves to its content where supported.
+	 * @type {string}
+	 */
+	get srcdoc () {
+		return `<!DOCTYPE html>
+<base href="${ document.baseURI }">
+<meta name="responsive-embedded-sizing" content="allow-origins=*">
+${ this.markup }`;
 	}
 
 	/**
@@ -260,6 +350,23 @@ let self = class HTMLDemoElement extends HTMLElement {
 			</label>`;
 		}
 	};
+
+	/**
+	 * Toolbar buttons by name, enabled per demo via the `buttons` attribute.
+	 * An EventTarget so demos can wait for buttons registered later.
+	 * @type {EventTarget & Record<string, ToolbarButton>}
+	 */
+	static buttons = Object.assign(new EventTarget(), buttons);
+
+	/**
+	 * Add a toolbar button. Define its icon as `--icon-<name>` in CSS.
+	 * @param {string} name
+	 * @param {ToolbarButton} definition
+	 */
+	static registerButton (name, definition) {
+		this.buttons[name] = definition;
+		this.buttons.dispatchEvent(new Event("register"));
+	}
 }
 
 function appendHTML (container, html) {
@@ -279,10 +386,7 @@ function serialize (nodes) {
 }
 
 /**
- * Create an iframe rendering the given HTML as its own document.
- * Relative URLs resolve against the page and the document opts into
- * responsive embedded sizing (https://developer.chrome.com/blog/responsive-iframes)
- * so the frame can size itself to its content where supported.
+ * Create an iframe rendering the given HTML document
  * @param {string} html
  * @returns {HTMLIFrameElement}
  */
@@ -290,10 +394,7 @@ function createFrame (html) {
 	let iframe = document.createElement("iframe");
 	iframe.part = "iframe";
 	iframe.title = "Demo";
-	iframe.srcdoc = `<!DOCTYPE html>
-<base href="${ document.baseURI }">
-<meta name="responsive-embedded-sizing" content="allow-origins=*">
-${ html }`;
+	iframe.srcdoc = html;
 	return iframe;
 }
 

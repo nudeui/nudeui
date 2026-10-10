@@ -20,6 +20,7 @@ Great for documenting web components!
 - Provide a code snippet and it will create the demo, or provide the demo and it will create the code snippet.
 - Demo inherits page styles but you can optionally isolate it, in a shadow tree or an iframe
 - Executes `<script>` tags (in code-first mode)
+- Toolbar buttons to open the demo in a new tab or CodePen, reload it, or anything else you define
 
 ### Roadmap
 
@@ -27,7 +28,6 @@ From most to least likely to be implemented:
 
 - More style customization (parts, CSS properties)
 - Option to collapse code by default
-- Open in CodePen button (need a way to specify dependencies)
 - Structured attribute values
 - Work with CSS and JS snippets (without having to include them in HTML markup)
 - Different layouts
@@ -67,6 +67,76 @@ Only `font-size` for now:
 ```
 
 Use `--font-size-min` and `--font-size-max` to set the range (default: `50%` to `300%`).
+
+### Toolbar buttons
+
+The `buttons` attribute adds buttons to the inline end of the toolbar.
+These are built in:
+
+| Name | Description |
+| --- | --- |
+| `open` | Open the demo in a new tab, as a standalone document |
+| `codepen` | Open the demo in CodePen |
+| `reload` | Reload the demo. Only rendered for [iframe demos](#isolate-iframe) |
+
+```html {demo}
+<html-demo isolate="iframe" buttons="open codepen reload">
+	<label><input type="checkbox"> Check me, then reload</label>
+</html-demo>
+```
+
+An empty `buttons` attribute adds every button available.
+Opened demos get a `<base>` pointing to the current page, so relative URLs keep working.
+Icons are masks, so they take the button’s text color.
+To swap one, set `--icon-<name>` to any CSS image:
+
+```css
+html-demo {
+	--icon-reload: url("my-reload.svg");
+}
+```
+
+#### Custom buttons
+
+The built-in buttons live in `HTMLDemoElement.buttons`, and you can register your own.
+Buttons are icon-only: the icon comes from `--icon-<name>`, so define it in CSS
+(or set `icon` to the name of another icon to reuse it).
+Inside `action()` and `available()`, `this` is the `<html-demo>` element,
+so you can use e.g. `this.code`, `this.markup` (code plus demo-only children),
+or `this.srcdoc` (the demo as a standalone document):
+
+```js
+HTMLDemoElement.registerButton("run", {
+	label: "Run",
+	action () {
+		new Function(this.code)();
+	},
+	// Optional: return false to leave the button out of a demo
+	available () {
+		return this.querySelector("code.language-js") !== null;
+	},
+});
+```
+
+```css
+html-demo {
+	--icon-run: url("play.svg");
+}
+```
+
+Then use it like any other button: `<html-demo buttons="run">`.
+Toolbars update when `buttons` changes, and demos that mention a button before it is registered catch up once it is.
+
+For completely custom buttons, slot any element with `slot="buttons"` to place it in the button group,
+or `slot="toolbar"` to place it between the adjusters and the buttons.
+Slotted elements are only placed, not styled:
+
+```html {demo}
+<html-demo buttons="open">
+	<button slot="buttons">Custom</button>
+	<input type="range">
+</html-demo>
+```
 
 ### Style isolation
 
