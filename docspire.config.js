@@ -43,7 +43,7 @@ const site = {
 
 		// Replace the <code-block> around ```html {demo} snippets with <html-demo>,
 		// which renders the demo client-side from the code’s text content
-		config.addContentTransform(tree => {
+		config.addPageTransform(tree => {
 			tree.match("code-block", node => {
 				let pre = node.content?.find(child => child?.tag === "pre");
 				let code = pre?.content?.find(child => child?.tag === "code");
