@@ -87,5 +87,8 @@ export default {
 	title: "Nude UI",
 	description: "A collection of accessible, customizable, ultra-light web components",
 	icon: "/logo.svg",
+	// Each component documents itself, in a README.md that also renders on GitHub.
+	// The docs tree mirrors the repo layout, so a README publishes at /components/<name>/.
+	import: "components/:name/README.md",
 	plugins: [landing, site],
 };
