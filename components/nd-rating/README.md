@@ -61,7 +61,7 @@ Actual image instead of emoji:
 
 
 ```html {demo}
-<nd-rating value="3.5" icon="../logo.svg"></nd-rating>
+<nd-rating value="3.5" icon="/logo.svg"></nd-rating>
 ```
 
 Participates in form submission (requires [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) support):
