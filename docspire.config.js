@@ -24,7 +24,7 @@ const site = {
 	styles: ["site.css", "demos.css"],
 	icons,
 	data: { statusIcons: STATUS_ICONS },
-	slots: {
+	slotted: {
 		"content.end": "installation",
 	},
 	plugin (config) {
