@@ -90,5 +90,7 @@ export default {
 	// Each component documents itself, in a README.md that also renders on GitHub.
 	// The docs tree mirrors the repo layout, so a README publishes at /components/<name>/.
 	import: "components/:name/README.md",
+	// components/ is the component library, so Docspire's components directory moves to docspire-components/
+	dirNames: { components: "docspire-components" },
 	plugins: [landing, site],
 };
