@@ -5,7 +5,7 @@ id: meter-discrete
 order: 4
 status: Mature
 ---
-<script type="module" src="/components/meter-discrete/meter-discrete.js"></script>
+<script type="module" src="./meter-discrete.js"></script>
 
 # Discrete meter
 
